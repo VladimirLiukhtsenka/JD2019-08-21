@@ -27,7 +27,7 @@ public class TaskA {
                 pow(a + 1.5, 1.0 / 3) +
                 a * pow(b, 5) -
                 b / log(a * a);
-        System.out.println(y);
+        System.out.println("y=" + y);
 
     }
 
@@ -35,7 +35,7 @@ public class TaskA {
         double x = 12.1;
         for (double a = -5; a <= 12; a += 3.57) {
             double f = exp(a * x) - 3.45 * a;
-            System.out.printf("For a=%-12g f=%-12g\n",a,f);
+            System.out.printf("For a=%-12g f=%-12g\n", a, f);
         }
     }
 
