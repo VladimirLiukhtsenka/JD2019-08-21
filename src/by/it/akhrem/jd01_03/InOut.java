@@ -1,6 +1,6 @@
 package by.it.akhrem.jd01_03;
 
-class InOut {
+public class InOut {
     static double[] getArray(String line) {
         line = line.trim();
         String[] arrayString = line.split(" ");
@@ -19,7 +19,7 @@ class InOut {
         System.out.println();
     }
 
-    static void printArray(double[] array, String name, int colCount) {
+    public static void printArray(double[] array, String name, int colCount) {
         for (int i = 0; i < array.length; i++) {
             System.out.printf("%s[% -3d]=%-8.3f ", name, i, array[i]);
             if ((i + 1) % colCount == 0) {
