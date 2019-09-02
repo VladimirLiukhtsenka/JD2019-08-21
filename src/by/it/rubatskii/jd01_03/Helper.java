@@ -30,37 +30,39 @@ public class Helper {
 
         }
     }
-    static void sort(double[ ] arr) {
+
+    static void sort(double[] arr) {
 
         for (double v : arr) {
             Arrays.sort(arr);
-                    }
+        }
 
     }
 
-    static double[ ] mul (double[ ][ ] matrix, double[ ] vector){
+    static double[] mul(double[][] matrix, double[] vector) {
         double[] a = new double[matrix.length];
-        for (int i = 0; i <matrix.length ; i++)
-            for (int j = 0; j <vector.length ; j++)
-                a[i] = a[i]+matrix[i][j]*vector[j];
+        for (int i = 0; i < matrix.length; i++)
+            for (int j = 0; j < vector.length; j++)
+                a[i] = a[i] + matrix[i][j] * vector[j];
 
 
         return a;
     }
-    static double[ ][ ] mul (double[ ][ ] matrixLeft, double[ ][ ] matrixRight) {
+
+
+    static double[][] mul(double[][] matrixLeft, double[][] matrixRight) {
         double[][] b = new double[matrixLeft.length][matrixRight[0].length];
         for (int i = 0; i < matrixLeft.length; i++)
-            for (int j = 0; j < matrixRight[0].length; j++)
+            for (int j = 0; j < matrixLeft.length; j++)
                 for (int k = 0; k < matrixRight.length; k++)
-                    b[i][j] = b[i][j] + matrixLeft[i][k] * matrixLeft[k][j];
+                    b[i][j] = b[i][j] + matrixLeft[i][k] * matrixRight[k][j];
 
         return b;
 
-        }
-
-
-
     }
+
+
+}
 
 
 

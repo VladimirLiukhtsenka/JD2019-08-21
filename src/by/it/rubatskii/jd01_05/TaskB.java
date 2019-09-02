@@ -9,13 +9,13 @@ public class TaskB {
     }
 
     private static void step1() {
-        for (double a = 0; a <= 2; a = a + 0.2) {
+        for (double a = 0; a <= 2; a += 0.2) {
             double y = 0;
             for (int x = 1; x <= 6; x++) {
 
                 y = ((pow(7, a) - cos(x))) + y;
 
-                System.out.printf("При a=%5.2f  Сумма y=%f \n", a, y);
+                System.out.printf("При a=%4.2g  Сумма y=-10.5%f \n", a, y);
             }
 
 
