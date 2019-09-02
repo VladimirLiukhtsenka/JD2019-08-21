@@ -32,9 +32,11 @@ public class TaskB {
                 beta = cos (pow (x, 2));
             else if (x / 2 == 0.2);
                 else beta = 1/tan(x*x);
+            alfa = log (abs (beta + 2.74));
+            System.out.printf ("%7s%.2f%7s%.10f\n", "При beta=",beta, " alfa =",alfa);
         }
-        alfa = log (abs (beta + 2.74));
-        System.out.println (alfa);
+
+
     }
 
 
