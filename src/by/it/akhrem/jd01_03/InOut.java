@@ -21,7 +21,7 @@ public class InOut {
 
     public static void printArray(double[] array, String name, int colCount) {
         for (int i = 0; i < array.length; i++) {
-            System.out.printf("%s[% -3d]=%-8.3f ", name, i, array[i]);
+            System.out.printf("%s[% -3d]=%-8.5f ", name, i, array[i]);
             if ((i + 1) % colCount == 0) {
                 System.out.println();
             }

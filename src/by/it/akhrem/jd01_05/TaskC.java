@@ -9,11 +9,11 @@ import static java.lang.Math.*;
 public class TaskC {
     public static void main(String[] args) {
         task6();
-        task7();
+        //task7();
     }
 
     private static void task6() {
-        int cntElements = 20;
+        int cntElements = 28;
         double delta = (9 - 5.33)/cntElements;
         double [] z = new double[cntElements];
         double x = 5.33;
