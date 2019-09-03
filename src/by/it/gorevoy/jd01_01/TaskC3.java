@@ -34,7 +34,7 @@ import java.util.Scanner;
 */
 
 class TaskC3 {
-<<<<<<< HEAD
+
 
         public static void main(String[] args) {
             Scanner sc = new Scanner(System.in);
@@ -54,22 +54,7 @@ class TaskC3 {
             }
             double newWeightMars = weightRound / 100.0;
             return newWeightMars;
-=======
-    public static void main(String[] args) {
-        Scanner scan = new Scanner(System.in);
-        int piople = scan.nextInt();
-        getWeight(piople);
 
-    }
-       public static int getWeight(int weight){
-
-        double mars = 3.86;
-        double land = 9.81;
-        double x = weight / land * mars;
-            System.out.printf("%.2f",x);
-
-return weight;
->>>>>>> origin/master
         }
     }
 
