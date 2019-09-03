@@ -9,19 +9,21 @@ import java.util.regex.Pattern;
  * гласной буквой (нужно сделать для проверки этого условия приватный метод без regex).
  */
 public class TaskB1 {
+    private static char[] vowels={'a','я','у','ю','э','е','ы','и','о','ё'};
     public static void main(String[] args) {
         StringBuilder text = new StringBuilder(Poem.text);
         Pattern pattern = Pattern.compile("[а-яёА-яЁ]{2,}");
-        String consonant="ЙйЦцКкНнГгШшЩщЗзХхФфВвПпРрЛлДдЖжЧчСсМмТтБб";
-        String vowels="АаЯяУуЮюИиЁёОоЭэЕеЫы";
         Matcher matcher = pattern.matcher(text);
         while (matcher.find()){
             String word=matcher.group();
             process(word);
         }
     }
-
     private static void process(String word) {
-
+        for (char vowel : vowels) {
+            if (word.toLowerCase().charAt(0) != vowel && word.toLowerCase().charAt(word.length() - 1) == vowel) {
+                System.out.printf("%s\n", word);
+            }
+        }
     }
 }
