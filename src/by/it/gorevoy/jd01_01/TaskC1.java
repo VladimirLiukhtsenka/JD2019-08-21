@@ -1,5 +1,10 @@
 package by.it.gorevoy.jd01_01;
 
+//это лишние импорты. удаляю, т.к. сборка ломается на других PC
+//import jdk.swing.interop.SwingInterOpUtils;
+//import java.sql.SQLOutput;
+//Хмелев.
+
 import java.util.Scanner;
 
 /* Нужно написать программу, которая вводит два числа с клавиатуры
