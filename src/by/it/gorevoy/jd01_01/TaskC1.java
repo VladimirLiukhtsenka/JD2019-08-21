@@ -1,8 +1,5 @@
 package by.it.gorevoy.jd01_01;
 
-import jdk.swing.interop.SwingInterOpUtils;
-
-import java.sql.SQLOutput;
 import java.util.Scanner;
 
 /* Нужно написать программу, которая вводит два числа с клавиатуры
