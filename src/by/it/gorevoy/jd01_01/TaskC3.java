@@ -34,20 +34,25 @@ import java.util.Scanner;
 */
 
 class TaskC3 {
-    public static void main(String[] args) {
-        Scanner scan = new Scanner(System.in);
-        int piople = scan.nextInt();
-        getWeight(piople);
 
-    }
-       public static int getWeight(int weight){
+        public static void main(String[] args) {
+            Scanner sc = new Scanner(System.in);
+            int weightEarth = sc.nextInt();
+            getWeight(weightEarth);
+            System.out.println(getWeight(weightEarth));
+        }
 
-        double mars = 3.86;
-        double land = 9.81;
-        double x = weight / land * mars;
-            System.out.printf("%.2f",x);
-
-return weight;
+        static double getWeight(int weightEarth) {
+            double weight = weightEarth / 9.81 * 3.86;
+            double weight1 = weight * 100;
+            int weightRound = 0;
+            if ((weight1 - (int) weight1) < 0.5) {
+                weightRound = (int) weight1;
+            } else {
+                weightRound = (int) weight1 + 1;
+            }
+            double newWeightMars = weightRound / 100.0;
+            return newWeightMars;
         }
     }
 
