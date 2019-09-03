@@ -15,7 +15,7 @@ public class TaskB {
 
                 y = ((pow(7, a) - cos(x))) + y;
 
-                System.out.printf("При a=%4.2g  Сумма y=-10.5%f \n", a, y);
+                System.out.printf("%s%.2f%s%f\n", "При a = ", a, " Сумма y = ", y);
             }
 
 
@@ -26,30 +26,29 @@ public class TaskB {
 
         for (double x = -5.5; x < 2; x += 0.5) {
             double z = x / 2.0;
-            if (z < -2 || z > 0.2) {
-                System.out.printf("При x/2=%-2.2f вычисления не определены %n", z);
-            }
+
+
             if (z > -2 && z <= -1) {
                 double b = sin(x * x);
-                double a = log(abs(b + 2.74));
+                double a = log10(abs(b + 2.74));
 
                 System.out.printf("При x/2=%-2.2f a = %f %n", z, a);
-            }
-            if (z > -1 && z <= 0.2) {
+            } else if (z > -1 && z <= 0.2) {
                 double b = cos(x * x);
-                double a = log(abs(b + 2.74));
+                double a = log10(abs(b + 2.74));
 
                 System.out.printf("При x/2=%-2.2f a = %f %n", z, a);
-            }
-            if (z == 0.2) {
+            } else if (z == 0.2) {
                 double b = 1 / (tan(x * x));
-                double a = log(abs(b + 2.74));
+                double a = log10(abs(b + 2.74));
 
                 System.out.printf("При x/2=%-2.2f a = %f %n", z, a);
+            } else
+                System.out.printf("При x/2=%-2.2f вычисления не определены %n", z);
 
 
-            }
         }
     }
 }
+
 
