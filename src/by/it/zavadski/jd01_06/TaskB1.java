@@ -12,7 +12,7 @@ public class TaskB1 {
     private static char[] vowels={'a','я','у','ю','э','е','ы','и','о','ё'};
     public static void main(String[] args) {
         StringBuilder text = new StringBuilder(Poem.text);
-        Pattern pattern = Pattern.compile("[а-яёА-яЁ]{2,}");
+        Pattern pattern = Pattern.compile("[а-яёА-яЁ]+");
         Matcher matcher = pattern.matcher(text);
         while (matcher.find()){
             String word=matcher.group();
