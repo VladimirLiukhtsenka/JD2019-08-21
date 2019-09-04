@@ -16,7 +16,7 @@ public class TaskB2 {
 
         for (int k = 0; k < sentences.length; k++) {
             clearSentences[k] = sentences[k].replaceAll("\\n"," ");
-            clearSentences[k]=clearSentences[k].replaceAll("\\p{Punct}", " ").trim();
+            clearSentences[k]=clearSentences[k].replaceAll("\\p{Punct}", "").trim();
 //            Matcher matcher = symbols.matcher(clearSentences[k]);
 //            if (matcher.find()){
 //                String counted=matcher.group();
@@ -32,11 +32,11 @@ public class TaskB2 {
                 }
 
             }
+          //  System.out.printf("%s\n",clearSentences[i]);
+        }
+        for (int i = 0; i <clearSentences.length ; i++) {
             System.out.printf("%s\n",clearSentences[i]);
         }
-//        for (int i = 0; i <clearSentences.length ; i++) {
-//            System.out.printf("%s\n",clearSentences[i]);
-//        }
     }
 }
 

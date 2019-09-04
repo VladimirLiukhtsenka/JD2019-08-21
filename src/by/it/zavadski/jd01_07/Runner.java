@@ -1,0 +1,21 @@
+package by.it.zavadski.jd01_07;
+
+import javax.sound.midi.Soundbank;
+
+public class Runner {
+    public static void main(String[] args) {
+        Scalar s1=new Scalar(3.14156926);
+        System.out.println(s1);
+
+       // Scalar s2=new Scalar(s1);
+        Var s2=new Scalar((Scalar)s1);
+        System.out.println(s2);
+
+        Scalar s3=new Scalar("1234.5678");
+        System.out.println(s3);
+
+        double[] array={1,2,3,5,6,7};
+        Var v1=new Vector(array);
+        System.out.println(v1);
+    }
+}
