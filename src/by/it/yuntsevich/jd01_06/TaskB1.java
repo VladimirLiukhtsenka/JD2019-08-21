@@ -13,9 +13,7 @@ public class TaskB1 {
         while (matcher.find()) {
             String word = matcher.group();
             checkPrint(word);
-
         }
-
     }
 
     private static void checkPrint(String word) {
@@ -27,20 +25,12 @@ public class TaskB1 {
         for (char vowel : vowels) {
             if (word.length() <= 1) continue;
             if (first == vowel)
-
                 isFirstFound = false;
 
             if (last == vowel)
                 isLastFound = true;
-
         }
             if ( isFirstFound&&isLastFound)
                 System.out.println(word);
-
         }
-
-
-
-
-
 }
