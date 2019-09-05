@@ -1,4 +1,4 @@
-package by.it._tasks_.jd01_07;
+package by.it.gorevoy.jd01_07;
 
 
 import org.junit.Test;
