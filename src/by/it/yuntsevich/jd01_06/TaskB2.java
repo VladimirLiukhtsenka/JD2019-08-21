@@ -8,8 +8,9 @@ public class TaskB2 {
         private static String[] sentences = new String[0];
 
         public static void main(String[] args) {
-            StringBuilder text = new StringBuilder(Poem.text);
-            Pattern regexp = Pattern.compile("[^.!?]*[.!?]+");
+            String text = Poem.text;
+            text = text.replaceFirst("\\.\\.\\.","");
+            Pattern regexp = Pattern.compile("[^.]*[.]+");
             Matcher matcher = regexp.matcher(text);
 
             while (matcher.find()) {
