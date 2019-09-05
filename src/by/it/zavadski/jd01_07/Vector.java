@@ -10,14 +10,13 @@ import java.util.zip.DeflaterOutputStream;
 
 public class Vector extends Var {
     private double[] value;
-    public Vector(double[] value){
+     Vector(double[] value){
         this.value= Arrays.copyOf(value,value.length);
     }
 
     public Vector(Vector vector){ this.value=vector.value; }
 
-    public Vector (String strVector){
-        //StringBuilder stringBuilder=new StringBuilder(strVector);
+     Vector (String strVector){
         Pattern pattern = Pattern.compile("[\\d]");
         Matcher matcher=pattern.matcher(strVector);
         String[] arrayDigits=new String[strVector.length()];
@@ -30,18 +29,18 @@ public class Vector extends Var {
         for (int i = 0; i < arrayDouble.length; i++) {
             arrayDouble[i]=Double.parseDouble(arrayDigits[i]);
         }
-this.value=arrayDouble;
+        this.value=arrayDouble;
 
     }
     @Override
     public String toString() {
-        StringBuilder sb=new StringBuilder("{");
+        StringBuilder stringBuilder=new StringBuilder("{");
         String delimiter="";
         for (double v : value) {
-            sb.append(delimiter).append(v);
+            stringBuilder.append(delimiter).append(v);
             delimiter=", ";
         }
-        sb.append('}');
-        return sb.toString();
+        stringBuilder.append('}');
+        return stringBuilder.toString();
     }
 }

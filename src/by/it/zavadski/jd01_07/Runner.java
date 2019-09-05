@@ -8,7 +8,7 @@ public class Runner {
         System.out.println(s1);
 
        // Scalar s2=new Scalar(s1);
-        Var s2=new Scalar((Scalar)s1);
+        Var s2=new Scalar(s1);
         System.out.println(s2);
 
         Scalar s3=new Scalar("1234.5678");
@@ -20,5 +20,9 @@ public class Runner {
 
         Vector v3 = new Vector("{1,2,3}");
         System.out.println(v3);
+
+        double[][] array2D={{1.0,2.0},{3.0,4.0}};
+        Matrix m1=new Matrix(array2D);
+
     }
 }

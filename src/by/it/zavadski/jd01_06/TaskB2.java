@@ -6,40 +6,47 @@ import java.util.regex.Pattern;
 /**TaskB2. Вывести через \n все предложения текста в порядке возрастания количества символов
  * (!) в каждом из них. В предложениях нужно сначала заменить все небуквенные символы и их последовательности
  * на один пробел и выполнить trim() для каждого предложения.
+ * Все замены выполняются без матчера.
  * @author y.zavadski
  * **/
 
 public class TaskB2 {
     public static void main(String[] args) {
-        //StringBuilder textOrigin = new StringBuilder(Poem.text);
-        //Pattern symbols=Pattern.compile("[а-яёА-ЯЁ\\p{Blank}]+");
-        String[] sentences = Poem.text.replace("\\.{3}?\\s"," ").split("[\\.\\!]"); //split input text on sentences by full stop
-        Pattern punctuation=Pattern.compile("\\p{Punct}+ ?");
-        Matcher matcher;
-        String[] clearSentences=new String[sentences.length]; //string array
-
-        for (int k = 0; k < sentences.length; k++) {
-            clearSentences[k] = sentences[k].replaceAll("(\\s+)",".").trim();
-            //clearSentences[k]=clearSentences[k].replaceAll("\\p{Space}", "").trim();
-            matcher=punctuation.matcher(clearSentences[k]);
-            if (matcher.find()){
-                String sentence=matcher.replaceAll(" ").trim();
-                clearSentences[k]=sentence;
-                }
+    String textInRow=Poem.text.replaceAll("\\n"," ").replaceAll("\\.\\.\\.","").replaceAll("[\\!]",".");
+    String[] sentences=textInRow.split("\\."); //Array for text in one row.
+        String[] clearSentences=new String[sentences.length]; //Array for modified (cleared) sentences.
+        for (int index = 0; index <sentences.length ; index++) {
+            clearSentences[index]=sentences[index].replaceAll("[\\.\\,\\:\\!\\?\\-]"," ").
+                    replaceAll("(\\s{2,3})"," ").trim();
         }
-        for (int i = 0; i <=clearSentences.length-2; i++) {
-            for (int j = i+1; j<=clearSentences.length-1; j++) {
+        sortSentencesByLength(clearSentences);
+        printSentences(clearSentences);
+        }
+
+    /**
+     * @author=y.zavadski
+     * @param clearSentences - array for sorting.
+     */
+    private static void sortSentencesByLength(String[] clearSentences) {
+        for (int i = 0; i <=clearSentences.length; i++) {
+            for (int j =i+1; j<=clearSentences.length-1; j++) {
                 if ((clearSentences[i].length()  > clearSentences[j].length())) {
                     String buffer=clearSentences[j];
                     clearSentences[j]=clearSentences[i];
                     clearSentences[i]=buffer;
                 }
             }
-          //  System.out.printf("%s\n",clearSentences[i]);
         }
-
-        for (int i = 0; i <clearSentences.length ; i++) {
-            System.out.printf("%s\n",clearSentences[i]);
+    }
+    /**@author=y.zavadski
+     * @param sentencesForPrint print specified String array OR String.
+     **/
+    private static void printSentences(String[] sentencesForPrint){
+        for (String s : sentencesForPrint) {
+            System.out.printf("%s\n", s);
         }
+    }
+        private static void printSentences(String sentencesForPrint){
+            System.out.printf("%s\n",sentencesForPrint);
     }
 }
