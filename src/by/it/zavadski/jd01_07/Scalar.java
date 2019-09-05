@@ -15,6 +15,6 @@ public class Scalar extends Var{
     this.value=otherScalar.value;
     }
     public Scalar(String strScalar){
-        value=Double.valueOf(strScalar);
+        value=Double.parseDouble(strScalar);
     }
 }

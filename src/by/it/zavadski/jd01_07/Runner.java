@@ -17,5 +17,8 @@ public class Runner {
         double[] array={1,2,3,5,6,7};
         Var v1=new Vector(array);
         System.out.println(v1);
+
+        Vector v3 = new Vector("{1,2,3}");
+        System.out.println(v3);
     }
 }
