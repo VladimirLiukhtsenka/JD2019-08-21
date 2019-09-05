@@ -13,7 +13,7 @@ public class TaskC {
 
         int numStep = 27;
         double [] mass = new  double [numStep] ;
-        double step = (9.0-5.33)/(numStep - 1) ;
+        double step = (9.0-5.33)/numStep ;
         int numOfMass =0;
         double x0= 5.33 ;
         for (double i=0 ; i <(numStep - 1) ; i++) {
