@@ -32,4 +32,9 @@ public class Matrix extends Var {
         stringBuilder.append('}');
         return stringBuilder.toString();
     }
+
+    @Override
+    protected double getValue() {
+        return 0;
+    }
 }

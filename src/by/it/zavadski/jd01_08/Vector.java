@@ -13,6 +13,26 @@ public class Vector extends Var {
 
     public Vector(Vector vector){ this.value=vector.value; }
 
+    @Override
+    public Var add(Var other){
+         if (other instanceof Scalar) {
+             double [] res=Arrays.copyOf(this.value,this.value.length);
+             double part2=((Vector) other).getValue();
+             for (int i = 0; i <res.length ; i++) {
+                 res[i]+=part2;
+             }
+             return new Vector(res);
+             }else  if(other instanceof Vector){
+             double[] res=Arrays.copyOf(this.value,this.value.length);
+             double[] part2=((Vector)other).value;
+             for (int i = 0; i <res.length ; i++) {
+                 res[i]+=part2[i];
+             }
+             return new Vector(res);
+         }else
+             return super.add(other);
+         }
+
      Vector (String strVector){
         Pattern pattern = Pattern.compile("[\\d]");
         Matcher matcher=pattern.matcher(strVector);
@@ -39,5 +59,10 @@ public class Vector extends Var {
         }
         stringBuilder.append('}');
         return stringBuilder.toString();
+    }
+
+    @Override
+    protected double getValue() {
+        return 0;
     }
 }

@@ -26,4 +26,6 @@ abstract class Var implements Operation{
     }
 
     public String toString(){return "Abstract class Var";}
+
+    protected abstract double getValue();
 }
