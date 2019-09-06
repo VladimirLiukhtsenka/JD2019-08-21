@@ -12,15 +12,16 @@ public class TaskB2 {
         for (int i = 0; i < poem.length; i++) { poem[i] = poem[i].trim();}
 
 
-        String forSort = poem[0];
+
         for (int numberOfSort = 0; numberOfSort < poem.length - 1; numberOfSort++)
             for (int i = 0; i < poem.length - 1; i++) {
+                String forSort = poem[0];
                 if (poem[i].length() > poem[i + 1].length()) {
                     forSort = poem[i + 1];
                     poem[i + 1] = poem[i];
                     poem[i] = forSort;}}
-        for (int i = 0; i < poem.length; i++) {
-            System.out.println(i);
+        for (int i = 0; i < poem.length -1; i++) {
+            System.out.println(poem[i]);
         }
 
 
