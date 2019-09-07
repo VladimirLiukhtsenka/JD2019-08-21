@@ -6,6 +6,10 @@ class Vector extends Var {
 
     private double[] value;
 
+    public double[] getValue() {
+        return value;
+    }
+
     Vector(double[] value) {
         this.value = value;
     }
@@ -112,7 +116,7 @@ class Vector extends Var {
                 div[i] /= divider;
             }
             return new Vector(div);
-        } else return super.mul(other);
+        } else return super.div(other);
     }
 }
 

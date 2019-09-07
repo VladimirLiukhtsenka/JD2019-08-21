@@ -17,7 +17,7 @@ class Matrix extends Var {
 
     private static double[][] stringToMatrix(String str) {
 
-        String[] strArray = str.split("[\\}\\}]|[\\}]");
+        String[] strArray = str.split("[\\}]+");
         for (int i = 0; i < strArray.length; i++) {
             strArray[i] = strArray[i].replaceAll("[^0-9\\.]+", " ");
             strArray[i] = strArray[i].trim();
@@ -40,20 +40,19 @@ class Matrix extends Var {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder("{ ");
+        StringBuilder sb = new StringBuilder("{");
         String opening = "{";
         for (double[] doubles : value) {
-            String delimiter = " ";
+            String delimiter = "";
             sb.append(opening);
             for (int j = 0; j < value[0].length; j++) {
                 sb.append(delimiter).append(doubles[j]);
                 delimiter = ", ";
             }
-            sb.append(" }");
+            sb.append("}");
             opening = ", {";
         }
-        sb.append(" }");
-//        System.out.println(sb.toString());
+        sb.append("}");
         return sb.toString();
     }
 }
