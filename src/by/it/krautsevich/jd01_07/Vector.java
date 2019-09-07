@@ -4,14 +4,14 @@ import java.util.Arrays;
 
 public class Vector extends Var {
 
-    private double [] values;
+    private double [] value;
 
     public Vector (double [] values) {
-        this.values = Arrays.copyOf(values, values.length) ;
+        this.value = Arrays.copyOf(values, values.length) ;
     }
 
     public Vector (Vector otherVector) {
-        this.values = otherVector.values ;
+        this.value = otherVector.value ;
     }
 
     public  Vector (String stringVector) {
@@ -22,14 +22,14 @@ public class Vector extends Var {
         for (int i = 0; i < itWillBe.length; i++) {
             newVector[i] = Double.parseDouble(itWillBe[i]) ;
         }
-        this.values = newVector ;
+        this.value = newVector ;
     }
 
     @Override
     public String toString() {
         StringBuilder sb  = new StringBuilder("{");
         String delimeter = "" ;
-        for (double v : values) {sb.append(delimeter).append(v);
+        for (double v : value) {sb.append(delimeter).append(v);
         delimeter = ", " ;}
         sb.append('}') ;
         return sb.toString() ;
