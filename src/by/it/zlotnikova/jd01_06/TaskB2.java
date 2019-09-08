@@ -1,8 +1,6 @@
 package by.it.zlotnikova.jd01_06;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
-import java.util.Comparator;
 
 public class TaskB2 {
     public static void main(String[] args) {
