@@ -3,6 +3,11 @@ package by.it.zavadski.jd01_08;
 
 public class Scalar extends Var {
     private double value;
+
+    public double getValue() {
+        return value;
+    }
+
     public Scalar(){
 
     }
@@ -51,8 +56,4 @@ public class Scalar extends Var {
         return Double.toString(value);
     }
 
-    @Override
-    protected double getValue() {
-        return 0;
-    }
 }
