@@ -1,5 +1,6 @@
 package by.it.zlotnikova.jd01_02;
 
+import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -9,6 +10,10 @@ public class TaskC {
         int n = sc.nextInt();
         int[][] matrix = step1(n);
         step2(matrix);
+        int[][] result = step3(matrix);
+        System.out.println(Arrays.deepToString(matrix));
+        System.out.println(Arrays.deepToString(result));
+
     }
 
 
@@ -64,6 +69,50 @@ public class TaskC {
         }
         System.out.println(sum);
         return sum;
+    }
+
+    private static int[][] step3(int[][] mas) {
+        int max = Integer.MIN_VALUE;
+        for (int[] ma : mas) {
+            for (int i : ma) {
+                if (i > max) {
+                    max = i;
+                }
+            }
+        }
+        boolean[] deleteRow = new boolean[mas.length];
+        boolean[] deleteColumn = new boolean[mas[0].length];
+        for (int i = 0; i < mas.length; i++) {
+            for (int j = 0; j < mas[i].length; j++) {
+                if (mas[i][j] == max) {
+                    deleteRow[i] = true;
+                    deleteColumn[j] = true;
+                }
+            }
+        }
+        int rowCount = 0;
+        int columnCount = 0;
+        for (boolean b : deleteRow) {
+            if (!b) rowCount++;
+        }
+        for (boolean b : deleteColumn) {
+            if (!b) columnCount++;
+        }
+        int[][] result = new int[rowCount][columnCount];
+        int iResult = 0;
+        for (int i = 0; i < deleteRow.length; i++) {
+            if (!deleteRow[i]) {
+                int jResult = 0;
+                for (int j = 0; j < deleteColumn.length; j++) {
+                    if (!deleteColumn[j]) {
+                        result[iResult][jResult] = mas[i][j];
+                        jResult++;
+                    }
+                }
+                iResult++;
+            }
+        }
+        return result;
     }
 }
 
