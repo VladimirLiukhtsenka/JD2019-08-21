@@ -40,7 +40,8 @@ public class Scalar extends Var {
 
     @Override
     public Var div(Var other) {
-        if (other instanceof Scalar) {
+
+        if (other instanceof Scalar &&  ((Scalar) other).value!=0) {
             double result = this.value/ ((Scalar) other).value;
             return new Scalar(result);
         }

@@ -5,11 +5,11 @@ import java.util.Arrays;
 public class Matrix extends Var {
     private double[][] value;
 
-    private Matrix (double[][] value){
+    Matrix (double[][] value){
         this.value = Arrays.copyOf(value,value.length);
     }
 
-    private Matrix (Matrix matrix){
+    Matrix (Matrix matrix){
         this.value = Arrays.copyOf(matrix.value,matrix.value.length);
     }
 
@@ -45,18 +45,21 @@ public class Matrix extends Var {
             return new Matrix(res);
         }
             else if (other instanceof Matrix) {
-            double[][] res = new double [this.value.length][this.value[0].length];
-            for (int i = 0; i < res.length; i++) {
-                for (int j = 0; j < res[i].length; j++) {
-                    res[i][j] = this.value[i][j]+((Matrix) other).value[i][j];
+            if (this.value.length==((Matrix) other).value.length && this.value[0].length==((Matrix) other).value[0].length) {
+                double[][] res = new double[this.value.length][this.value[0].length];
+                for (int i = 0; i < res.length; i++) {
+                    for (int j = 0; j < res[i].length; j++) {
+                        res[i][j] = this.value[i][j] + ((Matrix) other).value[i][j];
+                    }
                 }
-            }
-            return new Matrix(res);
 
+                return new Matrix(res);
+            }
         }
-        else return super.add(other);
+         return super.add(other);
 
     }
+
     @Override
     public Var sub(Var other) {
 
@@ -70,16 +73,17 @@ public class Matrix extends Var {
             return new Matrix(res);
         }
         else if (other instanceof Matrix) {
-            double[][] res = new double [this.value.length][this.value[0].length];
-            for (int i = 0; i < res.length; i++) {
-                for (int j = 0; j < res[i].length; j++) {
-                    res[i][j] = this.value[i][j]-((Matrix) other).value[i][j];
+            if (this.value.length==((Matrix) other).value.length && this.value[0].length==((Matrix) other).value[0].length) {
+                double[][] res = new double[this.value.length][this.value[0].length];
+                for (int i = 0; i < res.length; i++) {
+                    for (int j = 0; j < res[i].length; j++) {
+                        res[i][j] = this.value[i][j] - ((Matrix) other).value[i][j];
+                    }
                 }
+                return new Matrix(res);
             }
-            return new Matrix(res);
-
         }
-        else return super.add(other);
+         return super.add(other);
     }
 
     @Override
@@ -95,28 +99,30 @@ public class Matrix extends Var {
         }
 
         else if (other instanceof Vector) {
-            double[] res = new double [this.value.length];
-            for (int i = 0; i < this.value.length; i++) {
-                for (int j = 0; j < ((Vector) other).getValue().length; j++) {
-                    res[i] = res[i] + this.value[i][j] * ((Vector) other).getValue()[j];
-                }
-            }
-            return new Vector(res);
-        }
-
-        else if (other instanceof Matrix) {
-            double[][] res = new double [this.value.length][this.value[0].length];
-            for (int i = 0; i < this.value.length; i++) {
-                for (int j = 0; j < ((Matrix) other).value[i].length; j++) {
-                    for (int k = 0; k < ((Matrix) other).value.length; k++) {
-                        res[i][j] = res[i][j]+this.value[i][k] * ((Matrix) other).value[k][j];
+            if (this.value[0].length == ((Vector) other).getValue().length) {
+                double[] res = new double[this.value.length];
+                for (int i = 0; i < this.value.length; i++) {
+                    for (int j = 0; j < ((Vector) other).getValue().length; j++) {
+                        res[i] = res[i] + this.value[i][j] * ((Vector) other).getValue()[j];
                     }
                 }
+                return new Vector(res);
             }
-            return new Matrix(res);
-
         }
+        else if (other instanceof Matrix) {
+            if (this.value.length == ((Matrix) other).value.length && this.value[0].length == ((Matrix) other).value[0].length) {
+                double[][] res = new double[this.value.length][this.value[0].length];
+                for (int i = 0; i < this.value.length; i++) {
+                    for (int j = 0; j < ((Matrix) other).value[i].length; j++) {
+                        for (int k = 0; k < ((Matrix) other).value.length; k++) {
+                            res[i][j] = res[i][j] + this.value[i][k] * ((Matrix) other).value[k][j];
+                        }
+                    }
+                }
+                return new Matrix(res);
 
+            }
+        }
         return super.mul(other);
     }
 
