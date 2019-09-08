@@ -12,6 +12,8 @@ public class Vector extends Var {
 
     }
 
+
+
     @Override
     public String toString() {
         StringBuilder sb=new StringBuilder("{");
