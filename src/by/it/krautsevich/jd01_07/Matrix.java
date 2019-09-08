@@ -26,15 +26,16 @@ public class Matrix extends Var {
     } */
 
     public Matrix (String stringMatrix) {
-        String matrix1 = stringMatrix.replace("{{", "").replace("}}","").replace("}","").trim();
+        String matrix1 = stringMatrix.replace("{{", "").replace("}}","").replace("{","").trim();
         String [] stringMat = matrix1.split("}," ) ;
         double[][] newMatrix = new double[stringMat.length][] ;
         for (int i = 0 ; i < stringMat.length ; i++) {
             String[] str = stringMat[i].split(",") ;
+            newMatrix[i] =new double[str.length] ;
             for (int j = 0; j < str.length; j++) {
-                newMatrix[i][j] = Double.parseDouble(str[j]) ;
+                newMatrix[i][j] = Double.parseDouble(str[j]);
             }
-        }
-        this.value = newMatrix;
+        }this.value = newMatrix;
+
      }
 }
