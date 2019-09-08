@@ -1,33 +1,29 @@
 package by.it.rubatskii.jd01_06;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 public class TaskB2 {
     public static void main(String[] args) {
-        Pattern regexp = Pattern.compile("[.]+");
-        String[] sentences = regexp.split(Poem.text);
-        Pattern regexp1 = Pattern.compile("[^а-яА-ЯёЁ]+");
+        String s = Poem.text;
+        String b = s.replaceAll("\\.\\.\\.", "").replaceAll("[^а-яА-ЯёЁ .?!]", " ").replaceAll("[\\s]{2,}", " ");
 
-        for (int i = 0; i < sentences.length; i++) {
-            Matcher matcher = regexp1.matcher(sentences[i]);
-            sentences[i] = matcher.replaceAll(" ");
-            sentences[i] = sentences[i].trim();
+        String[] sentence = b.split("[.!?]");
+
+        for (int i = 0; i < sentence.length; i++) {
+            sentence[i] = sentence[i].trim();
         }
 
-        for (int i = 0; i < sentences.length; i++) {
-            for (int j = i + 1; j < sentences.length; j++)
-                if (sentences[i].length() > sentences[j].length()) {
-                    String temp = sentences[i];
-                    sentences[i] = sentences[j];
-                    sentences[j] = temp;
+        for (int i = 0; i < sentence.length; i++) {
+            for (int j = i+1; j < sentence.length; j++) {
+                if (sentence[j].length() < sentence[i].length()) {
+                    String temp = sentence[i];
+                    sentence[i] = sentence[j];
+                    sentence[j] = temp;
                 }
+            }
         }
 
-        for (int i = 0; i < sentences.length; i++) {
-            System.out.println(sentences[i]);
+        for (int i = 0; i < sentence.length; i++) {
+            System.out.println( sentence[i]);
         }
-
 
     }
+
 }
