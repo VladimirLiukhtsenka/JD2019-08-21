@@ -2,6 +2,10 @@ package by.it.kiturka.jd01_08;
 
  abstract class Var implements Operation{
      @Override
+     public String toString() {
+         return "Это класс Var";
+     }
+     @Override
      public Var add(Var other) {
          System.out.println("Операция сложения "+this + " + "+other+"невозможна ");
          return null;
