@@ -41,6 +41,56 @@ class Vector extends Var {
     }
 
     @Override
+    public Var sub(Var other) {
+        if (other instanceof Scalar) {
+            double[] res = Arrays.copyOf (value, value.length);
+            for (int i = 0; i < res.length; i++) {
+                res[i] = res[i] - ((Scalar) other).getValue ();
+            }
+            return new Vector (res);
+        } else if (other instanceof Vector) {
+            double[] res = Arrays.copyOf (value, value.length);
+            for (int i = 0; i < res.length; i++) {
+                res[i] = res[i] - ((Vector) other).value[i];
+            }
+            return new Vector (res);
+        } else
+            return super.sub (other);
+    }
+
+    @Override
+    public Var mul(Var other) {
+        if (other instanceof Scalar) {
+            double[] res = Arrays.copyOf (value, value.length);
+            for (int i = 0; i < res.length; i++) {
+                res[i] = res[i] * ((Scalar) other).getValue ();
+            }
+            return new Vector (res);
+        } else if (other instanceof Vector) {
+            double scalar = 0;
+            for (int i = 0; i < this.value.length; i++) {
+                scalar += this.value[i] * ((Vector) other).value[i];
+            }
+            return new Scalar (scalar);
+        } else
+            return super.mul (other);
+
+    }
+
+    @Override
+    public Var div(Var other) {
+        if (other instanceof Scalar) {
+            double[] res = new double[this.value.length];
+            for (int i = 0; i < this.value.length; i++)
+                res[i] = this.value[i] / ((Scalar) other).getValue ();
+            return new Vector (res);
+
+
+        }
+        return null;
+    }
+
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder ("{");
         String delimetr = "";
