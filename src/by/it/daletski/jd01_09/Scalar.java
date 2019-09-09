@@ -8,7 +8,7 @@ class Scalar extends Var {
         return value;
     }
 
-    private Scalar(double value) {
+    Scalar(double value) {
         this.value = value;
     }
 
