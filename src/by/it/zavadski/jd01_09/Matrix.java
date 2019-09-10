@@ -1,6 +1,13 @@
 package by.it.zavadski.jd01_09;
 
 
+import java.util.Arrays;
+import java.util.function.DoubleBinaryOperator;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import static java.lang.Double.parseDouble;
+
 public class Matrix extends Var {
     private double[][] value;
 
@@ -10,9 +17,8 @@ public class Matrix extends Var {
 
     Matrix(double[][] value) {
         double[][] neededMatrix=new  double[value.length][value[0].length];
-        for (int i = 0; i <value.length ; i++)
-            for (int j = 0; j <value[0].length ; j++)
-                neededMatrix[i][j]=value[i][j];
+        for (int i = 0; i <neededMatrix.length ; i++)
+            System.arraycopy(value[i],0,neededMatrix[i],0,neededMatrix[0].length);
                 this.value=neededMatrix;
     }
 
@@ -20,30 +26,38 @@ public class Matrix extends Var {
         this.value = matrix.value;
     }
 
-    public Matrix(String strMatrix){
-        strMatrix=strMatrix.replaceAll("[{+}]"," ").trim();
-        String[] stringArray=strMatrix.split(" , ");
-    }
+     Matrix(String strMatrix){
+         //String[] numbers=strMatrix.replaceAll("\\{\\{","").replaceAll("\\}\\}","").replaceAll("\\}\\,\\{","").split(",");
+         Pattern number=Pattern.compile("[\\d\\.\\d]");
+         Matcher matcher=number.matcher(strMatrix);
+
+        double[][] matrixAppended=new double[0][0];
+         while (matcher.find()){
+
+         }
+
+        this.value=matrixAppended;
+        }
+
+
 
     @Override
     public String toString() {
         StringBuilder stringBuilder=new StringBuilder("{");
-        int i = 0;
-        while (i <value.length) {
+        String delimiter=("");
+        for (int i = 0; i <value.length ; i++) {
             stringBuilder.append("{");
-            int j = 0;
-            while (j <value[i].length) {
-                stringBuilder.append(value[i][j]);
-                if (j != value[i].length - 1)
-                    stringBuilder.append(", ");
-                else stringBuilder.append("}");
-                j++;
+            for (int j = 0; j <value[i].length ; j++) {
+                stringBuilder.append(delimiter).append(value[i][j]);
+                delimiter=", ";
+
             }
-            if (i != value.length-1)
+            stringBuilder.append("}");
+            if(i+1 < value.length)
                 stringBuilder.append(", ");
-            i++;
+            delimiter="";
         }
-        stringBuilder.append('}');
+        stringBuilder.append("}");
         return stringBuilder.toString();
     }
 
@@ -73,16 +87,52 @@ public class Matrix extends Var {
 
     @Override
     public Var sub(Var other) {
-        return super.sub(other);
+        if (other instanceof Scalar) {
+            Matrix result=new Matrix(value);
+            double scalarValue=((Scalar) other).getValue();
+            for (int i = 0; i <result.value.length; i++) {
+                for (int j = 0; j <result.value.length ; j++) {
+                    result.value[i][j]-=scalarValue;
+                }
+            }
+            return new Matrix(result);
+        }else  if(other instanceof Matrix){
+            Matrix result=new Matrix(value);
+            double[] matrixValue;
+            for (int i = 0; i <result.value.length; i++) {
+                for (int j = 0; j <result.value.length ; j++) {
+                    result.value[i][j]-=((Matrix) other).getValue(i,j);
+                }
+            }
+            return new Matrix(result);
+        }else
+            return super.sub(other);
+
     }
 
     @Override
     public Var mul(Var other) {
-        return super.mul(other);
+        if (other instanceof Scalar) {
+            Matrix result=new Matrix(value);
+            double scalarValue=((Scalar) other).getValue();
+            for (int i = 0; i <result.value.length; i++) {
+                for (int j = 0; j <result.value.length ; j++) {
+                    result.value[i][j]=result.value[i][j]*scalarValue;
+                }
+            }
+            return new Matrix(result);
+        }else  if(other instanceof Matrix){
+            Matrix result=new Matrix(value);
+            double scalarValue=((Scalar) other).getValue();
+            //double[] matrixValue;
+            for (int i = 0; i <result.value.length; i++) {
+                for (int j = 0; j <result.value.length ; j++) {
+                    result.value[i][j]=result.value[i][j]*scalarValue;
+                }
+            }
+            return new Matrix(result);
+        }else
+            return super.sub(other);
     }
 
-    @Override
-    public Var div(Var other) {
-        return super.div(other);
-    }
 }

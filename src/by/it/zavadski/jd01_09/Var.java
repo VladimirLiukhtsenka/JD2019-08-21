@@ -2,6 +2,7 @@ package by.it.zavadski.jd01_09;
 
 abstract class Var implements Operation {
      static Var createVar(String strVar) {
+         strVar=strVar.trim().replace("\\s+","");
         if(strVar.matches(Patterns.SCALAR))
             return new Scalar(strVar);
         if(strVar.matches(Patterns.VECTOR))
