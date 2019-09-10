@@ -11,11 +11,11 @@ import static java.lang.Double.parseDouble;
 public class Matrix extends Var {
     private double[][] value;
 
-    public double getValue(int i, int j) {
+      double getValue(int i, int j) {
         return value[i][j];
     }
 
-    Matrix(double[][] value) {
+     Matrix(double[][] value) {
         double[][] neededMatrix=new  double[value.length][value[0].length];
         for (int i = 0; i <neededMatrix.length ; i++)
             System.arraycopy(value[i],0,neededMatrix[i],0,neededMatrix[0].length);
@@ -27,16 +27,19 @@ public class Matrix extends Var {
     }
 
      Matrix(String strMatrix){
-         //String[] numbers=strMatrix.replaceAll("\\{\\{","").replaceAll("\\}\\}","").replaceAll("\\}\\,\\{","").split(",");
-         Pattern number=Pattern.compile("[\\d\\.\\d]");
-         Matcher matcher=number.matcher(strMatrix);
+         String[] stringNumbers=strMatrix.replaceAll("\\{\\{","").replaceAll("\\}\\}","").replaceAll("\\s","").split("\\}\\,\\{");
+         Pattern number=Pattern.compile("[\\d.\\d]");
+         double[][] matrixAppended=new double[stringNumbers.length][stringNumbers.length];
 
-        double[][] matrixAppended=new double[0][0];
-         while (matcher.find()){
-
+         for (int i = 0; i <stringNumbers.length ; i++) {
+             int indexCol=0;
+             Matcher matcher=number.matcher(stringNumbers[i]);
+             while (matcher.find()){
+                matrixAppended[i][indexCol]=Double.parseDouble(matcher.group());
+                indexCol++;
+             }
          }
-
-        this.value=matrixAppended;
+            this.value=matrixAppended;
         }
 
 
@@ -74,7 +77,6 @@ public class Matrix extends Var {
             return new Matrix(result);
         }else  if(other instanceof Matrix){
             Matrix result=new Matrix(value);
-            double[] matrixValue;
             for (int i = 0; i <result.value.length; i++) {
                 for (int j = 0; j <result.value.length ; j++) {
                     result.value[i][j]+=((Matrix) other).getValue(i,j);
@@ -121,13 +123,23 @@ public class Matrix extends Var {
                 }
             }
             return new Matrix(result);
+        }else  if(other instanceof Vector){
+           // Matrix result=new Matrix(value);
+            double[] result=new double[this.value.length];
+            for (int i = 0; i <this.value.length; i++) {
+                for (int j = 0; j <((Vector)other).getValue().length ; j++) {
+                    result[i]=result[i]+this.value[i][j]*((Vector) other).getValue()[j];
+                }
+            }
+            return new Vector(result);
         }else  if(other instanceof Matrix){
-            Matrix result=new Matrix(value);
-            double scalarValue=((Scalar) other).getValue();
-            //double[] matrixValue;
-            for (int i = 0; i <result.value.length; i++) {
-                for (int j = 0; j <result.value.length ; j++) {
-                    result.value[i][j]=result.value[i][j]*scalarValue;
+            //Matrix result=new Matrix(value);
+            double[][] result=new double[this.value.length][this.value.length];
+            for (int i = 0; i <this.value.length ; i++) {
+                for (int j = 0; j <this.value[i].length ; j++) {
+                    for (int k = 0; k <((Matrix)other).value.length; k++) {
+                        result[i][j]=result[i][j]+this.value[i][k]*((Matrix)other).value[k][j];
+                    }
                 }
             }
             return new Matrix(result);
