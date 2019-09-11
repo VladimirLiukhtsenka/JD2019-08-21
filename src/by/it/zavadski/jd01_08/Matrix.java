@@ -20,6 +20,11 @@ public class Matrix extends Var {
         this.value = matrix.value;
     }
 
+    public Matrix(String strMatrix){
+        strMatrix=strMatrix.replaceAll("[{+}]"," ").trim();
+        String[] stringArray=strMatrix.split(" , ");
+    }
+
     @Override
     public String toString() {
         StringBuilder stringBuilder=new StringBuilder("{");
