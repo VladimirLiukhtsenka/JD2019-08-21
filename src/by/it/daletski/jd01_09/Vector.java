@@ -22,6 +22,10 @@ class Vector extends Var {
         }
     }
 
+    public double[] getValue() {
+        return value;
+    }
+
     @Override
     public Var add(Var other) {
         if (other instanceof Scalar) {
