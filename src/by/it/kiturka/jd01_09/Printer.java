@@ -2,7 +2,6 @@ package by.it.kiturka.jd01_09;
 
 public class Printer {
     void print(Var var){
-        if (var!=null)
-            System.out.println(var);
+        System.out.println(var);
     }
 }
