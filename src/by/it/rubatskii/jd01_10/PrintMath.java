@@ -18,15 +18,12 @@ public class PrintMath {
             Class<?>[] parameterTypes = method.getParameterTypes();
             for (Class<?> parameterType : parameterTypes) {
                 line.append(parameterType.getSimpleName()).append(',');
-
             }
-
             if (parameterTypes.length >= 1) {
                 line.setLength(line.length() - 1);
             }
             line.append(')');
             System.out.println(line);
-
         }
         Field[] fields = mathClass.getDeclaredFields();
         for (Field field : fields) {
@@ -34,7 +31,6 @@ public class PrintMath {
             int modifiers = field.getModifiers();
             if (Modifier.isPublic(modifiers) && Modifier.isStatic(modifiers)) {
                 line.append(field.getType().getSimpleName()).append(" ");
-
                 line.append(field.getName());
                 System.out.println(line);
             }
