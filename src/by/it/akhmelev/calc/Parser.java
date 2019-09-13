@@ -14,26 +14,24 @@ class Parser {
             return one;
         Var two = Var.createVar(part[1]);
 
-        String operation = "";
         Pattern patternOperation = Pattern.compile(Patterns.OPERATION);
         Matcher matcher = patternOperation.matcher(expression);
         if (matcher.find()) {
-            operation = matcher.group();
+            switch (matcher.group()) {
+                case "=":
+                    Var.save(part[0], two);
+                    return two;
+                case "+":
+                    return one.add(two);
+                case "-":
+                    return one.sub(two);
+                case "*":
+                    return one.mul(two);
+                case "/":
+                    return one.div(two);
+            }
         }
         //add exceptions
-        switch (operation) {
-            case "=":
-                Var.save(part[0], two);
-                return two;
-            case "+":
-                return one.add(two);
-            case "-":
-                return one.sub(two);
-            case "*":
-                return one.mul(two);
-            case "/":
-                return one.div(two);
-        }
         return null;
     }
 
