@@ -8,22 +8,23 @@ class Parser {
     Var calc(String expression) {
         expression = expression.replace(" ", "");
         String[] part = expression.split(Patterns.OPERATION, 2);
+
+        Var one = Var.createVar(part[0]); //may be null for A=7
         if (part.length == 1)
-            return Var.createVar(part[0]);
-        //A=7
+            return one;
         Var two = Var.createVar(part[1]);
+
+        String operation = "";
         Pattern patternOperation = Pattern.compile(Patterns.OPERATION);
         Matcher matcher = patternOperation.matcher(expression);
-        String operation="";
-        if (matcher.find()) operation = matcher.group();
-
-        if (operation.equals("=")) {
-            Var.save(part[0], two);
-            return two;
+        if (matcher.find()) {
+            operation = matcher.group();
         }
-        Var one = Var.createVar(part[0]);
         //add exceptions
         switch (operation) {
+            case "=":
+                Var.save(part[0], two);
+                return two;
             case "+":
                 return one.add(two);
             case "-":
