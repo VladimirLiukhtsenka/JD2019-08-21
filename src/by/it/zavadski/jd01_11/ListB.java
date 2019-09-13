@@ -1,48 +1,14 @@
 package by.it.zavadski.jd01_11;
 
-import java.util.*;
 
-public class ListA<E> implements List<E> {
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+
+public class ListB<E> implements List<E> {
     private E[] elements= (E[]) new Object[0];
     private int size=0;
-
-    @Override
-    public boolean add(E e) {
-        if (size == elements.length) {
-            elements= Arrays.copyOf(elements,(elements.length/2+1)*3);
-        }
-        elements[size]=e;
-        size++;
-        return false;
-    }
-
-    @Override
-    public E remove(int index) {
-        E removedElement=elements[index];
-        System.arraycopy(elements,index+1,elements,index,size-1-index);
-        size--;
-        return removedElement;
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder stringBuilder=new StringBuilder("[");
-        String delimiter="";
-        for (int i = 0; i < size; i++) {
-            stringBuilder.append(delimiter).append(elements[i]);
-        delimiter=", ";
-        }
-        stringBuilder.append("]");
-        return stringBuilder.toString();
-        //stringBuilder.append("");
-        //return Arrays.toString(elements);
-    }
-
-    @Override
-    public E get(int index) {
-        return elements[index];
-    }
-
 
     @Override
     public int size() {
@@ -51,7 +17,7 @@ public class ListA<E> implements List<E> {
 
     @Override
     public boolean isEmpty() {
-        return size==0;
+        return false;
     }
 
     @Override
@@ -63,7 +29,17 @@ public class ListA<E> implements List<E> {
     public Iterator<E> iterator() {
         return null;
     }
-
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder=new StringBuilder("[");
+        String delimiter="";
+        for (int i = 0; i < size; i++) {
+            stringBuilder.append(delimiter).append(elements[i]);
+            delimiter=", ";
+        }
+        stringBuilder.append("]");
+        return stringBuilder.toString();
+    }
     @Override
     public Object[] toArray() {
         return new Object[0];
@@ -72,6 +48,11 @@ public class ListA<E> implements List<E> {
     @Override
     public <T> T[] toArray(T[] a) {
         return null;
+    }
+
+    @Override
+    public boolean add(E e) {
+        return false;
     }
 
     @Override
@@ -110,6 +91,11 @@ public class ListA<E> implements List<E> {
     }
 
     @Override
+    public E get(int index) {
+        return null;
+    }
+
+    @Override
     public E set(int index, E element) {
         return null;
     }
@@ -117,6 +103,11 @@ public class ListA<E> implements List<E> {
     @Override
     public void add(int index, E element) {
 
+    }
+
+    @Override
+    public E remove(int index) {
+        return null;
     }
 
     @Override
