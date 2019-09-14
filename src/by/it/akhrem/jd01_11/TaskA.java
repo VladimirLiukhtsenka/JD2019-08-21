@@ -5,7 +5,7 @@ import java.util.List;
 
 public class TaskA {
     public static void main(String[] args) {
-        List<String> list=  new ArrayList<>();
+        List<String> list=  new ListA<>();
         list.add("Hello1");
         list.add("Hello2");
         list.add("Hello3");
