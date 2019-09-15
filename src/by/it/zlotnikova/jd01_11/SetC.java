@@ -1,33 +1,14 @@
 package by.it.zlotnikova.jd01_11;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 
 public class SetC<T> implements Set<T> {
 
-    private SetC elements = new SetC();
-    private int size = elements.size();
-
-    @Override
-    public String toString() {
-        Iterator<T> it = iterator();
-        if (!it.hasNext())
-            return "[]";
-
-        StringBuilder sb = new StringBuilder();
-        sb.append('[');
-        for (; ; ) {
-            T t = it.next();
-            sb.append(t == this ? "(this Collection)" : t);
-            if (!it.hasNext())
-                return sb.append(']').toString();
-            sb.append(',').append(' ');
-        }
-    }
+    private Map<T, Object> map = new HashMap<>();
 
     @Override
     public boolean add(T e) {
+
         return false;
     }
 
@@ -38,6 +19,7 @@ public class SetC<T> implements Set<T> {
 
     @Override
     public boolean contains(Object o) {
+
         return false;
     }
 
@@ -90,6 +72,23 @@ public class SetC<T> implements Set<T> {
     @Override
     public void clear() {
 
+    }
+
+    @Override
+    public String toString() {
+        Iterator<T> it = iterator();
+        if (!it.hasNext())
+            return "[]";
+
+        StringBuilder sb = new StringBuilder();
+        sb.append('[');
+        for (; ; ) {
+            T t = it.next();
+            sb.append(t == this ? "(this Collection)" : t);
+            if (!it.hasNext())
+                return sb.append(']').toString();
+            sb.append(',').append(' ');
+        }
     }
 }
 
