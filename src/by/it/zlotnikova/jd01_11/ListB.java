@@ -1,8 +1,5 @@
 package by.it.zlotnikova.jd01_11;
 
-import com.sun.org.apache.xerces.internal.xs.datatypes.ObjectList;
-
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class ListB<T> implements List<T> {

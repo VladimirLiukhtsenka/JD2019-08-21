@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Runner {
     public static void main(String[] args) {
-//        checkA();
+        checkA();
         checkB();
     }
 
@@ -50,8 +50,8 @@ public class Runner {
         arrListB.remove(1);
         System.out.println(myListB.toString());
         System.out.println(arrListB.toString());
-        System.out.println(myListB.get(0).toString());
-        System.out.println(arrListB.get(0).toString());
+        System.out.println(myListB.get(0));
+        System.out.println(arrListB.get(0));
         myListB.set(0, "First");
         arrListB.set(0, "First");
         System.out.println(myListB.toString());
