@@ -18,7 +18,7 @@ public class Bean {
 
     @Param(a = 10, b = 25)
     static double avg(int a, int b) {
-        return (a + b);
+        return (a + b)/2.0;
     }
 
 

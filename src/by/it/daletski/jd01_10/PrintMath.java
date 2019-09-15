@@ -13,7 +13,8 @@ public class PrintMath {
             int modifiers = method.getModifiers ();
             if(Modifier.isPublic (modifiers))line.append ("public ");
             if(Modifier.isPublic (modifiers))line.append ("static ");
-            //...
+           // if(Modifier.isPublic (modifiers))line.append ("float");
+
             line.append (method.getName ()).append (" ");
             line.append (method.getName ()).append (')');
 
@@ -24,7 +25,6 @@ public class PrintMath {
             }
 
         }
-
 
     }
 
