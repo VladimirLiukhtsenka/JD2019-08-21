@@ -10,7 +10,7 @@ public class ListA<E> implements List<E> {
     @Override
     public boolean add(E e) {
         if (size == elements.length) {
-            elements = Arrays.copyOf(elements, (elements.length / 2 + 1) * 3);
+            elements = Arrays.copyOf(elements, elements.length * 3 / 2 + 1);
         }
         elements[size] = e;
         size++;
