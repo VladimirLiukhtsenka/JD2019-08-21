@@ -1,4 +1,4 @@
-package by.it.zavadski.jd01_08;
+package by.it.zavadski.calc;
 
 
 import java.util.Arrays;
@@ -7,12 +7,13 @@ import java.util.regex.Pattern;
 
 public class Vector extends Var {
     private double[] value;
-     Vector(double[] value){
-        this.value= Arrays.copyOf(value,value.length);
-    }
     public double[] getValue() {
         return value;
     }
+     Vector(double[] value){
+        this.value= Arrays.copyOf(value,value.length);
+    }
+
     public Vector(Vector vector){ this.value=vector.value; }
 
 

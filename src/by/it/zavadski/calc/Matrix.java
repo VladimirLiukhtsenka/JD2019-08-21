@@ -1,46 +1,42 @@
-package by.it.zavadski.jd01_08;
+package by.it.zavadski.calc;
 
 
-import java.util.Arrays;
-import java.util.function.DoubleBinaryOperator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import static java.lang.Double.parseDouble;
 
 public class Matrix extends Var {
     private double[][] value;
 
-    double getValue(int i, int j) {
+      double getValue(int i, int j) {
         return value[i][j];
     }
 
-    Matrix(double[][] value) {
+     Matrix(double[][] value) {
         double[][] neededMatrix=new  double[value.length][value[0].length];
         for (int i = 0; i <neededMatrix.length ; i++)
             System.arraycopy(value[i],0,neededMatrix[i],0,neededMatrix[0].length);
-        this.value=neededMatrix;
+                this.value=neededMatrix;
     }
 
     public Matrix(Matrix matrix){
         this.value = matrix.value;
     }
 
-    Matrix(String strMatrix){
-        String[] stringNumbers=strMatrix.replaceAll("\\{\\{","").replaceAll("\\}\\}","").replaceAll("\\s","").split("\\}\\,\\{");
-        Pattern number=Pattern.compile("[\\d.\\d]");
-        double[][] matrixAppended=new double[stringNumbers.length][stringNumbers.length];
+     Matrix(String strMatrix){
+         String[] stringNumbers=strMatrix.replaceAll("\\{\\{","").replaceAll("\\}\\}","").replaceAll("\\s","").split("\\}\\,\\{");
+         Pattern number=Pattern.compile("[\\d.\\d]");
+         double[][] matrixAppended=new double[stringNumbers.length][stringNumbers.length];
 
-        for (int i = 0; i <stringNumbers.length ; i++) {
-            int indexCol=0;
-            Matcher matcher=number.matcher(stringNumbers[i]);
-            while (matcher.find()){
+         for (int i = 0; i <stringNumbers.length ; i++) {
+             int indexCol=0;
+             Matcher matcher=number.matcher(stringNumbers[i]);
+             while (matcher.find()){
                 matrixAppended[i][indexCol]=Double.parseDouble(matcher.group());
                 indexCol++;
-            }
+             }
+         }
+            this.value=matrixAppended;
         }
-        this.value=matrixAppended;
-    }
 
 
 
@@ -124,7 +120,7 @@ public class Matrix extends Var {
             }
             return new Matrix(result);
         }else  if(other instanceof Vector){
-            // Matrix result=new Matrix(value);
+           // Matrix result=new Matrix(value);
             double[] result=new double[this.value.length];
             for (int i = 0; i <this.value.length; i++) {
                 for (int j = 0; j <((Vector)other).getValue().length ; j++) {
