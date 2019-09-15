@@ -8,18 +8,6 @@ public class ListB<T> implements List<T> {
     private int size = 0;
 
     @Override
-    public String toString() {
-        StringBuilder out = new StringBuilder ("[");
-        String delimeter = "";
-        for (int i = 0; i < size; i++) {
-            out.append (delimeter).append (elements[i]);
-            delimeter = ", ";
-        }
-        out.append ("]");
-        return out.toString ();
-    }
-
-    @Override
     public boolean add(T e) {
         if (size == elements.length) {
             elements = Arrays.copyOf (elements, (size * 3) / 2 + 1);
@@ -58,6 +46,30 @@ public class ListB<T> implements List<T> {
         System.arraycopy (elements, index, elements, index + 1, size - index);
         elements[index] = element;
         size++;
+    }
+
+    @Override
+    public boolean addAll(Collection<? extends T> c) {
+        T[] newArray = (T[]) c.toArray();
+        int newSize = newArray.length;
+        if (size + 1 + newSize > elements.length) {
+            elements = Arrays.copyOf(elements, size + 1 + newSize);
+        }
+        System.arraycopy(newArray, 0, elements, size, newSize);
+        size += newSize;
+        return newSize != 0;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder out = new StringBuilder ("[");
+        String delimeter = "";
+        for (int i = 0; i < size; i++) {
+            out.append (delimeter).append (elements[i]);
+            delimeter = ", ";
+        }
+        out.append ("]");
+        return out.toString ();
     }
 
     @Override
@@ -102,11 +114,6 @@ public class ListB<T> implements List<T> {
 
     @Override
     public boolean containsAll(Collection<?> c) {
-        return false;
-    }
-
-    @Override
-    public boolean addAll(Collection<? extends T> c) {
         return false;
     }
 
