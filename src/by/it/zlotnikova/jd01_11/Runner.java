@@ -4,8 +4,9 @@ import java.util.*;
 
 public class Runner {
     public static void main(String[] args) {
-        checkA();
-        checkB();
+//        checkA();
+//        checkB();
+        checkC();
     }
 
     private static void checkA() {
@@ -65,5 +66,13 @@ public class Runner {
         arrListB.addAll(list);
         System.out.println(myListB.toString());
         System.out.println(arrListB.toString());
+    }
+
+    private static void checkC() {
+        SetC<String> hs = new SetC<>();
+        hs.add("One");
+        hs.add("Two");
+        hs.add("Three");
+        System.out.println(hs.toString());
     }
 }

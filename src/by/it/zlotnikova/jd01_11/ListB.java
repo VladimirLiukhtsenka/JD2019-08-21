@@ -2,7 +2,8 @@ package by.it.zlotnikova.jd01_11;
 
 import java.util.*;
 
-public class ListB<T> implements List<T> {
+public class
+ListB<T> implements List<T> {
 
     private T[] elements = (T[]) new Object[]{};
     private int size = 0;
