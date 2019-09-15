@@ -1,8 +1,11 @@
 package by.it.zlotnikova.jd01_11;
 
+import com.sun.org.apache.xerces.internal.xs.datatypes.ObjectList;
+
+import java.lang.reflect.Array;
 import java.util.*;
 
-public class ListA<T> implements List<T> {
+public class ListB<T> implements List<T> {
 
     private T[] elements = (T[]) new Object[]{};
     private int size = 0;
@@ -12,40 +15,9 @@ public class ListA<T> implements List<T> {
         if (size == elements.length) {
             elements = Arrays.copyOf(elements, elements.length * 3 / 2 + 1);
         }
-        elements[size++] = t;
-        return true;
-    }
-
-    @Override
-    public void add(int index, T element) {
-        if (size == elements.length) {
-            elements = Arrays.copyOf(elements, elements.length * 3 / 2 + 1);
-        }
-        System.arraycopy(elements, index, elements, index + 1, size - index);
-        elements[index] = element;
+        elements[size] = t;
         size++;
-    }
-
-    @Override
-    public int indexOf(Object o) {
-        if (o == null) {
-            for (int i = 0; i < elements.length; i++) {
-                if (elements[i] == null)
-                    return i;
-            }
-        } else for (int i = 0; i < size; i++) {
-            if (o.equals(elements[i]))
-                return i;
-        }
-        return -1;
-    }
-
-    @Override
-    public boolean remove(Object o) {
-        int index = indexOf(o);
-        if (index>-1)
-        remove(index);
-        return (index>-1);
+        return true;
     }
 
     @Override
@@ -62,6 +34,35 @@ public class ListA<T> implements List<T> {
     }
 
     @Override
+    public T set(int index, T element) {
+        T replacedElement = elements[index];
+        elements[index] = element;
+        return replacedElement;
+    }
+
+    @Override
+    public void add(int index, T element) {
+        if (size == elements.length) {
+            elements = Arrays.copyOf(elements, elements.length / 3 * 2 + 1);
+        }
+        System.arraycopy(elements, index, elements, index + 1, size - index);
+        elements[index] = element;
+        size++;
+    }
+
+    @Override
+    public boolean addAll(Collection<? extends T> c) {
+        T[] newArray = (T[]) c.toArray();
+        int newSize = newArray.length;
+        if (size + 1 + newSize > elements.length) {
+            elements = Arrays.copyOf(elements, size + 1 + newSize);
+        }
+        System.arraycopy(newArray, 0, elements, size, newSize);
+        size += newSize;
+        return newSize != 0;
+    }
+
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("[");
         String delimiter = "";
@@ -75,17 +76,27 @@ public class ListA<T> implements List<T> {
 
     // dummies
     @Override
+    public int indexOf(Object o) {
+        return 0;
+    }
+
+    @Override
+    public boolean contains(Object o) {
+        return false;
+    }
+
+    @Override
+    public boolean remove(Object o) {
+        return false;
+    }
+
+    @Override
     public int size() {
         return 0;
     }
 
     @Override
     public boolean isEmpty() {
-        return false;
-    }
-
-    @Override
-    public boolean contains(Object o) {
         return false;
     }
 
@@ -110,11 +121,6 @@ public class ListA<T> implements List<T> {
     }
 
     @Override
-    public boolean addAll(Collection<? extends T> c) {
-        return false;
-    }
-
-    @Override
     public boolean addAll(int index, Collection<? extends T> c) {
         return false;
     }
@@ -132,11 +138,6 @@ public class ListA<T> implements List<T> {
     @Override
     public void clear() {
 
-    }
-
-    @Override
-    public T set(int index, T element) {
-        return null;
     }
 
     @Override
