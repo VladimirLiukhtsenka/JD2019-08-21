@@ -1,4 +1,4 @@
-package by.it.daletski.jd01_08;
+package by.it.daletski.calc;
 
 public interface Operation {
     Var add(Var other);

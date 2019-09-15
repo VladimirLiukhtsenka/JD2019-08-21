@@ -1,4 +1,4 @@
-package by.it.daletski.jd01_08;
+package by.it.daletski.jd01_09;
 
 import java.util.Arrays;
 
@@ -20,6 +20,10 @@ class Vector extends Var {
         for (int i = 0; i < strArray.length; i++) {
             value[i] = Double.parseDouble (strArray[i]);
         }
+    }
+
+    public double[] getValue() {
+        return value;
     }
 
     @Override
