@@ -1,6 +1,16 @@
 package by.it.zavadski.calc;
 
+import java.util.HashMap;
+import java.util.Map;
+
 abstract class Var implements Operation {
+private static Map<String,Var> vars=new HashMap<>();
+static Var saveVar(String name, Var var){
+    vars.put(name, var);
+    return var;
+
+}
+
      static Var createVar(String strVar) {
          strVar=strVar.trim().replace("\\s+","");
         if(strVar.matches(Patterns.SCALAR))
@@ -9,7 +19,8 @@ abstract class Var implements Operation {
             return new Vector(strVar);
         if(strVar.matches(Patterns.MATRIX))
             return new Matrix(strVar);
-
+else if (vars.containsKey(strVar))
+    return vars.get(strVar);
         return null;
     }
 
