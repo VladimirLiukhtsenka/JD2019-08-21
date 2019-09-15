@@ -2,8 +2,10 @@ package by.it.akhmelev.jd01_11;
 
 import java.util.*;
 
+@SuppressWarnings("ConstantConditions") //for stubs
 public class ListA<E> implements List<E> {
 
+    @SuppressWarnings("unchecked")
     private E[] elements = (E[]) new Object[0];
     private int size = 0;
 
