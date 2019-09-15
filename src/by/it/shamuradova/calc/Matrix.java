@@ -1,9 +1,7 @@
-package by.it.shamuradova.jd01_09;
+package by.it.shamuradova.calc;
 
 
 import java.util.Arrays;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Matrix extends Var {
     private double[][] mat;
