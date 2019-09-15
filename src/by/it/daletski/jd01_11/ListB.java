@@ -1,53 +1,69 @@
 package by.it.daletski.jd01_11;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
+import java.util.*;
 
 public class ListB<T> implements List<T> {
 
     private T[] elements = (T[]) new Object[10];
-    private int size =  0;
+    private int size = 0;
 
     @Override
     public String toString() {
-        return super.toString ();
+        StringBuilder out = new StringBuilder ("[");
+        String delimeter = "";
+        for (int i = 0; i < size; i++) {
+            out.append (delimeter).append (elements[i]);
+            delimeter = ", ";
+        }
+        out.append ("]");
+        return out.toString ();
     }
 
     @Override
-    public boolean add(T t) {
-        return false;
+    public boolean add(T e) {
+        if (size == elements.length) {
+            elements = Arrays.copyOf (elements, (size * 3) / 2 + 1);
+        }
+        elements[size++] = e;
+        return true;
     }
 
     @Override
     public T remove(int index) {
-        return null;
+        T element = elements[index];
+        System.arraycopy (elements, index + 1, elements, index, size - 1 - index);
+        size--;
+        return element;
     }
 
     @Override
     public T get(int index) {
-        return null;
+
+        return elements[index];
     }
 
     @Override
     public T set(int index, T element) {
-        return null;
+        T old = get (index);
+        elements[index] = element;
+        return old;
+
     }
 
 
     @Override
     public void add(int index, T element) {
-
+        if (size == elements.length)
+            elements = Arrays.copyOf (elements, (size * 3) / 2 + 1);
+        System.arraycopy (elements, index, elements, index + 1, size - index);
+        elements[index] = element;
+        size++;
     }
 
     @Override
-    public boolean addAll(int index, Collection<? extends T> c) {
+    public boolean addAll(int index, Collection<? extends T> c){
         return false;
     }
-
-
-
 
     @Override
     public int size() {
