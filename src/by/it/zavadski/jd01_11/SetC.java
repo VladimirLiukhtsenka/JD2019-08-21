@@ -9,13 +9,13 @@ public class SetC<E> implements Set<E> {
 
     @Override
     public boolean add(E e) {
-        if (this.contains(e)){
-            return false;}
+        if(!contains(e)){
         if (size == elements.length) {
             elements= Arrays.copyOf(elements,(elements.length/2+1)*3);
-        }
-        elements[size++]=e;
-        return true;
+            elements[size++]=e;
+            return true;}
+    }
+        return false;
     }
 
     @Override
@@ -25,6 +25,11 @@ public class SetC<E> implements Set<E> {
 
     @Override
     public boolean containsAll(Collection<?> c) {
+        Object[] contains=c.toArray();
+        boolean result=true;
+        for (Object contain : contains) {
+            result=result&&contains(contain);
+        }
         return false;
     }
 
