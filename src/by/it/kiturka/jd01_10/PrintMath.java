@@ -32,17 +32,9 @@ public class PrintMath {
                 } else {
                     stringBuilder.append(parameterTypes[i].getSimpleName()).append(",");
                 }
-//            for (Class<?> parameter : parameterTypes) {
-//                stringBuilder.append(parameter.getSimpleName()).append(",");
-//            }
-                //System.out.println(stringBuilder.append(")"));
             }
             System.out.println(stringBuilder.append(")"));
-            //int last = stringBuilder.length()-1;
-            //int prelast = stringBuilder.length()-2;
-            //if(stringBuilder.substring(prelast, last+1).equals(stringBuilder.substring(prelast, last+1))){
-             //  stringBuilder.deleteCharAt(last);
-            //}
+
 
 
         }
