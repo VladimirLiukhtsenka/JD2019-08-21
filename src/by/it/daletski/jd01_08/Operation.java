@@ -1,6 +1,6 @@
 package by.it.daletski.jd01_08;
 
-interface Operation {
+public interface Operation {
     Var add(Var other);
 
     Var sub(Var other);
