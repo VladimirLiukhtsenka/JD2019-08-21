@@ -18,9 +18,6 @@ public abstract class Var implements Operation {
             System.out.println(entry.getKey()+"=" + entry.getValue());
     }
 
-    public static void sortvar() {
-
-    }
 
     static Var createVar(String strVar) {
         if (strVar.matches(Patterns.SCALAR))
