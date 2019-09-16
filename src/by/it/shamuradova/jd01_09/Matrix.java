@@ -193,24 +193,20 @@ public class Matrix extends Var {
     // first.div(second);
     // break;
     // }
-
     // }
 
     //private static Var determineType(String a) {
     // Pattern matrixPattern = Pattern.compile("^[{{]{2}");
     // Matcher matrixMatcher = matrixPattern.matcher(a);
-
     //if (matrixMatcher.find()) {
     //    return new Matrix(a);
     // }
-
     //Pattern vectorPattern = Pattern.compile("\\{");
     //Matcher vectorMatcher = vectorPattern.matcher(a);
 
     //if (vectorMatcher.find()) {
     // return new Vector(a);
     // }
-
     // return new Scalar(a);
     //}
 }

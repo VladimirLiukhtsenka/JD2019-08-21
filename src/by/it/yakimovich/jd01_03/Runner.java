@@ -13,5 +13,9 @@ public class Runner {
         Helper.findMax(array);
         Helper.sort(array);
 
+        double matrix[][] = new double[5][3];
+        double vector[] = new double[3];
+
+        Helper.mul(matrix, vector);
     }
 }

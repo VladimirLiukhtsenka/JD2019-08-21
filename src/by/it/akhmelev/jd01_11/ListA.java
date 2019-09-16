@@ -2,15 +2,17 @@ package by.it.akhmelev.jd01_11;
 
 import java.util.*;
 
+@SuppressWarnings("ConstantConditions") //for stubs
 public class ListA<E> implements List<E> {
 
+    @SuppressWarnings("unchecked")
     private E[] elements = (E[]) new Object[0];
     private int size = 0;
 
     @Override
     public boolean add(E e) {
         if (size == elements.length) {
-            elements = Arrays.copyOf(elements, (elements.length / 2 + 1) * 3);
+            elements = Arrays.copyOf(elements, elements.length * 3 / 2 + 1);
         }
         elements[size] = e;
         size++;
