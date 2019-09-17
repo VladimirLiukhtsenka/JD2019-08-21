@@ -2,26 +2,26 @@ package by.it.zlotnikova.jd01_12;
 
 import java.util.*;
 
-public class TaskB2 {
-
+public class TaskB3 {
     public static void main(String[] args) {
-        String[] round = {"One", "Two", "Three", "Four", "Five", "Six",
-                "Seven", "Eight", "Nine", "Ten"};
-        ArrayList<String> arrPeoples = new ArrayList<>(Arrays.asList(round));
-//
-//        Random rnd = new Random();
-//        for (int i = 0; i < 10; i++) {
-//            arrPeoples.add(String.valueOf(rnd.nextInt(10) + 1));
-//        }
+        int initialCapacity = 4096;
+        ArrayList<String> arrPeoples = new ArrayList<>(initialCapacity);
+
+        Random rnd = new Random();
+        for (int i = 0; i < initialCapacity; i++) {
+            arrPeoples.add(String.valueOf(rnd.nextInt(100)));
+        }
         LinkedList<String> linkPeoples = new LinkedList<>(arrPeoples);
 
-        System.out.println(arrPeoples);
+        long initTime1 = System.currentTimeMillis();
         String name1 = process(arrPeoples);
-        System.out.println(name1);
+        long time1 = System.currentTimeMillis() - initTime1;
+        System.out.println("Time for ArrayList - " + time1 + "ms");
 
-        System.out.println(linkPeoples);
+        long initTime2 = System.currentTimeMillis();
         String name2 = process(linkPeoples);
-        System.out.println(name2);
+        long time2 = System.currentTimeMillis() - initTime2;
+        System.out.println("Time for LinkedList - " + time2 + "ms");
     }
 
     private static String process(ArrayList<String> peoples) {
