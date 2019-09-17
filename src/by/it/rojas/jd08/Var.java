@@ -2,6 +2,8 @@ package by.it.rojas.jd08;
 
 abstract class Var  implements Operation {
 
+    public double[][] Value;
+
     @Override
     public Var add(Var other) {
         System.out.println("Операция сложения " +this+ " + " +other+ " невозможно");
