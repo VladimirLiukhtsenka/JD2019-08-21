@@ -7,7 +7,7 @@ import java.util.List;
 public class Runner {
     public static void main(String[] args) {
         checkA();
-        //checkB();
+        checkB();
     }
 
     private static void checkA() {
@@ -37,7 +37,7 @@ public class Runner {
         System.out.println(arrListA.get(0));
     }
 
-    /*private static void checkB() {
+    private static void checkB() {
         List<String> myListB = new ListB<>();
         List<String> arrListB = new ArrayList<>();
         myListB.add("One");
@@ -67,5 +67,5 @@ public class Runner {
         arrListB.addAll(list);
         System.out.println(myListB.toString());
         System.out.println(arrListB.toString());
-    }*/
+    }
 }
