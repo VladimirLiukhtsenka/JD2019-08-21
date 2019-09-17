@@ -19,7 +19,7 @@ public class TaskA3 {
                 list.add(positionZero, value);
             else
                 list.add(positionZero++, value);
-
         }
+        System.out.println(list);
     }
 }
