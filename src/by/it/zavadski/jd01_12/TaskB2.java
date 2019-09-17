@@ -1,14 +1,13 @@
 package by.it.zavadski.jd01_12;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class TaskB2 {
 
 
     public static void main(String[] args) {
-        ArrayList<String> arrayList=new ArrayList<>();
-        LinkedList<String> linkedList=new LinkedList<>();
+        ArrayList<String> arrayList = new ArrayList<>();
+        LinkedList<String> linkedList = new LinkedList<>();
         arrayList.add("Person1");
         arrayList.add("Person2");
         arrayList.add("Person3");
@@ -32,25 +31,30 @@ public class TaskB2 {
 
     }
 
-    private static String process(ArrayList<String> peoples) {
-        int index=0;
-        while (peoples.size()!=1){
-        peoples.remove(index+1 % peoples.size());
+     static String process(ArrayList<String> peoples) {
+        int index = 0;
+        while (peoples.size() != 1) {
+            peoples.remove(index + 1 % peoples.size());
         }
         return peoples.get(0);
     }
 
-   private static String process(LinkedList<String> peoples) {
-        int index=0;
-        for (int i = 0; i <peoples.size() ; i++) {
-            index=(index+2)%(i+1);
-        }
-        if(index==0) return peoples.get(0);
-        Iterator<String> iterator = peoples.iterator();
-        while (iterator.hasNext()){
-            if(iterator.next().endsWith(String.valueOf(index)))
-                return iterator.next();
-        }
-        return peoples.get(0);
-    }
+     static String process(LinkedList<String> peoples) {
+        int counter = 0;
+         Iterator<String> iterator = peoples.iterator();
+         while (peoples.size()>1){
+             if(iterator.hasNext()){
+                 iterator.next();
+                 counter++;
+                 if(counter==2){
+                     iterator.remove();
+                     counter=0;
+                 }
+             }
+             else{
+                 iterator=peoples.iterator();
+             }
+         }
+         return peoples.get(counter);
+     }
 }
