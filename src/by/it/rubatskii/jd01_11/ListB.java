@@ -1,61 +1,92 @@
 package by.it.rubatskii.jd01_11;
+
 import java.util.*;
 
-public class ListB<E> implements List<E> {
-    private E[] elements = (E[]) new Object[10];
+public class
+ListB<T> implements List<T> {
 
+    private T[] elements = (T[]) new Object[]{};
     private int size = 0;
 
     @Override
-    public boolean add(E e) {
+    public boolean add(T t) {
         if (size == elements.length) {
-            elements = Arrays.copyOf(elements, (elements.length  / 2 + 1)* 3);
+            elements = Arrays.copyOf(elements, elements.length * 3 / 2 + 1);
         }
-        elements[size++] = e;
-
+        elements[size] = t;
+        size++;
         return true;
     }
 
     @Override
-    public E remove(int index) {
-        E element=elements[index];
-        System.arraycopy(elements,index+1, elements,index,--size -index);
-        return element;
+    public T remove(int index) {
+        T deletedElement = elements[index];
+        System.arraycopy(elements, index + 1, elements, index, size - 1 - index);
+        size--;
+        return deletedElement;
     }
 
     @Override
-    public E get(int index) {
+    public T get(int index) {
         return elements[index];
+    }
+
+    @Override
+    public T set(int index, T element) {
+        T replacedElement = elements[index];
+        elements[index] = element;
+        return replacedElement;
+    }
+
+    @Override
+    public void add(int index, T element) {
+        if (size == elements.length) {
+            elements = Arrays.copyOf(elements, elements.length / 3 * 2 + 1);
+        }
+        System.arraycopy(elements, index, elements, index + 1, size - index);
+        elements[index] = element;
+        size++;
+    }
+
+    @Override
+    public boolean addAll(Collection<? extends T> c) {
+        T[] newArray = (T[]) c.toArray();
+        int newSize = newArray.length;
+        if (size + 1 + newSize > elements.length) {
+            elements = Arrays.copyOf(elements, size + 1 + newSize);
+        }
+        System.arraycopy(newArray, 0, elements, size, newSize);
+        size += newSize;
+        return newSize != 0;
     }
 
     @Override
     public String toString() {
-        StringBuilder out = new StringBuilder("[");
+        StringBuilder sb = new StringBuilder("[");
         String delimiter = "";
         for (int i = 0; i < size; i++) {
-            out.append(delimiter).append(elements[i]);
+            sb.append(delimiter).append(elements[i]);
             delimiter = ", ";
         }
-        out.append("]");
-        return out.toString();
+        sb.append("]");
+        return sb.toString();
+    }
+
+    // dummies
+    @Override
+    public int indexOf(Object o) {
+        return 0;
     }
 
     @Override
-    public E set(int index, E element) {
-
-        return elements[index];
-    }
-
-    @Override
-    public void add(int index, E element) {
-
-    }
-
-    @Override
-    public boolean addAll(Collection<? extends E> c) {
+    public boolean contains(Object o) {
         return false;
     }
-    //stubs
+
+    @Override
+    public boolean remove(Object o) {
+        return false;
+    }
 
     @Override
     public int size() {
@@ -68,12 +99,7 @@ public class ListB<E> implements List<E> {
     }
 
     @Override
-    public boolean contains(Object o) {
-        return false;
-    }
-
-    @Override
-    public Iterator<E> iterator() {
+    public Iterator<T> iterator() {
         return null;
     }
 
@@ -83,13 +109,8 @@ public class ListB<E> implements List<E> {
     }
 
     @Override
-    public <T> T[] toArray(T[] a) {
+    public <T1> T1[] toArray(T1[] a) {
         return null;
-    }
-
-    @Override
-    public boolean remove(Object o) {
-        return false;
     }
 
     @Override
@@ -98,7 +119,7 @@ public class ListB<E> implements List<E> {
     }
 
     @Override
-    public boolean addAll(int index, Collection<? extends E> c) {
+    public boolean addAll(int index, Collection<? extends T> c) {
         return false;
     }
 
@@ -118,28 +139,22 @@ public class ListB<E> implements List<E> {
     }
 
     @Override
-    public int indexOf(Object o) {
-        return 0;
-    }
-
-    @Override
     public int lastIndexOf(Object o) {
         return 0;
     }
 
     @Override
-    public ListIterator<E> listIterator() {
+    public ListIterator<T> listIterator() {
         return null;
     }
 
     @Override
-    public ListIterator<E> listIterator(int index) {
+    public ListIterator<T> listIterator(int index) {
         return null;
     }
 
     @Override
-    public List<E> subList(int fromIndex, int toIndex) {
+    public List<T> subList(int fromIndex, int toIndex) {
         return null;
     }
 }
-
