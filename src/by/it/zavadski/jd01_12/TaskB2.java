@@ -47,7 +47,7 @@ public class TaskB2 {
              if(iterator.hasNext()){
                  iterator.next();
                  counter++;
-                 if(counter==2){
+                 if(counter%2==0){
                      iterator.remove();
                      counter=0;
                  }
