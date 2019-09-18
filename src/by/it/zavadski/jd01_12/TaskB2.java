@@ -24,6 +24,7 @@ public class TaskB2 {
         linkedList.add("Person6");
         linkedList.add("Person7");
         linkedList.add("Person8");
+        linkedList.add("Person9");
         process(arrayList);
         process(linkedList);
         System.out.println(process(arrayList));
@@ -40,9 +41,9 @@ public class TaskB2 {
     }
 
      static String process(LinkedList<String> peoples) {
-        int counter = 0;
+         int counter = 0;
          Iterator<String> iterator = peoples.iterator();
-         while (peoples.size()>1){
+         while (peoples.size()!=1){
              if(iterator.hasNext()){
                  iterator.next();
                  counter++;
@@ -55,6 +56,6 @@ public class TaskB2 {
                  iterator=peoples.iterator();
              }
          }
-         return peoples.get(counter);
+         return peoples.get(0);
      }
 }
