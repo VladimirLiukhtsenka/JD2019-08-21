@@ -3,15 +3,19 @@ package by.it.zavadski.calc;
 import java.util.Scanner;
 
 public class ConsoleRunner {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws CalcException {
         Scanner sc = new Scanner(System.in);
         Parser parser=new Parser();
         Printer printer=new Printer();
-        for ( ; ;){
-            String expression=sc.nextLine();
-            if(expression.equals("end")) break;
-            Var result=parser.calc(expression);
-            printer.print(result);
+        String expression;
+       while (!(expression=sc.nextLine()).equals("end")){
+            //Var result=parser.calc(expression);
+            try {
+                Var result=parser.calc(expression);
+                printer.print(result);
+            } catch (CalcException e){
+                System.out.println(e.getMessage());
+            }
         }
     }
 }

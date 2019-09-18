@@ -11,14 +11,14 @@ public class TaskA{
                 Integer.parseInt("привет");
         }
         catch (NumberFormatException|NullPointerException e){
-
             StackTraceElement[] stackTrace = e.getStackTrace();
-            for (StackTraceElement stackTraceElement : stackTrace) {
-                String className = stackTraceElement.getClassName();
-                if (className.contains("TaskA")) {
-                    String simpleName = stackTraceElement.getClassName();
-                    int lineNumber = stackTraceElement.getLineNumber();
-                    System.out.printf(" name:%s\n class:%\n line:%d\n",className,simpleName,lineNumber);
+            for (StackTraceElement element : stackTrace) {
+                if (TaskA.class.getName().equals(element.getClassName())) {
+                    String className = element.getClassName();
+                    String name = e.getClass().getName();
+                    int lineNumber = element.getLineNumber();
+                    System.out.printf(" name:%s\n class:%s\n line:%d\n",name,className,lineNumber);
+                    break;
                 }
                 //System.out.println(stackTraceElement);
             }
