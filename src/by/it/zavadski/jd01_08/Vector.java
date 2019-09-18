@@ -10,7 +10,9 @@ public class Vector extends Var {
      Vector(double[] value){
         this.value= Arrays.copyOf(value,value.length);
     }
-
+    public double[] getValue() {
+        return value;
+    }
     public Vector(Vector vector){ this.value=vector.value; }
 
 
