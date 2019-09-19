@@ -11,8 +11,10 @@ public class TaskB {
         try {
             while (!(input=scanner.nextLine()).equals("END")){
                 sum+=Double.valueOf(input);
-                square= Math.sqrt(sum);
+                if(sum<0)
+                    throw new ArithmeticException();
                 System.out.println(input);
+                square= Math.sqrt(sum);
                 System.out.println(square);
                 }
             } catch (NumberFormatException|ArithmeticException e){
