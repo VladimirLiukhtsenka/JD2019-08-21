@@ -19,7 +19,7 @@ public abstract class Var implements Operation {
     }
 
 
-    static Var createVar(String strVar) {
+    static Var createVar(String strVar) throws CalcException{
         if (strVar.matches(Patterns.SCALAR))
             return new Scalar(strVar);
         if (strVar.matches(Patterns.VECTOR))
@@ -28,7 +28,7 @@ public abstract class Var implements Operation {
             return new Matrix(strVar);
         if (vars.containsKey(strVar))
             return vars.get(strVar);
-        return null;
+        throw new CalcException("Unavailable to create " + strVar);
     }
 
     @Override
@@ -37,26 +37,22 @@ public abstract class Var implements Operation {
     }
 
     @Override
-    public Var add(Var other) {
-        System.out.println("Operation " + this + " + " + other + "unavailable\n");
-        return null;
+    public Var add(Var other) throws CalcException {
+        throw new CalcException("Operation " + this + " + " + other + "unavailable\n");
     }
 
     @Override
-    public Var sub(Var other) {
-        System.out.println("Operation " + this + " - " + other + "unavailable\n");
-        return null;
+    public Var sub(Var other) throws CalcException {
+        throw new CalcException("Operation " + this + " - " + other + "unavailable\n");
     }
 
     @Override
-    public Var mul(Var other) {
-        System.out.println("Operation " + this + " * " + other + "unavailable\n");
-        return null;
+    public Var mul(Var other) throws CalcException{
+        throw new CalcException("Operation " + this + " * " + other + "unavailable\n");
     }
 
     @Override
-    public Var div(Var other) {
-        System.out.println("Operation " + this + " / " + other + "unavailable\n");
-        return null;
+    public Var div(Var other) throws CalcException{
+        throw new CalcException("Operation " + this + " / " + other + "unavailable\n");
     }
 }
