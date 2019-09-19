@@ -1,11 +1,11 @@
-package by.it.akhmelev.calc;
+package by.it.akhmelev.calc2;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 class Parser {
 
-    Var calc(String expression) {
+    Var calc(String expression) throws CalcException {
         expression = expression.replace(" ", "");
         String[] part = expression.split(Patterns.OPERATION, 2);
 

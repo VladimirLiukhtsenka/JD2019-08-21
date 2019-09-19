@@ -1,4 +1,4 @@
-package by.it.akhmelev.calc;
+package by.it.akhmelev.calc1;
 
 interface Operation {
     Var add(Var other);
