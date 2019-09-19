@@ -3,39 +3,48 @@ package by.it.yuntsevich.jd01_11;
 import java.util.*;
 
 public class SetC<E> implements Set<E> {
-    private E[] elements=(E[])new Object[0];
+    private E[] elements = (E[]) new Object[0];
 
-    private int size =0;
+    private int size = 0;
 
     @Override
     public boolean add(E e) {
-        if (e==null) return false;
 
-        if (!contains(e)) {
-            if (size == elements.length) {
-                elements = Arrays.copyOf(elements, elements.length * 3 / 2 + 1);
-            }
-            elements[size++] = e;
-            boolean isSorted = false;
-            E buf;
-            while(!isSorted) {
-                isSorted = true;
-                for (int i = 0; i < elements.length-2; i++) {
-                   // System.out.println(elements[i] + " " +elements[i+1]);
-                    if(elements[i].hashCode() > elements[i+1].hashCode()){
-                        isSorted = false;
+        for (int i = 0; i < size; i++) {
+            E[] array1 = (E[]) new Object[1];
+            array1[0] = elements[i];
+            E[] array2 = (E[]) new Object[1];
+            array2[0] = e;
+            if (Arrays.equals(array1, array2))
+                return false;
+        }
 
-                        buf = elements[i];
-                        elements[i] = elements[i+1];
-                        elements[i+1] = buf;
-                    }
-                }
-            }
+        if (e == null) {
+            System.arraycopy(elements, 0, elements, 1, size);
+            elements[0] = null;
+            size++;
+            return true;
+        }
+        if (size == elements.length) {
+            elements = Arrays.copyOf(elements, elements.length * 3 / 2 + 1);
         }
 
 
-        return !contains(e);
+        for (int i = 0; i < size; i++) {
+
+            if (elements[i].hashCode() >= e.hashCode()) {
+                System.arraycopy(elements, i, elements, i + 1, size - i);
+                elements[i] = e;
+                size++;
+                return true;
+            }
+        }
+            elements[size] = e;
+        size++;
+
+        return true;
     }
+
 
     @Override
     public boolean remove(Object o) {
@@ -44,14 +53,15 @@ public class SetC<E> implements Set<E> {
 
     @Override
     public boolean contains(Object o) {
-        boolean isElementExists = false;
-        for (E element : elements) {
-            if (element.equals(o)) {
-                isElementExists = true;
-                break;
-            }
+        for (int i = 0; i < size; i++) {
+            E[] array1 = (E[]) new Object[1];
+            array1[0] = elements[i];
+            E[] array2 = (E[]) new Object[1];
+            array2[0] = (E)o;
+            if (Arrays.equals(array1, array2))
+                return true;
         }
-         return isElementExists;
+        return false;
     }
 
     @Override
@@ -62,7 +72,7 @@ public class SetC<E> implements Set<E> {
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return size==0;
     }
 
     @Override
@@ -79,9 +89,6 @@ public class SetC<E> implements Set<E> {
     public boolean removeAll(Collection<?> c) {
         return false;
     }
-
-
-
 
 
     @Override

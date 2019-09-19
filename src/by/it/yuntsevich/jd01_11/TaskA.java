@@ -36,18 +36,18 @@ public class TaskA {
 //        myList.addAll(arList);
 //        System.out.println(myList);
 
-        Set<Short> mySet = new SetC<>();
+        Set<Integer> mySet = new SetC<>();
         Set<Short> hashSet = new HashSet<>();
-        mySet.add((short)15);
-        hashSet.add((short)15);
-        mySet.add((short)1);
+        mySet.add(15);
+      //  hashSet.add(15);
+        mySet.add(1);
         hashSet.add((short)1);
-        mySet.add((short)10);
+        mySet.add(10);
         hashSet.add((short)10);
 
-
-        System.out.println(hashSet.contains((short)5));
-        System.out.println(mySet.contains((short)5));
+        System.out.println(mySet);
+//        System.out.println(hashSet.contains((short)5));
+    System.out.println(mySet.contains(100));
 
 
     }
