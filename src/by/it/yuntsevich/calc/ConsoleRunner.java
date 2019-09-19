@@ -8,22 +8,24 @@ public class ConsoleRunner {
         Parser parser = new Parser();
         Printer printer = new Printer();
 
-      //  ArrayList<String> demo= new ArrayList <>();
-      //  Map<String, Var> vars = new HashMap<>();
 
-        for(;;){
+        for(;;) {
             String expression = sc.nextLine();
+            try {
+                if (expression.equals("end")) break;
+                if (expression.equals("printvar")) {
+                    printer.printMap(Var.getVars());
+                }
+                if (expression.equals("sortvar")) {
+                    printer.printSorted(Var.getVars());
+                }
 
-          //  demo.add(expression);
-            if(expression.equals("end")) break;
-//            else if (expression.equals("printvar")){
-//                demo.remove(demo.size()-1);
-//                demo.forEach(it -> System.out.println(it));
-//                break;
-//            }
-
-            Var result = parser.calc(expression);
-            printer.print(result);
+                Var result = parser.calc(expression);
+                if (result != null) printer.print(result);
+            }
+            catch(CalcException e){
+                System.out.println(e.getMessage());            }
         }
+
     }
 }

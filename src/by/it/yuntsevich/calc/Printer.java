@@ -25,9 +25,7 @@ class Printer {
         List<String> keys = new ArrayList<>(varMap.keySet());
         keys.sort(null);
         for (String key : keys) {
-            StringBuilder sb = new StringBuilder(key);
-            sb.append("=").append(varMap.get(key));
-            System.out.println(sb.toString());
+            System.out.println(key + "=" + varMap.get(key));
         }
     }
 }

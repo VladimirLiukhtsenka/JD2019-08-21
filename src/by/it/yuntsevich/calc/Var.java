@@ -10,11 +10,11 @@ public abstract class Var implements Operation {
         vars.put(name, var);
         return var;
     }
-    public static Map<String, Var> getVars() {
+    static Map<String, Var> getVars() {
         return vars;
     }
 
-    static Var createVar(String strVar) {
+    static Var createVar(String strVar)  throws CalcException{
         if (strVar.matches(Patterns.SCALAR))
             return new Scalar(strVar);
         else if (strVar.matches(Patterns.VECTOR))
@@ -23,31 +23,32 @@ public abstract class Var implements Operation {
             return new Matrix(strVar);
         else if (vars.containsKey(strVar))
             return vars.get(strVar);
-        return null;
+//        else if (strVar.equals("printvar")||strVar.equals("sortvar"))
+//            return strVar;
+        throw new CalcException("Невозможно создать " + strVar);
     }
 
     @Override
-    public Var add(Var other) {
-        System.out.printf("Операция %s + %s невозможна.\n", this.toString(), other);
-        return null;
+    public Var add(Var other)  throws CalcException{
+        throw new CalcException("Операция сложения " + this +"+" + other +" невозможна");
     }
 
     @Override
-    public Var sub(Var other) {
-        System.out.printf("Операция %s - %s невозможна.\n", this.toString(), other);
-        return null;
+    public Var sub(Var other)  throws CalcException{
+        throw new CalcException("Операция вычитания " + this +"-" + other +" невозможна");
+
     }
 
     @Override
-    public Var mul(Var other) {
-        System.out.printf("Операция %s * %s невозможна.\n", this.toString(), other);
-        return null;
+    public Var mul(Var other)  throws CalcException{
+        throw new CalcException("Операция умножения " + this +"*" + other +" невозможна");
+
     }
 
     @Override
-    public Var div(Var other) {
-        System.out.printf("Операция %s / %s невозможна.\n", this.toString(), other);
-        return null;
+    public Var div(Var other)  throws CalcException{
+        throw new CalcException("Операция деления " + this +"/" + other +" невозможна");
+
     }
 
     @Override

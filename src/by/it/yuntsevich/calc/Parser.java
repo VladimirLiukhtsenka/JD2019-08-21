@@ -4,20 +4,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 class Parser {
-    Var calc(String expression) {
-        if (expression.equals("printvar")){
-            printVariables();
-            return null;
-        }
-        if (expression.equals("sortvar")){
-            printSorted();
-            return null;
-        }
+    Var calc(String expression) throws CalcException{
+
 
         expression = expression.replace(" ", "");
         String[] part = expression.split(Patterns.OPERATION, 2);
 
-        Var two = Var.createVar(part[1]);
+        Var two = Var.createVar(part[part.length-1]);
         if (expression.contains("="))
             return Var.saveVar(part[0], two);
         Var one = Var.createVar(part[0]);
@@ -44,13 +37,5 @@ class Parser {
         }
         return null;
     }
-    private void printVariables(){
-        Printer printer = new Printer();
-        printer.printMap(Var.getVars());
-    }
 
-    private void printSorted(){
-        Printer printer = new Printer();
-        printer.printSorted(Var.getVars());
-    }
 }
