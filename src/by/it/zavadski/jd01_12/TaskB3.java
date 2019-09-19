@@ -2,7 +2,7 @@ package by.it.zavadski.jd01_12;
 
 import java.util.*;
 
-public class TaskB2 {
+public class TaskB3 {
 
 
     public static void main(String[] args) {
@@ -15,47 +15,29 @@ public class TaskB2 {
             arrayList.add("Person"+(i+1));
             linkedList.add("Person"+(i+1));
         }
-//        arrayList.add("Person1");
-//        arrayList.add("Person2");
-//        arrayList.add("Person3");
-//        arrayList.add("Person4");
-//        arrayList.add("Person5");
-//        arrayList.add("Person6");
-//        arrayList.add("Person7");
-//        arrayList.add("Person8");
-//        arrayList.add("Person9");
         System.out.println(arrayList);
         System.out.println(process(arrayList));
-//        linkedList.add("Person1");
-//        linkedList.add("Person2");
-//        linkedList.add("Person3");
-//        linkedList.add("Person4");
-//        linkedList.add("Person5");
-//        linkedList.add("Person6");
-//        linkedList.add("Person7");
-//        linkedList.add("Person8");
-//        linkedList.add("Person9");
         System.out.println(linkedList);
         System.out.println(process(linkedList));
 
     }
 
     static String process(ArrayList<String> peopleArr) {
-        int counter = 1; //Счетчик
-        while (peopleArr.size() != 1) { //Делаем пока размер списка не равен 1
-            ListIterator<String> iterator = peopleArr.listIterator(); //Создаем итератор
-            while (iterator.hasNext()) { //Делаем пока у итератора есть элемент
-                if (counter % 2 == 0) { //Проверяем что счетчик кратен 2, Но похоже тут нулевой т.е. первый элемент удаляется
-                    iterator.next();// берем следующий элемент
-                    iterator.remove();//удаляем
-                    counter++;//увеличиваем счетчик
+        int counter = 1;
+        while (peopleArr.size() != 1) {
+            Iterator<String> iterator = peopleArr.iterator();
+            while (iterator.hasNext()) {
+                if (counter % 2 == 0) {
+                    iterator.next();
+                    iterator.remove();
+                    counter++;
                 } else {
-                    iterator.next(); //итератор берет слудующий элемент
-                    counter++;//увеличиваем счетчик
+                    iterator.next();
+                    counter++;
                 }
             }
         }
-        return peopleArr.get(0);//возвращаем единственный оставшийся элемент
+        return peopleArr.get(0);
     }
 
     static String process(LinkedList<String> people) {
@@ -73,6 +55,6 @@ public class TaskB2 {
                 }
             }
         }
-        return people.get(0);//возвращаем единственный оставшийся элемент
+        return people.getFirst();//возвращаем единственный оставшийся элемент
     }
 }

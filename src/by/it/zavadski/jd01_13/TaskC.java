@@ -1,6 +1,9 @@
 package by.it.zavadski.jd01_13;
 
-import java.util.Scanner;
+
+import java.util.*;
+
+import static java.util.Collections.*;
 
 public class TaskC {
     /**
@@ -14,12 +17,33 @@ public class TaskC {
      *  Числа нужно выводить без форматирования, через пробел, в порядке обратном вводу.
      *  После 5 допущенных ошибок программа должна завершиться, пробрасывая ошибку в JVM.
      */
-    public static void main(String[] args) {
-        Scanner scanner=new Scanner(System.in);
-         readData(scanner);
-    }
-    static void readData(Scanner scanner){
-        String input=scanner.nextLine();
+    private static int errorCount=0;
+    private static String input;
+    private static List<Double> list= new ArrayList<>();
 
+    public static void main(String[] args) throws Exception {
+        Scanner scanner=new Scanner(System.in);
+        while(errorCount!=5){
+            input=scanner.nextLine();
+         readData();
+        }
     }
-}
+    private static void readData() throws Exception {
+            try {
+                double inputValue=Double.parseDouble(input);
+                list.add(inputValue);
+
+            }
+            catch (NumberFormatException e) {
+                if(errorCount==5)
+                   throw new Exception("Wrong input 5 times",e);
+                else
+                errorCount++;
+                Thread.sleep(100);
+                for (int i = list.size()-1; i >=0 ; i--){
+                    System.out.print(list.get(i)+" ");
+                }
+                System.out.println();
+    }
+}}
+
