@@ -15,7 +15,6 @@ public class TaskC {
         scanner = new Scanner(System.in);
         for (; ; ) {
             readData();
-
         }
     }
 
