@@ -1,7 +1,6 @@
 package by.it.zlotnikova.jd01_14;
 
 import java.io.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -49,7 +48,7 @@ public class TaskB {
     }
 
     private static String readFromFile(String filename) {
-        StringBuffer text = new StringBuffer();
+        StringBuilder text = new StringBuilder();
         try (BufferedReader in = new BufferedReader(
                 new FileReader(filename))
         ) {
