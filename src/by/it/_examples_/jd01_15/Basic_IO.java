@@ -11,7 +11,7 @@ public class Basic_IO {
         String fileInTxt = src+"\\in.txt";
         System.out.println(src);
         //объявим коллекцию строк, со своим вариантом преобразования в строку
-        List<String> txtLn=new ArrayList<>(){
+        List<String> txtLn=new ArrayList<String>(){
             @Override //вспомогательный анонимный класс,
                       //для вывода коллекции в нужном нам формате
                       //добавлено для повторения этого материала
