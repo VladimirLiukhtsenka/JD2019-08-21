@@ -4,8 +4,8 @@ import java.util.*;
 
 public class Runner {
     public static void main(String[] args) {
-        checkA();
-        checkB();
+//        checkA();
+//        checkB();
 //        checkC();
     }
 
@@ -68,11 +68,18 @@ public class Runner {
         System.out.println(arrListB.toString());
     }
 
-//    private static void checkC() {
-//        SetC<String> hs = new SetC<>();
-//        hs.add("One");
-//        hs.add("Two");
-//        hs.add("Three");
-//        System.out.println(hs.toString());
-//    }
+    private static void checkC() {
+        Set<String> hashSet = new HashSet<>();
+        Set<String> mySet = new SetC<>();
+        mySet.add("One"); hashSet.add("One");
+        mySet.add("Two"); hashSet.add("Two");
+        mySet.add("Three"); hashSet.add("Three");
+        mySet.add("One"); hashSet.add("One");
+        mySet.add("Four"); hashSet.add("Four");
+        System.out.println("  My set: " + mySet.toString());
+        System.out.println("Hash set: " + hashSet.toString());
+
+
+    }
+
 }

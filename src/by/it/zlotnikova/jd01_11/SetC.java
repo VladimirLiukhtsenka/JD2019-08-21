@@ -4,11 +4,23 @@ import java.util.*;
 
 public class SetC<T> implements Set<T> {
 
-    private Map<T, Object> map = new HashMap<>();
+    private List<T> elements = new ArrayList<>();
+    int size = 0;
 
     @Override
     public boolean add(T e) {
-
+        if (size == elements.size()) {
+            System.arraycopy(elements, 0, elements, 0,size*3/2+1);
+        }
+        for (int i = 0; i < elements.size(); i++) {
+            if (e.equals(elements.get(i)))
+                return false;
+            else {
+                elements.set(size, e);
+                size++;
+                return true;
+            }
+        }
         return false;
     }
 
@@ -48,7 +60,25 @@ public class SetC<T> implements Set<T> {
         return false;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        if (size == 0)
+            sb.append("[]");
+        else {
+            sb.append('[');
+            String delimiter = "";
+            for (int i = 0; i < size; i++) {
+                sb.append(delimiter).append(elements.get(i));
+                delimiter = ", ";
+            }
+            sb.append("]");
+        }
+    return sb.toString();
+    }
+
     // stubs
+
     @Override
     public Iterator<T> iterator() {
         return null;
@@ -72,23 +102,6 @@ public class SetC<T> implements Set<T> {
     @Override
     public void clear() {
 
-    }
-
-    @Override
-    public String toString() {
-        Iterator<T> it = iterator();
-        if (!it.hasNext())
-            return "[]";
-
-        StringBuilder sb = new StringBuilder();
-        sb.append('[');
-        for (; ; ) {
-            T t = it.next();
-            sb.append(t == this ? "(this Collection)" : t);
-            if (!it.hasNext())
-                return sb.append(']').toString();
-            sb.append(',').append(' ');
-        }
     }
 }
 
