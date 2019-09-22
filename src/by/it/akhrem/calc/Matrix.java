@@ -59,7 +59,7 @@ public class Matrix extends Var {
     }
 
     @Override
-    public Var add(Var other) {
+    public Var add(Var other) throws CalcException{
         if (other instanceof Scalar) {
             double [][]result = new double [this.value.length][this.value.length];
             for (int i = 0; i < this.value.length; i++)
@@ -74,11 +74,11 @@ public class Matrix extends Var {
                     result[i][j] = this.value[i][j] + ((Matrix) other).value[i][j];
             return new Matrix(result);
         }
-        return null;
+        throw new CalcException("Unavailable addition for Matrix");
     }
 
     @Override
-    public Var sub(Var other) {
+    public Var sub(Var other) throws CalcException {
         if (other instanceof Scalar) {
             double [][]result = new double [this.value.length][this.value.length];
             for (int i = 0; i < this.value.length; i++)
@@ -88,16 +88,19 @@ public class Matrix extends Var {
         }
         if (other instanceof Matrix) {
             double [][] result = new double [this.value.length][this.value.length];
+            if (this.value.length != ((Matrix) other).value.length || this.value[0].length != ((Matrix)other).value[0].length ) {
+                throw new CalcException("The size of matrix is not equal");
+            }
             for (int i = 0; i < this.value.length; i++)
                 for(int j=0; j< this.value[i].length; j++)
                     result[i][j] = this.value[i][j] - ((Matrix) other).value[i][j];
             return new Matrix(result);
         }
-        return null;
+        throw new CalcException("Unavailable subtraction for Matrix");
     }
 
     @Override
-    public Var mul(Var other) {
+    public Var mul(Var other) throws CalcException{
         if (other instanceof Scalar) {
             double [][]result = new double [this.value.length][this.value.length];
             for (int i = 0; i < this.value.length; i++)
@@ -120,6 +123,6 @@ public class Matrix extends Var {
                         result[i][j] = result[i][j] + this.value[i][k] * ((Matrix)other).value[k][j];
             return new Matrix(result);
         }
-        return null;
+        throw new CalcException("Unavailable multiplication for Matrix");
     }
 }
