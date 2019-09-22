@@ -24,10 +24,12 @@ public class TaskA {
             }
             double sum = 0;
             for (int element : list) {
-                System.out.printf("%d ", element);
+                System.out.print(element + " ");
                 sum = sum +  element ;
             }
-            System.out.printf("\n avg=%f \n" , sum/list.size());
+            double average = sum/list.size() ;
+            System.out.println();
+            System.out.print("avg=" + average);
         }
         catch (IOException e) {
             System.err.println(filename + " не удается прочитать");}
@@ -57,7 +59,9 @@ public class TaskA {
                 writer.printf("%d ", element);
                 sum2 = sum2 +  element ;
             }
-            writer.printf("\n avg=%f \n" , sum2/list.size());
+            double average = sum2/list.size() ;
+            writer.println();
+            writer.print("avg=" + average);
         }
         catch (IOException e) {
             System.err.println(filename + " не удается записать ArrayList");
@@ -68,8 +72,7 @@ public class TaskA {
 
     public static void main(String[] args) {
         String path = getPath(TaskA.class);
-        System.out.println(path);
-        String filename = path + " dataTaskA.bin" ;
+        String filename = path + "dataTaskA.bin" ;
         String fileTXT = path + "resultTaskA.txt" ;
         List<Integer> list = new ArrayList<>(20) ;
 
