@@ -2,6 +2,8 @@ package by.it.rojas.jd09;
 
 abstract class Var  implements Operation {
 
+    public double[][] Value;
+
     static Var createVar (String operand){
         operand = operand.trim().replace("\\s+","");
         if (operand.matches(Patterns.SCALAR))
