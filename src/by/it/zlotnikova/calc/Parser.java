@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 
 class Parser {
 
-    Var calc(String expression) {
+    Var calc(String expression) throws CalcException{
         if (expression.equals("printvar")){
             printVariables();
             return null;
@@ -22,6 +22,7 @@ class Parser {
         if(expression.contains("=")){
             return Var.saveVar(operand[0], right);
         }
+//        else throw new CalcException("ERROR: ошибка ввода");
         Var left = Var.createVar(operand[0]);
         if (left == null || right == null) return null;
         Pattern p = Pattern.compile(Patterns.OPERATION);
