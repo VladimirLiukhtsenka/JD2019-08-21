@@ -17,12 +17,8 @@ public class TaskC {
     public static void main(String[] args) {
         try(PrintWriter printer=new PrintWriter(new FileWriter(outputFilePath)))
         {
-            //Create new file with package path
-            File file = new File(getClassPath(TaskC.class));
-            //Get parent for specified path
-            String fileParent = file.getParent();
             //Create a new file with parent path
-            file=new File(fileParent);
+            File file = new File(new File(getClassPath(TaskC.class)).getParent());
             //Get list of files by parent path
             File[] folders= file.listFiles();
             for (File folder : folders) {
@@ -43,9 +39,5 @@ public class TaskC {
         catch(IOException e) {
             e.printStackTrace();
         }
-    }
-
-    private static void getFilesNames(String surname) {
-
     }
 }
