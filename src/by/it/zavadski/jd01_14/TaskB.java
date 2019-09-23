@@ -24,11 +24,10 @@ public class TaskB {
         countWordsAndMarks(inputFile,outputFile);
     }
 
-    private static void countWordsAndMarks(String inputFilePath, String outputFilePath) {
+    private static void countWordsAndMarks(String inputFilePath,String outputFilePath) {
         Pattern wordsPattern= Pattern.compile("[А-ЯЁёа-я]+");
         Pattern marksPattern=Pattern.compile("[^ А-ЯЁёа-я]+");
-        try(BufferedReader fileReader=new BufferedReader(new FileReader(inputFilePath));
-                PrintWriter printer=new PrintWriter(new FileWriter(outputFilePath))
+        try(BufferedReader fileReader=new BufferedReader(new FileReader(inputFilePath))
         ){
             int wordsCount = 0;
             int marksCount = 0;
@@ -41,7 +40,15 @@ public class TaskB {
                 while (marks.find())
                     marksCount++;
             }
-            printer.printf("words=%d, punctuation marks=%d",wordsCount,marksCount);
+            printCounter(wordsCount,marksCount,outputFilePath);
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+    private static void printCounter(int wordsCount,int marksCount,String outputFilePath) {
+        try (PrintWriter printer = new PrintWriter(new FileWriter(outputFilePath))) {
+            printer.printf("words=%d, punctuation marks=%d", wordsCount, marksCount);
             System.out.printf("words=%d, punctuation marks=%d",wordsCount,marksCount);
         }
         catch (IOException e){
