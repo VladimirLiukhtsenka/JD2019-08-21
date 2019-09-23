@@ -35,15 +35,13 @@ public abstract class Var implements Operation {
         }
     }
 
-    static void loadVars() throws CalcException {
+    static void loadVars() throws IOException, CalcException {
         Parser tmpParser = new Parser();
         try (
                 BufferedReader in = new BufferedReader(new FileReader(filename))
         ) {
             while (in.ready())
                 tmpParser.calc(in.readLine());
-        } catch (IOException e) {
-            throw new CalcException(" not read file: " + filename, e);
         }
     }
 

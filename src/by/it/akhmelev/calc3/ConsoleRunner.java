@@ -1,5 +1,6 @@
 package by.it.akhmelev.calc3;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class ConsoleRunner {
@@ -12,7 +13,10 @@ public class ConsoleRunner {
         try {
             Var.loadVars();
         } catch (CalcException e) {
-            System.out.println("File vars.txt not found. Recreated.");
+            System.err.println(e.getMessage());
+        } catch (IOException e) {
+            System.out.println("The file vars.txt was not found. It will be recreated after the first variable is assigned...");
+            e.printStackTrace();
         }
         for (; ; ) {
             try {
