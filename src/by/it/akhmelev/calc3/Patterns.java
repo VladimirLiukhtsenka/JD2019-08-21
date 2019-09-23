@@ -7,7 +7,6 @@ final class Patterns {
     static final String VECTOR = "\\{" + SCALAR + "(," + SCALAR + ")*}";
     static final String MATRIX = "\\{" + VECTOR + "(," + VECTOR + ")*}";
 
-
     private Patterns() {
     }
 }
