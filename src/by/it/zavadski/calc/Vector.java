@@ -18,7 +18,7 @@ public class Vector extends Var {
 
 
     @Override
-    public Var add(Var other){
+    public Var add(Var other) throws CalcException {
          if (other instanceof Scalar) {
              double [] res=Arrays.copyOf(this.value,this.value.length);
              double scalarValue=((Scalar) other).getValue();
@@ -38,7 +38,7 @@ public class Vector extends Var {
          }
 
     @Override
-    public Var sub(Var other) {
+    public Var sub(Var other) throws CalcException {
         if (other instanceof Scalar) {
             double [] res=Arrays.copyOf(this.value,this.value.length);
             double scalarValue=((Scalar) other).getValue();
@@ -58,7 +58,7 @@ public class Vector extends Var {
     }
 
     @Override
-    public Var mul(Var other) {
+    public Var mul(Var other) throws CalcException {
         if (other instanceof Scalar) {
             double [] res=Arrays.copyOf(this.value,this.value.length);
             double scalarValue=((Scalar) other).getValue();
@@ -80,19 +80,21 @@ public class Vector extends Var {
     }
 
     @Override
-    public Var div(Var other) {
+    public Var div(Var other) throws CalcException {
         if (other instanceof Scalar) {
             double[] res = Arrays.copyOf(this.value, this.value.length);
             double scalarValue = ((Scalar) other).getValue();
             for (int i = 0; i < res.length; i++) {
                 res[i] = res[i] / scalarValue;
+                if(scalarValue==0)
+                    throw new CalcException("Деление на ноль ");
             }
             return new Vector(res);
         }
         return super.div(other);
     }
 
-    Vector (String strVector){
+    Vector (String strVector) throws CalcException{
         Pattern pattern = Pattern.compile("[\\d]");
         Matcher matcher=pattern.matcher(strVector);
         String[] arrayDigits=new String[strVector.length()];

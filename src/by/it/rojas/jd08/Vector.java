@@ -105,13 +105,6 @@ class Vector extends Var {
             }
             return new Vector(res);
         }
-        /*else if (other instanceof Vector){
-            double[] res = Arrays.copyOf(value, value.length);
-            for (int i = 0; i < res.length ; i++) {
-                res [i] = res [i] / ((Vector) other).value[i];
-            }
-            return  new Vector(res);
-        }*/
         else return super.add(other);
     }
 }

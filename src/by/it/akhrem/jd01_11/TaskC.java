@@ -1,6 +1,8 @@
 package by.it.akhrem.jd01_11;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class TaskC {
@@ -71,7 +73,7 @@ public class TaskC {
     }
 
     static void testRemoveAll(Set<String> inpSet) {
-        Set<String> st = new HashSet<>(10);
+        List<String> st = new ArrayList<>(10);
         st.add("four");
         st.add("five");
         st.add("six");
@@ -80,10 +82,12 @@ public class TaskC {
         st.add("two");
         st.add("1");
         st.add(null);
+        st.add(null);
+        st.add("2");
         st.add("2");
         st.add("3");
         st.add("4");
-        inpSet.removeAll(st);
-        System.out.println(inpSet);
+        boolean b = inpSet.removeAll(st);
+        System.out.println(inpSet +" " + b);
     }
 }
