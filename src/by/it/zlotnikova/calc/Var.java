@@ -8,15 +8,16 @@ abstract class Var implements Operation {
 
     private static Map<String, Var> vars = new HashMap<>();
 
-    public static Map<String, Var> getVars() {
+    static Map<String, Var> getVars() {
         return vars;
     }
+
     static Var saveVar(String name, Var var) {
         vars.put(name, var);
         return var;
     }
 
-    static Var createVar(String strVar) {
+    static Var createVar(String strVar) throws CalcException{
         strVar = strVar.trim().replace("\\s+", "");
         if (strVar.matches(Patterns.SCALAR))
             return new Scalar(strVar);
@@ -26,31 +27,31 @@ abstract class Var implements Operation {
             return new Matrix(strVar);
         else if (vars.containsKey(strVar))
             return vars.get(strVar);
-        return null;
+        throw new CalcException("невозможно создать " + strVar);
     }
 
     @Override
-    public Var add(Var other) {
-        System.out.printf("Операция сложения %s и %s невозможна.\n", this.toString(), other.toString());
-        return null;
+    public Var add(Var other) throws CalcException {
+        throw new CalcException("Операция сложения " + this.toString() + " + "
+                + other.toString() + " невозможна");
     }
 
     @Override
-    public Var sub(Var other) {
-        System.out.printf("Операция вычитания %s и %s невозможна.\n", this.toString(), other.toString());
-        return null;
+    public Var sub(Var other) throws CalcException {
+        throw new CalcException("Операция вычитания " + this.toString() + " - "
+                + other.toString() + " невозможна");
     }
 
     @Override
-    public Var mul(Var other) {
-        System.out.printf("Операция умножения %s и %s невозможна.\n", this.toString(), other.toString());
-        return null;
+    public Var mul(Var other) throws CalcException {
+        throw new CalcException("Операция умножения " + this.toString() + " * "
+                + other.toString() + " невозможна");
     }
 
     @Override
-    public Var div(Var other) {
-        System.out.printf("Операция деления %s и %s невозможна.\n", this.toString(), other.toString());
-        return null;
+    public Var div(Var other) throws CalcException {
+        throw new CalcException("Операция деления " + this.toString() + " / "
+                + other.toString() + " невозможна");
     }
 
     @Override

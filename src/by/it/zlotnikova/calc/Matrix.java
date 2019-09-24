@@ -62,7 +62,7 @@ class Matrix extends Var {
     }
 
     @Override
-    public Var add(Var other) {
+    public Var add(Var other) throws CalcException {
         if (other instanceof Scalar) {
             double[][] sum1 = new double[this.value.length][this.value[0].length];
             for (int i = 0; i < sum1.length; i++) {
@@ -72,18 +72,25 @@ class Matrix extends Var {
             }
             return new Matrix(sum1);
         } else if (other instanceof Matrix) {
-            double[][] sum2 = new double[this.value.length][this.value[0].length];
-            for (int i = 0; i < sum2.length; i++) {
-                for (int j = 0; j < sum2[0].length; j++) {
-                    sum2[i][j] = this.value[i][j] + ((Matrix) other).getValue()[i][j];
+            if (this.value.length == ((Matrix) other).getValue().length
+                    && this.value[0].length == ((Matrix) other).getValue()[0].length) {
+                double[][] sum2 = new double[this.value.length][this.value[0].length];
+                for (int i = 0; i < sum2.length; i++) {
+                    for (int j = 0; j < sum2[0].length; j++) {
+                        sum2[i][j] = this.value[i][j] + ((Matrix) other).getValue()[i][j];
+                    }
                 }
+                return new Matrix(sum2);
+            } else {
+                throw new CalcException("матрицы разного размера");
             }
-            return new Matrix(sum2);
-        } else return super.add(other);
+        } else {
+            throw new CalcException("операция невозможна");
+        }
     }
 
     @Override
-    public Var sub(Var other) {
+    public Var sub(Var other) throws CalcException {
         if (other instanceof Scalar) {
             double[][] sub1 = new double[this.value.length][this.value[0].length];
             for (int i = 0; i < sub1.length; i++) {
@@ -93,18 +100,25 @@ class Matrix extends Var {
             }
             return new Matrix(sub1);
         } else if (other instanceof Matrix) {
-            double[][] sub2 = new double[this.value.length][this.value[0].length];
-            for (int i = 0; i < sub2.length; i++) {
-                for (int j = 0; j < sub2[0].length; j++) {
-                    sub2[i][j] = this.value[i][j] - ((Matrix) other).getValue()[i][j];
+            if (this.value.length == ((Matrix) other).getValue().length
+                    && this.value[0].length == ((Matrix) other).getValue()[0].length) {
+                double[][] sub2 = new double[this.value.length][this.value[0].length];
+                for (int i = 0; i < sub2.length; i++) {
+                    for (int j = 0; j < sub2[0].length; j++) {
+                        sub2[i][j] = this.value[i][j] - ((Matrix) other).getValue()[i][j];
+                    }
                 }
+                return new Matrix(sub2);
+            } else {
+                throw new CalcException("матрицы разного размера");
             }
-            return new Matrix(sub2);
-        } else return super.add(other);
+        } else {
+            throw new CalcException("операция невозможна");
+        }
     }
 
     @Override
-    public Var mul(Var other) {
+    public Var mul(Var other) throws CalcException {
         if (other instanceof Scalar) {
             double[][] mul1 = new double[this.value.length][this.value[0].length];
             for (int i = 0; i < mul1.length; i++) {
@@ -114,37 +128,49 @@ class Matrix extends Var {
             }
             return new Matrix(mul1);
         } else if (other instanceof Vector) {
-            double[] mul2 = new double[this.value.length];
-            for (int i = 0; i < this.value.length; i++) {
-                for (int j = 0; j < ((Vector) other).getValue().length; j++) {
-                    mul2[i] = mul2[i] + this.value[i][j] * ((Vector) other).getValue()[j];
-                }
-            }
-            return new Vector(mul2);
-        } else if (other instanceof Matrix) {
-            double[][] mul3 = new double[this.value.length][this.value[0].length];
-            for (int i = 0; i < this.value.length; i++) {
-                for (int j = 0; j < this.value.length; j++) {
-                    for (int k = 0; k < ((Matrix) other).getValue().length; k++) {
-                        mul3[i][j] = mul3[i][j] + this.value[i][k] * ((Matrix) other).getValue()[k][j];
+            if (this.value.length == ((Vector) other).getValue().length) {
+                double[] mul2 = new double[this.value.length];
+                for (int i = 0; i < this.value.length; i++) {
+                    for (int j = 0; j < ((Vector) other).getValue().length; j++) {
+                        mul2[i] = mul2[i] + this.value[i][j] * ((Vector) other).getValue()[j];
                     }
                 }
+                return new Vector(mul2);
+            } else throw new CalcException("размеры вектора и матрицы не совпадают");
+        } else if (other instanceof Matrix) {
+            if (this.value.length == ((Matrix) other).getValue().length
+                    && this.value[0].length == ((Matrix) other).getValue()[0].length) {
+                double[][] mul3 = new double[this.value.length][this.value[0].length];
+                for (int i = 0; i < this.value.length; i++) {
+                    for (int j = 0; j < this.value.length; j++) {
+                        for (int k = 0; k < ((Matrix) other).getValue().length; k++) {
+                            mul3[i][j] = mul3[i][j] + this.value[i][k] * ((Matrix) other).getValue()[k][j];
+                        }
+                    }
+                }
+                return new Matrix(mul3);
+            } else {
+                throw new CalcException("размеры матриц не совпадают");
             }
-            return new Matrix(mul3);
+        } else {
+            throw new CalcException();
         }
-        else return super.add(other);
     }
 
     @Override
-    public Var div(Var other) {
+    public Var div(Var other) throws CalcException {
         if (other instanceof Scalar) {
-            double[][] div = new double[this.value.length][this.value[0].length];
-            for (int i = 0; i < div.length; i++) {
-                for (int j = 0; j < div[0].length; j++) {
-                    div[i][j] = this.value[i][j] / ((Scalar) other).getValue();
+            if (((Scalar) other).getValue() != 0) {
+                double[][] div = new double[this.value.length][this.value[0].length];
+                for (int i = 0; i < div.length; i++) {
+                    for (int j = 0; j < div[0].length; j++) {
+                        div[i][j] = this.value[i][j] / ((Scalar) other).getValue();
+                    }
                 }
+                return new Matrix(div);
+            } else {
+                throw new CalcException("деление на ноль");
             }
-            return new Matrix(div);
-        } else return super.div(other);
+        } else throw new CalcException("операция невозможна");
     }
 }
