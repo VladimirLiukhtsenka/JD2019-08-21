@@ -1,48 +1,61 @@
 package by.it.zavadski.jd01_15;
-import by.it.zavadski.jd01_15.*;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
 
 public class TaskB {
+    public static StringBuilder toPrint=new StringBuilder();
     //1st one line comment for main method
     public static void main(String[] args) {
         String inputFile = TaskA.getClassPath(TaskB.class).concat("TaskB.java");
         String outputFile = TaskA.getClassPath(TaskB.class).concat("TaskB.txt");
-        printer(removeComments(inputFile),outputFile);
+        removeComments(inputFile);
+        printer(outputFile);
+        readFile(outputFile);
     }
 /*
-2lined comment to be removed*/
-    private static StringBuilder removeComments(String inputFile) {
+* 2lined comment to be removed
+*/
+private static void removeComments(String inputFile) {
         try(BufferedReader bufferedReader=new BufferedReader(new FileReader(inputFile))
-
-                ){
-
+        ){
+            String line;
+            while((line=bufferedReader.readLine())!=null){
+                StringBuilder cleanString=new StringBuilder(line).append("\n");
+                if(line.contains("*/")&&!line.contains("contains"))
+                    cleanString.delete(line.indexOf("*"),line.length());
+                if(line.contains("/")&&!line.contains("contains")&&!line.contains("indexOf"))
+                    cleanString.delete(line.indexOf("/"),line.length());
+                else if(line.contains("*") &&!line.contains("contains")&&!line.contains("indexOf")&&!line.contains(".*"))
+                    cleanString.delete(line.indexOf("*"),line.length());
+                toPrint.append(cleanString.toString());
+            }
         }
-        catch (IOException e){
+        /*
+       * removed
+         */
+        catch (IOException e) {
             e.printStackTrace();
         }
-        return null;
     }
+    /**
+     * Java doc example
+     * @param outputFile
+     */
 //printer method for print result
-    private static void printer(StringBuilder stringBuilder, String outputFile) {
-        try(PrintWriter writer=new PrintWriter(new FileWriter(outputFile))){
-            writer.print(stringBuilder);
+    private static void printer(String outputFile) {
+        try(PrintWriter writer=new PrintWriter(new PrintWriter(outputFile))){
+            writer.print(toPrint.toString());
         }
         catch(IOException e){
             e.printStackTrace();
         }
     }
-/*
-Multiple lined
-comment
-check
- */
-    private static void readFile(String filename) {
-        try {
-            Files.lines(Paths.get(filename)).forEach(System.out::println);
+    private static void readFile(String fileToRead){
+        try(BufferedReader reader=new BufferedReader(new FileReader(fileToRead))
+        ){
+            while (reader.ready()){
+                System.out.println(reader.readLine());
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
