@@ -1,9 +1,6 @@
 package by.it.akhrem.jd01_11;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 
 public class SetC<T> implements Set<T> {
 
@@ -73,7 +70,8 @@ public class SetC<T> implements Set<T> {
 
     @Override
     public boolean removeAll(Collection<?> c) {
-        Object[] a = c.toArray();
+        Set<?> s = new HashSet<>(c);
+        Object[] a = s.toArray();
         boolean result = true;
         for (int i = a.length - 1; i >= 0; i--)
             result = remove(a[i]) && result;
@@ -128,6 +126,6 @@ public class SetC<T> implements Set<T> {
 
     @Override
     public void clear() {
-
+       size = 0;
     }
 }
