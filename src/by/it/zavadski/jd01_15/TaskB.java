@@ -23,6 +23,8 @@ private static void removeComments(String inputFile) {
                 StringBuilder cleanString=new StringBuilder(line).append("\n");
                 if(line.contains("*/")&&!line.contains("contains"))
                     cleanString.delete(line.indexOf("*"),line.length());
+                if(line.contains("/*")&&!line.contains("contains"))
+                    cleanString.delete(line.indexOf("*"),line.length());
                 if(line.contains("/")&&!line.contains("contains")&&!line.contains("indexOf"))
                     cleanString.delete(line.indexOf("/"),line.length());
                 else if(line.contains("*") &&!line.contains("contains")&&!line.contains("indexOf")&&!line.contains(".*"))
@@ -30,9 +32,9 @@ private static void removeComments(String inputFile) {
                 toPrint.append(cleanString.toString());
             }
         }
-        /*
-       * removed
-         */
+/*
+* removed
+*/
         catch (IOException e) {
             e.printStackTrace();
         }
@@ -43,7 +45,7 @@ private static void removeComments(String inputFile) {
      */
 //printer method for print result
     private static void printer(String outputFile) {
-        try(PrintWriter writer=new PrintWriter(new PrintWriter(outputFile))){
+        try(PrintWriter writer=new PrintWriter(new FileWriter(outputFile))){
             writer.print(toPrint.toString());
         }
         catch(IOException e){

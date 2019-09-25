@@ -32,9 +32,11 @@ public class TaskC {
     }
 
     private static void changeDirectory(StringBuilder input) {
+        String[] cmds=input.toString().split(" ", 2);
         if (input.toString().equals("cd..")||input.toString().equals("cd ..")){
             defaulttDir.delete(defaulttDir.lastIndexOf(File.separator),defaulttDir.length());
             System.out.println(defaulttDir);
+
         }
         if(input.toString().equals("cd")||input.toString().equals("cd ")){
             File file=new File(defaulttDir.toString());
@@ -46,6 +48,11 @@ public class TaskC {
             }
             System.out.println(defaulttDir.toString());
         }
+        if (cmds[1]!=null){
+            File file= new File(new File(defaulttDir.toString()).getAbsolutePath()+File.separator+cmds[1]);
+            System.out.println(file.getAbsolutePath());
+        }
+
         if(input.toString().equals("dir")){
             try{
                 File file2=new File(defaulttDir.toString());
