@@ -14,7 +14,7 @@ public class Util {
         try{
             Thread.sleep (timeout/Dispatcher.kSpeed);
         } catch (InterruptedException e){
-            //stubb
+            //stub
         }
 
     }

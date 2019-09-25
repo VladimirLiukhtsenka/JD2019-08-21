@@ -1,9 +1,10 @@
 package by.it.daletski.jd02_01;
 
-public class Buyer extends Thread implements IBuyer {
+public class Buyer extends Thread implements IBuyer,IUseBacket {
 
 
     Buyer(int number){
+
         super("Bayer № " + number);
     }
 
@@ -13,6 +14,9 @@ public class Buyer extends Thread implements IBuyer {
         enterToMarket ();
         chooseGoods ();
         goOut ();
+        takeBacket();
+        putGoodsToBacket();
+
         }
 
     @Override
@@ -38,8 +42,22 @@ public class Buyer extends Thread implements IBuyer {
         System.out.println (this+" leave to Market");
     }
 
+
+
     @Override
     public String toString() {
         return this.getName ();
     }
+
+
+    @Override
+    public void takeBacket() {
+        System.out.println (this+" take backet");
+    }
+
+    @Override
+    public void putGoodsToBacket() {
+        System.out.println (this+" put goods to backet");
+    }
 }
+
