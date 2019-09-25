@@ -3,7 +3,10 @@ package by.it.zavadski.jd01_15;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.SQLOutput;
+import java.text.SimpleDateFormat;
 import java.util.Scanner;
+import java.util.SimpleTimeZone;
 
 /**
  * Класс TaskC Нужно реализовать на java приложение - аналог командной строки Windows. Приложение должно
@@ -16,6 +19,7 @@ import java.util.Scanner;
 
 public class TaskC {
     private static StringBuilder defaulttDir=new StringBuilder(getClassPath(TaskC.class));
+    private static File defDir=new File(defaulttDir.toString());
 
     private static String getClassPath(Class <?> className){
         String path= System.getProperty("user.dir")+ File.separator+"src"+File.separator;
@@ -32,38 +36,36 @@ public class TaskC {
     }
 
     private static void changeDirectory(StringBuilder input) {
-        String[] cmds=input.toString().split(" ", 2);
-        if (input.toString().equals("cd..")||input.toString().equals("cd ..")){
-            defaulttDir.delete(defaulttDir.lastIndexOf(File.separator),defaulttDir.length());
-            System.out.println(defaulttDir);
-
+        String[] cmds=input.toString().split(" ",2);
+        if(cmds[0].equals("cd")&&cmds[1].equals("..")){
+            String parentDir=defDir.getParent();
+            defDir= new File(parentDir);
+            System.out.println(defDir.getAbsolutePath());
         }
-        if(input.toString().equals("cd")||input.toString().equals("cd ")){
-            File file=new File(defaulttDir.toString());
-            input.delete(0,3);
-            for (File listFile : file.listFiles()) {
-                if (input.toString().equals(listFile.getName())){
-                    defaulttDir.append(File.separator).append(listFile.getName());
+        else{
+            String newPath=defDir.getAbsolutePath()+File.separator+cmds[1];
+            File tFile=new File(newPath);
+            if(tFile.exists()){
+                defDir=new File(newPath);
+                System.out.println(defDir.getAbsolutePath());
+                }else System.out.println("Incorrect path: "+newPath);
+            }
+        if(cmds[0].equals("dir")||cmds[1].isEmpty()){
+            File[] files=defDir.listFiles();
+            if(files!=null){
+                for (File element : files) {
+                    SimpleDateFormat data=new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                    if(element.isFile()){
+                        long totalSpace=element.getTotalSpace();
+                        System.out.printf(data.format(element.lastModified())+"\t %15d \t %-20s",totalSpace,element.getName());
+                        System.out.println();
+                    }else{
+                        System.out.printf(data.format(element.lastModified())+"\t <DIR> \t %-20s",element.getName());
+                        System.out.println();
+                    }
                 }
             }
-            System.out.println(defaulttDir.toString());
-        }
-        if (cmds[1]!=null){
-            File file= new File(new File(defaulttDir.toString()).getAbsolutePath()+File.separator+cmds[1]);
-            System.out.println(file.getAbsolutePath());
-        }
+    }
 
-        if(input.toString().equals("dir")){
-            try{
-                File file2=new File(defaulttDir.toString());
-                System.out.println("dir: "+file2.getName());
-                for (File listFile : file2.listFiles()) {
-                    System.out.println("\tfile: "+listFile.getName());
-                }
-            }
-            catch (NullPointerException e){
-                System.out.println("Empty folder");
-            }
-        }
     }
 }
