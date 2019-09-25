@@ -21,14 +21,9 @@ private static void removeComments(String inputFile) {
             String line;
             while((line=bufferedReader.readLine())!=null){
                 StringBuilder cleanString=new StringBuilder(line).append("\n");
-                if(line.contains("*/")&&!line.contains("contains"))
-                    cleanString.delete(line.indexOf("*"),line.length());
-                if(line.contains("/*")&&!line.contains("contains"))
-                    cleanString.delete(line.indexOf("*"),line.length());
-                if(line.contains("/")&&!line.contains("contains")&&!line.contains("indexOf"))
-                    cleanString.delete(line.indexOf("/"),line.length());
-                else if(line.contains("*") &&!line.contains("contains")&&!line.contains("indexOf")&&!line.contains(".*"))
-                    cleanString.delete(line.indexOf("*"),line.length());
+                if(line.contains("/")&&checkThatNotCode(line))
+                    cleanString.delete(cleanString.indexOf("/"), cleanString.length()).append("\n");
+                if(cleanString.toString().contains("*")&&checkThatNotCode(line)) continue;
                 toPrint.append(cleanString.toString());
             }
         }
@@ -39,6 +34,11 @@ private static void removeComments(String inputFile) {
             e.printStackTrace();
         }
     }
+
+    private static boolean checkThatNotCode(String line) {
+    return !line.contains("contains")&&!line.contains("indexOf")&&!line.contains(".*");
+    }
+
     /**
      * Java doc example
      * @param outputFile
