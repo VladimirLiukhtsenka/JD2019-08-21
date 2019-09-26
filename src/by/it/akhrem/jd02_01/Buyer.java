@@ -1,11 +1,15 @@
 package by.it.akhrem.jd02_01;
 
-import com.sun.xml.internal.ws.resources.UtilMessages;
 
-public class Buyer extends Thread implements IBuyer {
+import java.util.HashMap;
+import java.util.Map;
+
+public class Buyer extends Thread implements IBuyer, IUseBacket {
+
+    Map<String, Double> basket = null;
 
     public Buyer(int number) {
-        super("Buyer "+ number);
+        super("Buyer " + number);
     }
 
     @Override
@@ -17,7 +21,7 @@ public class Buyer extends Thread implements IBuyer {
 
     @Override
     public void enterToMarket() {
-        System.out.println("Enter to market");
+        System.out.println("Enter to market " + this);
     }
 
     @Override
@@ -27,14 +31,43 @@ public class Buyer extends Thread implements IBuyer {
 
     @Override
     public void chooseGoods() {
-        System.out.println("started to choose goods");
-        int timeout = Util.random(2000);
-        Util.sleep(timeout);
-        System.out.println("end to choose goods");
+        takeBacket();
+        System.out.println("started to choose goods " + this);
+        //int timeout = Util.random(2000);
+        //Util.sleep(timeout);
+        putGoodsToBacket();
+        System.out.println("end to choose goods " + this);
     }
 
     @Override
     public void goOut() {
-        System.out.println("leave the market");
+        System.out.println("leave the market " + this);
+    }
+
+    @Override
+    public void takeBacket() {
+        int timeout = Util.random(100, 200);
+        basket = new HashMap<>(4);
+        Util.sleep(timeout);
+        System.out.println(this + " takes a basket");
+    }
+
+    @Override
+    public void putGoodsToBacket() {
+        int cntGoods = Util.random(1, 4);
+        if (basket == null)
+            System.out.println(this + " doesn't have a basket");
+        else {
+            for (int i = 1; i <= cntGoods; i++) {
+                int timeout = Util.random(100, 200);
+                Util.sleep(timeout);
+                Map.Entry<String, Double> e = Market.getRandomGoods();
+                if (e != null) {
+                    basket.put(e.getKey(), e.getValue());
+                    System.out.println(this + " puts " + e.getKey() + " - " + e.getValue() + " BYN  to basket.");
+                }
+            }
+        }
+
     }
 }

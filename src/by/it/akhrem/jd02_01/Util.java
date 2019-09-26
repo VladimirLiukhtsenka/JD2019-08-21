@@ -8,6 +8,7 @@ public class Util {
     public static int random (int from, int to) {
         return from + (int)(Math.random()*(to-from+1));
     }
+
     public static void sleep(int timeout) {
         try {
             Thread.sleep(timeout/Dispathcher.kSpeed);
