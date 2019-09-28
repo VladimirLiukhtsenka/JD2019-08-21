@@ -13,9 +13,12 @@ public class Buyer extends Thread implements IBuyer, IUseBacket {
         Dispathcher.buyerInMarket();
     }
 
+    public Map<String, Double> getBasket() {
+        return basket;
+    }
+
     @Override
     public void run() {
-
         enterToMarket();
         chooseGoods();
         goToQueue();
@@ -24,7 +27,7 @@ public class Buyer extends Thread implements IBuyer, IUseBacket {
 
     @Override
     public void enterToMarket() {
-        System.out.println("Enter to market " + this);
+        System.out.println("---> Enter to market " + this);
     }
 
     @Override
@@ -44,7 +47,7 @@ public class Buyer extends Thread implements IBuyer, IUseBacket {
 
     @Override
     public void goOut() {
-        System.out.println("leave the market " + this);
+        System.out.println("<--- leave the market " + this);
         Dispathcher.buyerLeaveMarket();
     }
 
@@ -64,8 +67,8 @@ public class Buyer extends Thread implements IBuyer, IUseBacket {
 
     @Override
     public void takeBacket() {
-        int timeout = Util.random(100, 200);
         basket = new HashMap<>(4);
+        int timeout = Util.random(100, 200);
         Util.sleep(timeout);
         System.out.println(this + " takes a basket");
     }

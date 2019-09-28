@@ -6,7 +6,7 @@ import java.util.LinkedList;
 public class QueueBuyers {
 
     private static Deque<Buyer> deque = new LinkedList<>();
-    //Sync QueueBuyeras.class
+    //Sync QueueBuyers.class
     static synchronized void add(Buyer buyer){
         deque.addLast(buyer);
     }
@@ -14,4 +14,6 @@ public class QueueBuyers {
     static Buyer extract() {
         return deque.pollFirst();
     }
+
+
 }

@@ -29,27 +29,29 @@ public class Market {
 
     public static void main(String[] args) {
         System.out.println("Market opened");
-        int numberBuyer = 0;
+        int numberOfCashiers = 5;
 
-        for (int i = 1; i <= 2 ; i++) {
+        List<Thread> threadList = new ArrayList<>(200);
+        for (int i = 1; i <= numberOfCashiers ; i++) {
             Cashier cashier = new Cashier(i);
             Thread thread = new Thread(cashier);
+            threadList.add(thread);
             thread.start();
         }
-        List<Buyer> buyerList = new ArrayList<>(200);
+        int numberBuyer = 0;
         //for (int time = 0; time < 120; time++)
          while (!Dispathcher.planComplete()){
             int countBuyer = Util.random(2);
             for (int i=0; i < countBuyer; i++) {
                 if (!Dispathcher.planComplete()) {
                     Buyer b = new Buyer(++numberBuyer);
-                    buyerList.add(b);
+                    threadList.add(b);
                     b.start();
                 }
             }
             Util.sleep(1000);
         }
-        for (Buyer b: buyerList)
+        for (Thread b: threadList)
             try {
               b.join();
             } catch (InterruptedException e) {

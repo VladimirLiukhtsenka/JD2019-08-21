@@ -6,8 +6,9 @@ public class Dispathcher {
     static final int MAX_BUYERS = 100;
     static int buyerCounter = 0;
     static int buyerInMarket = 0;
+
     static synchronized boolean marketIsOpened() {
-        return buyerCounter< MAX_BUYERS || buyerInMarket > 0;//stub
+        return buyerCounter < MAX_BUYERS || buyerInMarket > 0;
     }
 
     static synchronized void buyerInMarket() {
