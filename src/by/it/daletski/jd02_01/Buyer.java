@@ -1,11 +1,14 @@
 package by.it.daletski.jd02_01;
 
-public class Buyer extends Thread implements IBuyer,IUseBacket {
+import java.util.Map;
 
+public class Buyer extends Thread implements IBuyer, IUseBasket {
 
-    Buyer(int number){
+    private Map<String, Double> basket;
 
-        super("Bayer № " + number);
+    Buyer(int number) {
+
+        super ("Bayer № " + number);
     }
 
     @Override
@@ -14,15 +17,15 @@ public class Buyer extends Thread implements IBuyer,IUseBacket {
         enterToMarket ();
         chooseGoods ();
         goOut ();
-        takeBacket();
-        putGoodsToBacket();
+        takeBasket ();
+        putGoodsToBasket ();
 
-        }
+    }
 
     @Override
     public void enterToMarket() {
 
-        System.out.println (this+" enter to Market");
+        System.out.println (this + " enter to Market");
 
 
     }
@@ -30,38 +33,49 @@ public class Buyer extends Thread implements IBuyer,IUseBacket {
     @Override
     public void chooseGoods() {
 
-        System.out.println (this+" start choose goods");
-        int timeout = Util.random(2000);
+        System.out.println (this + " start choose goods");
+        int timeout = Util.random (2000);
         Util.sleep (timeout);
-        System.out.println (this+" end choose goods");
+        System.out.println (this + " end choose goods");
 
     }
 
     @Override
     public void goOut() {
-        System.out.println (this+" leave to Market");
-    }
 
+        System.out.println (this + " leave to Market");
+    }
 
 
     @Override
     public String toString() {
+
         return this.getName ();
     }
 
 
     @Override
-    public void takeBacket() {
-        System.out.println (this+" take backet");
-        int timeout = Util.random(2000);
+    public void takeBasket() {
+        System.out.println (this + " take basket");
+        int timeout = Util.random (200);
         Util.sleep (timeout);
     }
 
     @Override
-    public void putGoodsToBacket() {
-        System.out.println (this+" put goods to backet");
-        int timeout = Util.random(2000);
-        Util.sleep (timeout);
+    public void putGoodsToBasket() {
+        int countGoods = Util.random (1, 4);
+        if (basket == null)
+            System.out.println (this + " no basket");
+        else {
+            for (int i = 1; i <= countGoods; i++) {
+                int timeout = Util.random (100, 200);
+                Util.sleep (timeout);
+                Map.Entry<String, Double> e = Market.randomGoods ();
+                if (e != null) {
+                    basket.put (e.getKey (), e.getValue ());
+                    System.out.println (this + " put " + e.getKey () + " - " + e.getValue () + " cash");
+                }
+            }
+        }
     }
 }
-
