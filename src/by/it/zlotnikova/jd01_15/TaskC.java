@@ -17,35 +17,79 @@ public class TaskC {
     }
 
     public static void main(String[] args) {
-        String startPath = getPath(TaskC.class);
-        Scanner scanner = new Scanner(System.in);
-        String command = scanner.next();
+
+        String startPath = getPath(TaskC.class);  //method returns string
         Path currentPath = Paths.get(startPath);
-        switch (command) {
-            case "end": break;
-            case "dir": {executeDir(currentPath);
+        System.out.println(currentPath);
+        String targetDir = "";
+
+        Scanner scanner = new Scanner(System.in);
+        String line;
+
+        while (!(line = scanner.nextLine()).equals("end")) {
+            if (line.startsWith("cd ")) {
+                targetDir = line.substring(3).trim();
+                line = "changeDir";
             }
-            case "cd..": break;  // create logic
-            case "cd" + "dirName": break; // create logic
+            switch (line) {
+                case "cd..": {
+                    currentPath = dirUp(currentPath);
+                    System.out.println(currentPath);
+                    break;
+                }
+                case "changeDir": {
+                    currentPath = changeDir(currentPath, targetDir);
+                    System.out.println(currentPath);
+                    break;
+                }
+                case "dir": {
+                    dir(currentPath);
+                    break;
+                }
+                default: {
+                    System.out.println("Unknown command");
+                    break;
+                }
+            }
         }
     }
 
-    private static void executeDir(Path currentPath) {
+
+    private static void dir(Path currentPath) {
         try {
             for (Path path : Files.newDirectoryStream(currentPath)) {
-                String marker = "";
+                StringBuilder sb = new StringBuilder();
+                String dirMarker = "";
                 if (Files.isDirectory(path)) {
-                    marker = "DIR";
+                    dirMarker = "DIR";
                 }
                 String size = "";
                 if (!Files.isDirectory(path)) {
                     size = String.valueOf(Files.size(path));
                 }
-                System.out.println(Files.getLastModifiedTime(path) + " " + marker + " " + size
-                        + " " + path.getFileName());
+                System.out.printf("%-25s%5s%8s%20s%n",
+                        Files.getLastModifiedTime(path), dirMarker, size, path.getFileName());
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private static Path dirUp(Path currentPath) {
+        String path = currentPath.toString();
+        String newPathString = path.substring(0, path.length() - 1).substring(0, path.lastIndexOf(File.separator));
+        Path newPath = Paths.get(newPathString);
+        return newPath;
+    }
+
+    private static Path changeDir(Path currentPath, String targetDir) {
+//        try {
+        String path = currentPath.toString();
+        String newPathString = path + File.separator + targetDir;
+        Path newPath = Paths.get(newPathString);
+        return newPath;
+//        } catch (InvalidPathException e) {
+//            System.out.println("No such folder in current directory");
+//        }
     }
 }

@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.stream.Stream;
 
 public class TaskB {
@@ -13,6 +14,15 @@ public class TaskB {
         String fileForReading = getPath(TaskB.class) + "TaskB.java";
         String fileForWriting = getPath(TaskB.class) + "TaskB.txt";
         try {
+//            List<String> lines = Files.readAllLines(Paths.get(fileForReading));
+//            boolean comment = false;
+//            for (int i = 0; i < lines.size(); i++) {
+//                String line = lines.get(i);
+//                if (line.contains("//")) {
+//                    line.substring(0, )
+//                }
+//
+//            }
             StringBuilder sb = new StringBuilder();
             Files.lines(Paths.get(fileForReading)).forEachOrdered(s -> sb.append(s).append("\n"));
             PrintWriter out = new PrintWriter(
