@@ -1,4 +1,4 @@
-package by.it.yuntsevich.jd02_01;
+package by.it.yuntsevich.jd02_02;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,10 +15,13 @@ public class Buyer extends Thread implements IBuyer, IUseBucket {
 
     @Override
     public void run() {
+
         enterToMarket();
         takeBucket();
         chooseGoods();
+        goToQueue();
         goOut();
+
     }
 
     @Override
@@ -29,7 +32,6 @@ public class Buyer extends Thread implements IBuyer, IUseBucket {
     @Override
     public void enterToMarket() {
         System.out.println(this + "вошел в магазин");
-        //Util.sleep(3000);
     }
 
     @Override
@@ -57,6 +59,21 @@ public class Buyer extends Thread implements IBuyer, IUseBucket {
     }
 
     @Override
+    public void goToQueue() {
+        System.out.println(this+" стал в очередь");
+        QueueBuyers.addBuyer(this);
+        synchronized (this){
+            try {
+                this.wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        System.out.println(this+" покинул очередь");
+    }
+
+    @Override
     public void takeBucket() {
         int timeout;
         bucket = new HashMap<>(4);
@@ -72,8 +89,10 @@ public class Buyer extends Thread implements IBuyer, IUseBucket {
     @Override
     public void putGoodsToBucket() {
         int countGoods = Util.random(1, 4);
+        double totalSum = 0;
         for (int i = 1; i <= countGoods; i++) {
             int timeout;
+
             if (pensioneer) {
                 timeout = Util.random(150, 300);
             } else {
@@ -84,13 +103,15 @@ public class Buyer extends Thread implements IBuyer, IUseBucket {
             if (entry != null) {
                 bucket.put(entry.getKey(), entry.getValue());
                 System.out.println(this + "кладет " + entry.getKey() + " стоимостью " + entry.getValue() + " BYN в корзину.");
+                totalSum += entry.getValue();
             }
         }
+        System.out.println("Общая сумма товаров у " + this + "= " +totalSum + " BYN");
 
 
     }
 
-    void setPensioneer() {
-        this.pensioneer = true;
+    void setPensioneer(boolean pensioneer) {
+        this.pensioneer = pensioneer;
     }
 }

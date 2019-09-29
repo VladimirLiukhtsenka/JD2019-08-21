@@ -5,7 +5,7 @@ import java.util.*;
 public class Runner {
 
 
-    static Map<String, Double> goods = new HashMap<>(20);
+    private static Map<String, Double> goods = new HashMap<>(20);
 
     static Map.Entry<String, Double> takeGoods() {
         goods.put("Гречка", 1.0);
@@ -36,8 +36,8 @@ public class Runner {
         System.out.println("Магазин открыт");
         int numberBuyers = 0;
         List<Buyer> buyerList = new ArrayList<>(200);
-        numberBuyers = generateBuyers(numberBuyers, buyerList, 0);
-        generateBuyers(numberBuyers, buyerList, 60);
+       numberBuyers = generateBuyers(numberBuyers, buyerList);
+          generateBuyers(numberBuyers, buyerList);
         for (Buyer b : buyerList)
             try {
                 b.join();
@@ -47,33 +47,44 @@ public class Runner {
         System.out.println("Магазин закрыт");
     }
 
-    private static int generateBuyers(int numberBuyers, List<Buyer> buyerList, int startTime) {
-        for (int time = startTime; time < startTime + 30; time++) {
-            int countBuyers = Util.random(2);
-            for (int i = 0; i < countBuyers; i++) {
-                Buyer buyer = new Buyer(++numberBuyers);
-                if (numberBuyers % 4 == 0) {
-                    buyer.setPensioneer(true);
-                }
-                buyerList.add(buyer);
-                buyer.start();
-            }
-            Util.sleep(1000);
-        }
-        for (int time = startTime + 30; time < startTime + 60; time++) {
-            if (buyerList.size() <= 40 + (30 - time)) {
+    private static int generateBuyers(int numberBuyers, List<Buyer> buyerList) {
+        int time;
+
+            for (time = 1; time <= 60; time++) {
+                System.out.println(time + " " + Dispathcher.getBuyerInMarket());// проверка
+
                 int countBuyers = Util.random(2);
-                for (int i = 0; i < countBuyers; i++) {
-                    Buyer buyer = new Buyer(++numberBuyers);
-                    if (numberBuyers % 4 == 0) {
-                        buyer.setPensioneer(true);
+
+                if (time<= 30 && Dispathcher.getBuyerInMarket() <= time+10) {
+                    for (int i = 0; i <= countBuyers; i++) {
+                        Buyer buyer = new Buyer(++numberBuyers);
+
+                        if (numberBuyers % 4 == 0) {
+                            buyer.setPensioneer();
+                        }
+                        buyerList.add(buyer);
+                        buyer.start();
                     }
-                    buyerList.add(buyer);
-                    buyer.start();
                 }
+                else if (time > 30 && Dispathcher.getBuyerInMarket() <= 40 + 30 - time){
+                    for (int i = 0; i <= countBuyers; i++) {
+                        Buyer buyer = new Buyer(++numberBuyers);
+
+                        if (numberBuyers % 4 == 0) {
+                            buyer.setPensioneer();
+                        }
+                        buyerList.add(buyer);
+                        buyer.start();
+                    }
+                }
+
+
                 Util.sleep(1000);
+
             }
-        }
+
+
+
         return numberBuyers;
     }
 }

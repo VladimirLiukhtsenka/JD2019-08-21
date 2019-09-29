@@ -1,4 +1,4 @@
-package by.it.yuntsevich.jd02_01;
+package by.it.yuntsevich.jd02_02;
 
 public class Util {
     public static int random(int max) {
@@ -9,7 +9,7 @@ public class Util {
         return from + (int) (Math.random() * (to - from + 1));
     }
 
-    static void sleep(int timeout) {
+    public static void sleep(int timeout) {
         try {
             Thread.sleep(timeout / Dispathcher.kSpeed);
         } catch (InterruptedException e) {
