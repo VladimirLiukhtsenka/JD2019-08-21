@@ -28,7 +28,7 @@ public class TaskB {
 
             if ((testLine.length()==1)) {myString.append(testLine)  ;}
 
-            if (!testLine.contains(Patterns.SLASH) && !testLine.contains(Patterns.MIDDLE_OF_ANNO))
+            if (!testLine.contains(Patterns.SLASH) && !testLine.contains(Patterns.MIDDLE_OF_ANNO) && (testLine.length()>1))
                 {myString.append(testLine).append("\n");}
 
             if (testLine.contains(Patterns.ONELINECOMMENT))
