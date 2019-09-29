@@ -4,7 +4,7 @@ import java.io.File;
 
 public class getPath {
 
-    private static String getPath(Class<?> getClass) {
+    public static String getMyPath(Class<?> getClass) {
         String rootProject = System.getProperty("user.dir") ;
         String subPaths = getClass.getName().replace("." , File.separator).
                 replace(getClass.getSimpleName() , "") ;
