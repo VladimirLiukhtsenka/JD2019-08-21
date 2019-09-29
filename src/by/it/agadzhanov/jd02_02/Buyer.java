@@ -1,18 +1,23 @@
-package by.it.agadzhanov.jd02_01;
+package by.it.agadzhanov.jd02_02;
 
 public class Buyer extends Thread implements IBuyer, IUseBasket {
 
     private static Basket basket;
     private static boolean pensioner;
 
-    Buyer(int buyerID) {
+    Basket getBasket() {
+        return basket;
+    }
+
+    Buyer() {
         int randomNumber = Util.randomFromTo(1, 4);
         pensioner = randomNumber == 1;
         if (pensioner) {
-            this.setName("Покупатель(пенсионер) №" + buyerID);
+            this.setName("Покупатель(пенсионер) №" + Dispatcher.buyerEnter());
         } else {
-            this.setName("Покупатель №" + buyerID);
+            this.setName("Покупатель №" + Dispatcher.buyerEnter());
         }
+        basket = new Basket();
     }
 
     @Override
@@ -21,11 +26,13 @@ public class Buyer extends Thread implements IBuyer, IUseBasket {
         takeBasket();
         chooseGoods();
         putGoodsToBasket();
+        goToQueue();
         goOut();
     }
 
     @Override
     public void enterToMarket() {
+
         System.out.println(">>> " + this + " вошел в магазин");
     }
 
@@ -41,7 +48,6 @@ public class Buyer extends Thread implements IBuyer, IUseBasket {
         } catch (InterruptedException e) {
             System.out.println(this.getName() + ": ожидание завершено некорректно при вызове takeBasket()!");
         }
-        basket = new Basket();
         System.out.println("\\_/ " + this + " взял корзину");
     }
 
@@ -72,12 +78,30 @@ public class Buyer extends Thread implements IBuyer, IUseBasket {
         } catch (InterruptedException e) {
             System.out.println(this.getName() + ": ожидание завершено некорректно при вызове putGoodsToBasket()!");
         }
-        basket.fillBasket();
-        System.out.println("$$$ " + this + " купил " + basket);
+    }
+
+    @Override
+    public void goToQueue() {
+        BuyersQueue.add(this);
+        System.out.println("... " + this + " встал в очередь");
+        for (Cashier cashier : Dispatcher.cashierList) {
+            synchronized (cashier) {
+                cashier.notify();
+            }
+        }
+        synchronized (this) {
+            try {
+                this.wait();
+            } catch (InterruptedException e) {
+                System.out.println("Ошибка во время ожидания покупателя " + this);
+            }
+        }
+        System.out.println("!!! " + this + " покинул очередь");
     }
 
     @Override
     public void goOut() {
+        Dispatcher.buyerExit();
         System.out.println("<<< " + this + " вышел из магазина");
     }
 

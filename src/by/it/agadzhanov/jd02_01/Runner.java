@@ -15,7 +15,7 @@ public class Runner {
         //В течение 120 секунд
         for (int i = 0; i < 120; i++) {
             //Сгенерировать число покупателей от 0 до 2
-            int buyersEntered = Rnd.upTo(2);
+            int buyersEntered = Util.randomUpTo(2);
 
             //Создать объект класса Buyer для каждого покупателя, записать его в ArrayList, стартовать его поток
             for (int j = 1; j <= buyersEntered; j++) {
@@ -33,7 +33,7 @@ public class Runner {
             //Ожидать секунду до появления следующих возможных покупателей (кроме последней секунды)
             if (i < 119) {
                 try {
-                    Thread.sleep(1000 / Dispatcher.timeFactor);
+                    Util.sleepAccelerated(1000);
                 } catch (InterruptedException e) {
                     System.out.println("Main: ожидание завершено некорректно!");
                 }
