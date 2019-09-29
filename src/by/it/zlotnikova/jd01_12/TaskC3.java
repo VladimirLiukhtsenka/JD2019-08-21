@@ -3,6 +3,8 @@ package by.it.zlotnikova.jd01_12;
 import java.util.*;
 
 public class TaskC3 {
+
+    // not finished
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         String string = scanner.nextLine();
