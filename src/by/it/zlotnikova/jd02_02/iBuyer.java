@@ -5,5 +5,7 @@ public interface iBuyer {
 
     void chooseGoods();
 
+    void goToQueue();
+
     void goOut();
 }

@@ -6,7 +6,17 @@ import java.util.Map;
 
 public class Buyer extends Thread implements iBuyer, IUseBasket {
 
-    private String name;
+    Buyer() {
+        //important!!!!
+        super("Buyer № " + Dispatcher.buyerEnters());
+    }
+
+    private String buyerName = this.getName();
+
+    String getBuyerName() {
+        return buyerName;
+    }
+
     private boolean isPensioner;
     private Double speed = 1.0;
     private Map<String, Double> basket = new HashMap<>();
@@ -15,10 +25,10 @@ public class Buyer extends Thread implements iBuyer, IUseBasket {
         int i = Utils.random(1, 4);
         if (i == 1) {
             this.isPensioner = true;
-            this.name = name + " !P";
+            this.buyerName = name + " !P";
             this.speed = 1.5;
         } else {
-            this.name = name;
+            this.buyerName = name;
         }
     }
 
@@ -28,12 +38,13 @@ public class Buyer extends Thread implements iBuyer, IUseBasket {
         takeBasket();
         chooseGoods();
         putGoodsToBasket();
+        goToQueue();
         goOut();
     }
 
     @Override
     public void enterToMarket() {
-        System.out.println(this.name + ": enters the market");
+        System.out.println(this.buyerName + ": enters the market");
     }
 
     @Override
@@ -43,12 +54,27 @@ public class Buyer extends Thread implements iBuyer, IUseBasket {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        System.out.println(this.name + ": chooses goods");
+        System.out.println(this.buyerName + ": chooses goods");
+    }
+
+    @Override
+    public void goToQueue() {
+        System.out.println(this.buyerName + " goes to the queue");
+        BuyersQueue.add(this);
+        synchronized (this) {
+            try {
+                this.wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        System.out.println(this.buyerName + " leaves the cash-desk");
     }
 
     @Override
     public void goOut() {
-        System.out.println(this.name + ": leaves the market");
+        System.out.println(this.buyerName + ": leaves the market");
+        Dispatcher.buyerLeaves();
     }
 
     @Override
@@ -58,7 +84,7 @@ public class Buyer extends Thread implements iBuyer, IUseBasket {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        System.out.println(this.name + ": takes a basket");
+        System.out.println(this.buyerName + ": takes a basket");
     }
 
     @Override
@@ -93,6 +119,6 @@ public class Buyer extends Thread implements iBuyer, IUseBasket {
                     .append(entry.getValue()).append(")");
             delimiter = ", ";
         }
-        System.out.println(this.name + ": puts goods into the basket: " + listOfGoods.toString());
+        System.out.println(this.buyerName + ": puts goods into the basket: " + listOfGoods.toString());
     }
 }

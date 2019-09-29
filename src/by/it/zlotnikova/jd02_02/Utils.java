@@ -9,4 +9,12 @@ class Utils {
     static int random(int from, int to) {
         return (int) (from + Math.random() * (to - from + 1));
     }
+
+    static void sleep(int timeout) {
+        try {
+            Thread.sleep(timeout / Dispatcher.kSpeed);
+        } catch (InterruptedException e) {
+            ///stub;
+        }
+    }
 }

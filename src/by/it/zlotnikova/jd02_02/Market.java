@@ -12,23 +12,25 @@ public class Market {
     public static void main(String[] args) {
 
         goods = createGoodsList();
-
-//        int time = 120; //seconds; a period of time when the market is open
-        int buyerNumber = 1;
-        int entersMarket = 0;
-        int leavesMarket = 0;
-        List<Buyer> buyerList = new LinkedList<>();
-
         System.out.println("xxx The market opens xxx");
+        List<Thread> actorList = new LinkedList<>();
 
-        while (buyerNumber <= 100) {
+        int cashierNumber = 2;
+        for (int i = 1; i <= cashierNumber; i++) {
+            Cashier cashier = new Cashier(i);
+            Thread thread = new Thread(cashier);
+            actorList.add(thread);
+            thread.start();
+        }
+
+        while (!Dispatcher.planComplete()) {
             int counter = Utils.random(2);
             for (int j = 0; j <= counter; j++) {
-                Buyer buyer = new Buyer("Buyer " + buyerNumber);
-                buyerNumber++;
-                buyerList.add(buyer);
-                buyer.start();
-                entersMarket++;
+                if (!Dispatcher.planComplete()) {
+                    Buyer buyer = new Buyer();
+                    actorList.add(buyer);
+                    buyer.start();
+                }
             }
             try {
                 Thread.sleep(1000);
@@ -36,19 +38,10 @@ public class Market {
                 e.printStackTrace();
             }
         }
-        // check number of buyers in the market
-//        int countBuyers = 0;
-//        Iterator<Buyer> it = buyerList.iterator();
-//        while (it.hasNext()) {
-//            if (it.next().isAlive()) {
-//                countBuyers++;
-//            }
-//        }
-//        System.out.println("\tBuyers in the market: " + countBuyers);
 
-        buyerList.forEach(buyer -> {
+        actorList.forEach(actor -> {
             try {
-                buyer.join();
+                actor.join();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
