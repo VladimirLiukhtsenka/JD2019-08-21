@@ -7,7 +7,7 @@ package by.it.krautsevich.jd01_15;
 import java.io.*;
 
 public class TaskB {
-      //                                     try to get path
+      //try to get path
     public static void main(String[] args) {
 
         String myPath = getPath.getMyPath(TaskB.class) ;
@@ -15,8 +15,7 @@ public class TaskB {
         String result = myPath + "TaskB.txt" ;
         StringBuilder myString = new StringBuilder() ;
 
-/*
-   try to read file
+/*try to read file
     */
 
         try (RandomAccessFile reader = new RandomAccessFile(filename , "r") )
@@ -33,14 +32,16 @@ public class TaskB {
 
             if (testLine.contains(Patterns.ONELINECOMMENT))
                 {   int position = testLine.indexOf(Patterns.ONELINECOMMENT) ;
-                    if (position==1) {myString.append("");}
+                    if (position<2) {myString.append("");}
                     else testLine = testLine.substring(0 , position) ;
                     myString.append(testLine).append("\n");}
 
             if (testLine.contains(Patterns.START_ANNO))
             { int position = testLine.indexOf(Patterns.START_ANNO);
-                String myLine = testLine.substring(0 , position);
-                myString.append(myLine).append("\n");}
+                if (position < 2)
+                {myString.append("");}
+                else {String myLine = testLine.substring(0 , position);
+                      myString.append(myLine) ;}}
 
             if ((testLine.contains(Patterns.START_MANYLINE)) && (!testLine.contains(Patterns.START_ANNO)))
                 {  int position = testLine.indexOf(Patterns.START_MANYLINE) ;
@@ -74,8 +75,7 @@ public class TaskB {
         catch (IOException e) {
             System.out.println("Can't write file: " + result);
         }
-      /*
-   one more many-line comment
+      /*one more many-line comment
     */
     }
 }
