@@ -1,4 +1,4 @@
-package by.it.agadzhanov.jd02_02;
+package by.it.agadzhanov.jd02_03;
 
 
 import java.util.ArrayList;
