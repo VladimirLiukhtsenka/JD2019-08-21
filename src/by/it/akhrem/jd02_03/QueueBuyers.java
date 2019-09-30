@@ -8,7 +8,7 @@ import java.util.concurrent.LinkedBlockingDeque;
 public class QueueBuyers {
 
     private static BlockingDeque<Buyer> deque = new LinkedBlockingDeque<>(30);
-    //Sync QueueBuyers.class
+
     static void add(Buyer buyer){
         try {
             deque.putLast(buyer);

@@ -33,19 +33,20 @@ public class Market {
         System.out.println("Market opened");
         int numberOfCashiers = 2;
 
-        List<Thread> threadList = new ArrayList<>(200);
-        ExecutorService threadPool1 = Executors.newFixedThreadPool(5);
-        for(int i=1; i<=2; i++) {
-            Cashier cashier = new Cashier(i);
-            threadPool1.execute(cashier);
-        }
 
+        ExecutorService nwThreadPool = Executors.newFixedThreadPool(5);
+        for(int i=1; i<=numberOfCashiers; i++) {
+            Cashier cashier = new Cashier(i);
+            nwThreadPool.execute(cashier);
+        }
+        List<Thread> threadList = new ArrayList<>(200);
+        /*
         for (int i = 1; i <= numberOfCashiers ; i++) {
             Cashier cashier = new Cashier(i);
             Thread thread = new Thread(cashier);
             threadList.add(thread);
             thread.start();
-        }
+        }*/
         int numberBuyer = 0;
         while (!Dispathcher.planComplete()){
             int countBuyer = Util.random(2);
@@ -64,6 +65,10 @@ public class Market {
             } catch (InterruptedException e) {
               e.printStackTrace();
             }
+        nwThreadPool.shutdown();
+        while (!nwThreadPool.isTerminated()) {
+            Thread.yield();
+        }
         System.out.println("Market closed");
     }
 }
