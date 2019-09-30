@@ -1,4 +1,4 @@
-package by.it.zavadski.jd02_02;
+package by.it.zavadski.jd02_03;
 
 public class Util {
 //    public static int random (int array){
@@ -12,7 +12,7 @@ public class Util {
         return random(0,max);
     }
 
-    public static void sleep(int timeout) {
+    static void sleep(int timeout) {
         try {
             Thread.sleep(timeout/ Dispatcher.kSpeed);
         } catch (InterruptedException e) {

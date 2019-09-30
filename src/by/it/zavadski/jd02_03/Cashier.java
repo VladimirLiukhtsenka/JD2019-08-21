@@ -1,8 +1,8 @@
-package by.it.zavadski.jd02_02;
+package by.it.zavadski.jd02_03;
 
-import static by.it.zavadski.jd02_02.Dispatcher.marketIsOpened;
-import static by.it.zavadski.jd02_02.Util.random;
-import static by.it.zavadski.jd02_02.Util.sleep;
+import static by.it.zavadski.jd02_03.Dispatcher.marketIsOpened;
+import static by.it.zavadski.jd02_03.Util.random;
+import static by.it.zavadski.jd02_03.Util.sleep;
 
 public class Cashier implements Runnable {
     private String name;
@@ -26,6 +26,7 @@ public class Cashier implements Runnable {
         sleep(random(timeout));
         System.out.printf("%-9s finished processing %10s\n",this,buyer);
         synchronized (buyer){
+            buyer.setWaiting(false);
             buyer.notifyAll();
         }
     }

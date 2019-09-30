@@ -1,36 +1,33 @@
-package by.it.zavadski.jd02_02;
+package by.it.zavadski.jd02_03;
 
 import java.util.HashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 class Dispatcher {
-    private static final Object monitorCounter=new Object();
     static int kSpeed =1000;
     static int closeTime =120; //Time of app running
 
     static final int MAX_BYERS=100;
-    static int buyerCounter=0;
-    static int buyersInMarket=0;
+    static final AtomicInteger buyerCounter=new AtomicInteger(0);
+    static final AtomicInteger buyersInMarket=new AtomicInteger(0);
 
 static boolean marketIsOpened(){
-    return !planComplete() || buyersInMarket>0;
+    return !planComplete() || buyersInMarket.get()>0;
 }
 
 static int buyerInMarket(){
-    synchronized (monitorCounter){
-        buyerCounter++;
-        buyersInMarket++;
-    }
-    return buyersInMarket;
+
+        buyerCounter.getAndIncrement();
+        buyersInMarket.getAndIncrement();
+    return buyersInMarket.get();
 }
 
 static void buyerLeaveMarket(){
-    synchronized (monitorCounter){
-        buyersInMarket--;
-    }
+        buyersInMarket.getAndDecrement();
 }
 
-public static boolean planComplete(){
-    return buyerCounter==MAX_BYERS;
+static boolean planComplete(){
+    return buyerCounter.get()==MAX_BYERS;
 }
 
 

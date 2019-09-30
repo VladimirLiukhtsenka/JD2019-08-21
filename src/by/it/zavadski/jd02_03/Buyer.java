@@ -1,17 +1,24 @@
-package by.it.zavadski.jd02_02;
+package by.it.zavadski.jd02_03;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
-import static by.it.zavadski.jd02_01.Util.random;
+import static by.it.zavadski.jd02_03.Util.random;
 
 public class Buyer extends Thread implements IBuyer, IUseBasket {
+    public void setWaiting(boolean waiting) {
+        this.waiting = waiting;
+    }
+
+    private boolean waiting=false;
+
+
+
+
+
     Buyer (){
         super("Buyer-"+Dispatcher.buyerInMarket());
             }
-Buyer(int number){
-        super("Buyer-"+number);
-}
+
     @Override
     public String toString() {
         return this.getName();
@@ -23,7 +30,11 @@ Buyer(int number){
         takeBasket();
         chooseGoods();
         putGoodsToBasket();
-        jumpInQueue();
+        try {
+            jumpInQueue();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         goOut();
     }
 
@@ -33,18 +44,20 @@ Buyer(int number){
     }
 
     @Override
-    public void jumpInQueue() {
+    public void jumpInQueue() throws InterruptedException {
         System.out.println(this+"->Jump in queue");
         QueueBuyers.add(this);
-        synchronized (this){
-            try {
-                this.wait();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-                Thread.currentThread().interrupt();
-            }
-        }
+        waiting=true;
         System.out.println(this+"<-Leave Cashdesk");
+        while (waiting)
+            synchronized (this){
+                try {
+                    this.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                    Thread.currentThread().interrupt();
+                }
+            }
     }
 
     @Override

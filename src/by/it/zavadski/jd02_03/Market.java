@@ -1,23 +1,28 @@
-package by.it.zavadski.jd02_02;
+package by.it.zavadski.jd02_03;
 
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
-import static by.it.zavadski.jd02_02.Dispatcher.closeTime;
-import static by.it.zavadski.jd02_02.Dispatcher.planComplete;
-import static by.it.zavadski.jd02_02.Util.random;
-import static by.it.zavadski.jd02_02.Util.sleep;
+import static by.it.zavadski.jd02_03.Dispatcher.planComplete;
+import static by.it.zavadski.jd02_03.Util.random;
+import static by.it.zavadski.jd02_03.Util.sleep;
 
 public class Market {
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args)  {
         int numberBuyer = 0;
         List<Buyer> buyerList = new ArrayList<>(200);
         System.out.println("Market opened");
+
+        ExecutorService pool = Executors.newFixedThreadPool(5);
+
         for (int i = 1; i <= 2; i++) {
             Cashier cashier = new Cashier(i);
-            Thread thread = new Thread(cashier);
-            thread.start();
+            pool.execute(cashier);
+           // Thread thread = new Thread(cashier);
+           // thread.start();
         }
         while (!planComplete()) {
             int maxBuyers = random(2);
@@ -37,6 +42,11 @@ public class Market {
                 System.out.println("JOIN ERROR: " + e.getMessage());
                 Thread.currentThread().interrupt();
             }
+        }
+        pool.shutdown();
+        while (!pool.isTerminated())
+        {
+            Thread.yield();
         }
         System.out.println("Market closed");
     }
