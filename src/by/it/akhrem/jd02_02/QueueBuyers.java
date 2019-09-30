@@ -15,5 +15,4 @@ public class QueueBuyers {
         return deque.pollFirst();
     }
 
-
 }

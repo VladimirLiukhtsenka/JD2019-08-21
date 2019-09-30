@@ -1,6 +1,8 @@
-package by.it.akhrem.jd02_02;
+package by.it.akhrem.jd02_03;
 
 import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Market {
 
@@ -32,6 +34,12 @@ public class Market {
         int numberOfCashiers = 2;
 
         List<Thread> threadList = new ArrayList<>(200);
+        ExecutorService threadPool1 = Executors.newFixedThreadPool(5);
+        for(int i=1; i<=2; i++) {
+            Cashier cashier = new Cashier(i);
+            threadPool1.execute(cashier);
+        }
+
         for (int i = 1; i <= numberOfCashiers ; i++) {
             Cashier cashier = new Cashier(i);
             Thread thread = new Thread(cashier);
