@@ -2,28 +2,13 @@ package by.it.daletski.jd01_04;
 
 import java.util.Scanner;
 
-public class TaskA {
-
+public class TaskC {
     public static void main(String[] args) {
-        printMulTable ();
         Scanner sc = new Scanner (System.in);
-        String s = sc.nextLine();
-        buildOneDimArray (s);
+        String line = sc.nextLine ();
+        buildOneDimArray (line);
 
     }
-
-    static void printMulTable() {
-
-        for (int i = 2; i <= 9; i++) {
-            for (int j = 2; j <= 9; j++) {
-                System.out.printf ("%1d*%1d=%-3d", i, j, i * j);
-            }
-            System.out.println (
-
-            );
-        }
-    }
-
 
     public static void buildOneDimArray(String line) {
 
@@ -36,17 +21,31 @@ public class TaskA {
 
         for (int i = 0; i < array.length; i++) {
             if (array[i] == start) {
-                System.out.println ("Index of first element="+i);
+                System.out.println ("Index of first element=" + i);
                 break;
             }
         }
         for (int i = 0; i < array.length; i++) {
             if (array[i] == stop) {
-                System.out.printf ("Index of last element="+i);
+                System.out.printf ("Index of last element=" + i);
                 break;
             }
         }
 
 
     }
+
+
+    static int mergeSort(double[] array, int left, int right) {
+        double d = array[right];
+        int sort = 0;
+        for (int i = left+1; i <=right ; i++) {
+            if (array[i]<d){
+                array[i] = array[sort+1];
+        }
+        array[i] = array[sort];
+        }
+        return sort;
+    }
+
 }
