@@ -14,15 +14,18 @@ public class Buyer extends Thread implements IBuyer, IUseBasket {
         return basket;
     }
 
+    boolean isPensioner() {
+        return pensioner;
+    }
+
     Buyer() {
         int randomNumber = Util.randomFromTo(1, 4);
         pensioner = randomNumber == 1;
         if (pensioner) {
-            this.setName("Покупатель(пенсионер) №" + Dispatcher.buyerEnter());
+            this.setName("Покупатель(пенсионер) №" + Dispatcher.buyerEnterMarket());
         } else {
-            this.setName("Покупатель №" + Dispatcher.buyerEnter());
+            this.setName("Покупатель №" + Dispatcher.buyerEnterMarket());
         }
-        basket = new Basket();
     }
 
     @Override
@@ -32,6 +35,7 @@ public class Buyer extends Thread implements IBuyer, IUseBasket {
         chooseGoods();
         putGoodsToBasket();
         goToQueue();
+        returnBasket();
         goOut();
     }
 
@@ -49,18 +53,31 @@ public class Buyer extends Thread implements IBuyer, IUseBasket {
         } else {
             Util.sleepAccelerated(pause);
         }
+
+        try {
+            basket = BasketStack.takeBasket();
+        } catch (InterruptedException e) {
+            System.out.println(this + ": взятие корзины было прервано!");
+        }
         System.out.println("\\_/ " + this + " взял корзину");
     }
 
     @Override
     public void chooseGoods() {
+        try {
+            Dispatcher.choosingGoodsSemaphore.acquire();
+        } catch (InterruptedException e) {
+            System.out.println(this + ": ошибка при взятии разрешение у семафора!");
+        }
         int pause = Util.randomFromTo(500, 2000);
         if (pensioner) {
             Util.sleepPensioner(pause);
         } else {
             Util.sleepAccelerated(pause);
         }
+        basket.fillBasket();
         System.out.println("||| " + this + " выбрал товар");
+        Dispatcher.choosingGoodsSemaphore.release();
     }
 
     @Override
@@ -91,8 +108,13 @@ public class Buyer extends Thread implements IBuyer, IUseBasket {
     }
 
     @Override
+    public void returnBasket() {
+        BasketStack.putBasketBack();
+    }
+
+    @Override
     public void goOut() {
-        Dispatcher.buyerExit();
+        Dispatcher.buyerExitMarket();
         System.out.println("<<< " + this + " вышел из магазина");
     }
 

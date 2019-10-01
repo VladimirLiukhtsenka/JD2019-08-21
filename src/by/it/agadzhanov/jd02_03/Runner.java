@@ -14,6 +14,8 @@ public class Runner {
             main1(args);
             Dispatcher.resetBuyerCount();
             Dispatcher.resetCashierCount();
+            Dispatcher.resetTotalRevenue();
+            Dispatcher.resetCashierRevenueMap();
         }
     }
 
