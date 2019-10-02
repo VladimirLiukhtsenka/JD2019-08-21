@@ -7,6 +7,7 @@ import static by.it.zavadski.jd02_03.Util.random;
 
 public class Buyer extends Thread implements IBuyer, IUseBasket {
     private boolean waiting=false;
+    private boolean retard=false; //pensioner field
 
     public void setWaiting(boolean waiting) {
         this.waiting = waiting;
@@ -15,7 +16,10 @@ public class Buyer extends Thread implements IBuyer, IUseBasket {
     private static Semaphore semaphore=new Semaphore(20); //limit of selecting goods by 20 buyers at one moment
 
     Buyer (){
+
         super("Buyer-"+Dispatcher.buyerInMarket());
+        if (random(1,4)==4)
+            this.retard=true;
             }
 
     @Override
@@ -64,7 +68,9 @@ public class Buyer extends Thread implements IBuyer, IUseBasket {
         System.out.printf("%-10s choosing goods\n",this);
         try {
             semaphore.acquire();
-            int timeout = random(2000);
+            int timeout = random(500,2000);
+            if (retard)
+                timeout*=3/2;
             Util.sleep(timeout);
             System.out.printf("%-10s chose goods\n",this);
         } catch (InterruptedException e) {
