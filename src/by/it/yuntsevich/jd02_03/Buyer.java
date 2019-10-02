@@ -1,14 +1,31 @@
-package by.it.yuntsevich.jd02_02;
+package by.it.yuntsevich.jd02_03;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Semaphore;
 
 public class Buyer extends Thread implements IBuyer, IUseBucket {
+
+    private static Semaphore sem = new Semaphore(20);
+
+    private boolean iWait = false;
+
+    void setiWait(boolean iWait) {
+        this.iWait = iWait;
+    }
+    private final List<String> good = new ArrayList<>();
+
+    List<String> getGood() {
+        return good;
+    }
     private Map<String, Double> bucket = null;
     private boolean pensioneer = false;
     boolean isPensioneer() {
         return pensioneer;
     }
+
 
     Buyer(int num) {
 
@@ -21,7 +38,15 @@ public class Buyer extends Thread implements IBuyer, IUseBucket {
 
         enterToMarket();
         takeBucket();
-        chooseGoods();
+        try {
+            sem.acquire();
+            chooseGoods();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        finally {
+            sem.release();
+        }
         goToQueue();
         goOut();
 
@@ -38,6 +63,44 @@ public class Buyer extends Thread implements IBuyer, IUseBucket {
     @Override
     public void enterToMarket() {
         System.out.println(this + "вошел в магазин");
+    }
+
+    @Override
+    public void takeBucket() {
+        int timeout;
+        bucket = new HashMap<>(4);
+        if (pensioneer) {
+            timeout = Util.random(150, 300);
+        } else {
+            timeout = Util.random(100, 200);
+        }
+        Util.sleep(timeout);
+        System.out.println(this + "взял корзину");
+    }
+
+    @Override
+    public double putGoodsToBucket() {
+        int countGoods = Util.random(1, 4);
+        double totalSum = 0;
+        for (int i = 1; i <= countGoods; i++) {
+            int timeout;
+
+            if (pensioneer) {
+                timeout = Util.random(150, 300);
+            } else {
+                timeout = Util.random(100, 200);
+            }
+            Util.sleep(timeout);
+            Map.Entry<String, Double> entry = Goods.takeGoods();
+            if (entry != null) {
+                bucket.put(entry.getKey(), entry.getValue());
+                System.out.println(this + "кладет " + entry.getKey() + " стоимостью " + entry.getValue() + " BYN в корзину.");
+                totalSum += entry.getValue();
+            }
+        }
+        System.out.println("Общая сумма товаров у " + this + "= " +Math.round(totalSum*100)/100.0 + " BYN");
+
+return Math.round(totalSum*100)/100.0;
     }
 
     @Override
@@ -59,63 +122,29 @@ public class Buyer extends Thread implements IBuyer, IUseBucket {
 
 
     @Override
-    public void goOut() {
-        System.out.println(this + "вышел из магазина");
-        Dispathcher.buyerLeftMarket();
-    }
-
-    @Override
     public void goToQueue() {
         System.out.println(this+" стал в очередь");
         QueueBuyers.addBuyer(this);
+        iWait = true;
         synchronized (this){
-            try {
-                this.wait();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            while(iWait)
+                try {
+                    this.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
         }
 
         System.out.println(this+" покинул очередь");
     }
 
     @Override
-    public void takeBucket() {
-        int timeout;
-        bucket = new HashMap<>(4);
-        if (pensioneer) {
-            timeout = Util.random(150, 300);
-        } else {
-            timeout = Util.random(100, 200);
-        }
-        Util.sleep(timeout);
-        System.out.println(this + "взял корзину");
+    public void goOut() {
+        System.out.println(this + "вышел из магазина");
+        Dispathcher.buyerLeftMarket();
     }
 
-    @Override
-    public void putGoodsToBucket() {
-        int countGoods = Util.random(1, 4);
-        double totalSum = 0;
-        for (int i = 1; i <= countGoods; i++) {
-            int timeout;
 
-            if (pensioneer) {
-                timeout = Util.random(150, 300);
-            } else {
-                timeout = Util.random(100, 200);
-            }
-            Util.sleep(timeout);
-            Map.Entry<String, Double> entry = Runner.takeGoods();
-            if (entry != null) {
-                bucket.put(entry.getKey(), entry.getValue());
-                System.out.println(this + "кладет " + entry.getKey() + " стоимостью " + entry.getValue() + " BYN в корзину.");
-                totalSum += entry.getValue();
-            }
-        }
-        System.out.println("Общая сумма товаров у " + this + "= " +Math.round(totalSum*100)/100.0 + " BYN");
-
-
-    }
 
     void setPensioneer(boolean pensioneer) {
         this.pensioneer = pensioneer;
