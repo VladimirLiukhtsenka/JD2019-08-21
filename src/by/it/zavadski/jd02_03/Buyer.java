@@ -1,19 +1,18 @@
 package by.it.zavadski.jd02_03;
 
 import java.util.ArrayList;
+import java.util.concurrent.Semaphore;
 
 import static by.it.zavadski.jd02_03.Util.random;
 
 public class Buyer extends Thread implements IBuyer, IUseBasket {
+    private boolean waiting=false;
+
     public void setWaiting(boolean waiting) {
         this.waiting = waiting;
     }
 
-    private boolean waiting=false;
-
-
-
-
+    private static Semaphore semaphore=new Semaphore(20); //limit of selecting goods by 20 buyers at one moment
 
     Buyer (){
         super("Buyer-"+Dispatcher.buyerInMarket());
@@ -63,9 +62,16 @@ public class Buyer extends Thread implements IBuyer, IUseBasket {
     @Override
     public void chooseGoods() {
         System.out.printf("%-10s choosing goods\n",this);
-        int timeout = random(2000);
-        Util.sleep(timeout);
-        System.out.printf("%-10s chose goods\n",this);
+        try {
+            semaphore.acquire();
+            int timeout = random(2000);
+            Util.sleep(timeout);
+            System.out.printf("%-10s chose goods\n",this);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }finally {
+            semaphore.release();
+        }
     }
 
     @Override

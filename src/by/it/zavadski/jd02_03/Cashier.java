@@ -8,7 +8,7 @@ public class Cashier implements Runnable {
     private String name;
 
     Cashier(int number){
-        name="Cashier "+number;
+        name="--Cashier "+number;
     }
 
     @Override
@@ -21,10 +21,10 @@ public class Cashier implements Runnable {
         while (marketIsOpened()){
         Buyer buyer = QueueBuyers.extract();
         if (buyer !=null){
-        System.out.printf("%-9s started processing %10s\n",this,buyer);
+        System.out.printf("%-9s started processing %s\n",this,buyer);
         int timeout = random(2000, 5000);
         sleep(random(timeout));
-        System.out.printf("%-9s finished processing %10s\n",this,buyer);
+        System.out.printf("%-9s finished processing %s\n",this,buyer);
         synchronized (buyer){
             buyer.setWaiting(false);
             buyer.notifyAll();
