@@ -3,13 +3,16 @@ package by.it.akhrem.jd02_03;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Semaphore;
 
 public class Buyer extends Thread implements IBuyer, IUseBacket {
 
     Map<String, Double> basket = null;
+    Semaphore sem;
 
-    public Buyer(int number) {
+    public Buyer(int number, Semaphore semaphore) {
         super("Buyer " + number);
+        sem = semaphore;
         Dispathcher.buyerInMarket();
     }
 
@@ -38,11 +41,18 @@ public class Buyer extends Thread implements IBuyer, IUseBacket {
     @Override
     public void chooseGoods() {
         takeBacket();
-        System.out.println("started to choose goods " + this);
-        //int timeout = Util.random(2000);
-        //Util.sleep(timeout);
-        putGoodsToBacket();
-        System.out.println("end to choose goods " + this);
+        try {
+            sem.acquire();
+            System.out.println("started to choose goods " + this);
+            putGoodsToBacket();
+            System.out.println("end to choose goods " + this);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } finally {
+            sem.release();
+        }
+
+
     }
 
     @Override
