@@ -1,4 +1,4 @@
-package by.it.agadzhanov.jd01_09;
+package by.it.agadzhanov.jd02_04_calculator4;
 
 import java.util.Scanner;
 

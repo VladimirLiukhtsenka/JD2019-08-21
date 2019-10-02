@@ -1,9 +1,9 @@
-package by.it.agadzhanov.jd01_09;
+package by.it.agadzhanov.jd01_09_calculator3;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Parser {
+class Parser {
     Var calc(String expression) {
         String[] operands = expression.split(Patterns.operation);
         Var one = Var.createVar(operands[0]);

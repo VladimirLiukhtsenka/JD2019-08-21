@@ -1,4 +1,4 @@
-package by.it.agadzhanov.jd01_07;
+package by.it.agadzhanov.jd01_07_calculator1;
 
 public class Runner {
 

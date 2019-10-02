@@ -1,4 +1,4 @@
-package by.it.agadzhanov.jd01_08;
+package by.it.agadzhanov.jd01_08_calculator2;
 
 public class Runner {
     private static void print(Var var) {

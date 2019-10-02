@@ -1,6 +1,6 @@
-package by.it.agadzhanov.jd01_09;
+package by.it.agadzhanov.jd01_09_calculator3;
 
-public class Printer {
+class Printer {
     void print(Var var) {
         if (var!=null)
             System.out.println(var);

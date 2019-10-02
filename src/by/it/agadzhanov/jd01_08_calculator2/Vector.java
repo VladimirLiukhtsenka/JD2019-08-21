@@ -1,4 +1,4 @@
-package by.it.agadzhanov.jd01_09;
+package by.it.agadzhanov.jd01_08_calculator2;
 
 import java.util.Arrays;
 

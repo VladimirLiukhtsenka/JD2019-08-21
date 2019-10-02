@@ -1,6 +1,6 @@
-package by.it.agadzhanov.jd01_09;
+package by.it.agadzhanov.jd01_09_calculator3;
 
-public class Patterns {
+class Patterns {
 
     static final String operation = "[-+/*]";
     static final String SCALAR = "-?[0-9]+\\.?[0-9]*";
