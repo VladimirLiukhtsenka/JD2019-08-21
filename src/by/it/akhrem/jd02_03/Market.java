@@ -3,6 +3,7 @@ package by.it.akhrem.jd02_03;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Semaphore;
 
 public class Market {
 
@@ -48,11 +49,12 @@ public class Market {
             thread.start();
         }*/
         int numberBuyer = 0;
+        Semaphore sem = new Semaphore(20);
         while (!Dispathcher.planComplete()){
-            int countBuyer = Util.random(2);
+            int countBuyer = Util.random(50);
             for (int i=0; i < countBuyer; i++) {
                 if (!Dispathcher.planComplete()) {
-                    Buyer b = new Buyer(++numberBuyer);
+                    Buyer b = new Buyer(++numberBuyer, sem);
                     threadList.add(b);
                     b.start();
                 }
