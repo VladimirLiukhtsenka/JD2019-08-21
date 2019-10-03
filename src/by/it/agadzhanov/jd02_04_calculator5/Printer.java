@@ -1,8 +1,8 @@
-package by.it.agadzhanov.jd02_04_calculator4;
+package by.it.agadzhanov.jd02_04_calculator5;
 
 class Printer {
     void print(Var var) {
-        if (var!=null)
+        if (var != null)
             System.out.println(var);
     }
 }

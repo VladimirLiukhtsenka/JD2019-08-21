@@ -1,4 +1,4 @@
-package by.it.agadzhanov.jd02_04_calculator4;
+package by.it.agadzhanov.jd02_04_calculator5;
 
 interface Operation {
 

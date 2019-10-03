@@ -1,4 +1,4 @@
-package by.it.agadzhanov.jd02_04_calculator4;
+package by.it.agadzhanov.jd02_04_calculator5;
 
 import java.util.Arrays;
 
@@ -18,7 +18,7 @@ class Vector extends Var {
 
     Vector(Vector otherVector) {
         double[] newVector = new double[otherVector.value.length];
-        System.arraycopy(otherVector.value,0,newVector,0,otherVector.value.length);
+        System.arraycopy(otherVector.value, 0, newVector, 0, otherVector.value.length);
         this.value = newVector;
     }
 
@@ -38,17 +38,16 @@ class Vector extends Var {
     @Override
     public Var add(Var other) {
         if (other instanceof Scalar) {
-            double[] sum= Arrays.copyOf(this.value,this.value.length);
+            double[] sum = Arrays.copyOf(this.value, this.value.length);
             for (int i = 0; i < sum.length; i++) {
-                sum[i]=sum[i]+((Scalar) other).getValue();
+                sum[i] = sum[i] + ((Scalar) other).getValue();
             }
             return new Vector(sum);
-        }
-        else if (other instanceof Vector) {
-            if (this.value.length==((Vector) other).value.length) {
-                double[] sum= Arrays.copyOf(this.value,this.value.length);
+        } else if (other instanceof Vector) {
+            if (this.value.length == ((Vector) other).value.length) {
+                double[] sum = Arrays.copyOf(this.value, this.value.length);
                 for (int i = 0; i < sum.length; i++) {
-                    sum[i]=sum[i]+((Vector) other).value[i];
+                    sum[i] = sum[i] + ((Vector) other).value[i];
                 }
                 return new Vector(sum);
             }
@@ -59,17 +58,16 @@ class Vector extends Var {
     @Override
     public Var sub(Var other) {
         if (other instanceof Scalar) {
-            double[] sub= Arrays.copyOf(this.value,this.value.length);
+            double[] sub = Arrays.copyOf(this.value, this.value.length);
             for (int i = 0; i < sub.length; i++) {
-                sub[i]=sub[i]-((Scalar) other).getValue();
+                sub[i] = sub[i] - ((Scalar) other).getValue();
             }
             return new Vector(sub);
-        }
-        else if (other instanceof Vector) {
-            if (this.value.length==((Vector) other).value.length) {
-                double[] sub= Arrays.copyOf(this.value,this.value.length);
+        } else if (other instanceof Vector) {
+            if (this.value.length == ((Vector) other).value.length) {
+                double[] sub = Arrays.copyOf(this.value, this.value.length);
                 for (int i = 0; i < sub.length; i++) {
-                    sub[i]=sub[i]-((Vector) other).value[i];
+                    sub[i] = sub[i] - ((Vector) other).value[i];
                 }
                 return new Vector(sub);
             }
@@ -80,17 +78,16 @@ class Vector extends Var {
     @Override
     public Var mul(Var other) {
         if (other instanceof Scalar) {
-            double[] product= Arrays.copyOf(this.value,this.value.length);
+            double[] product = Arrays.copyOf(this.value, this.value.length);
             for (int i = 0; i < product.length; i++) {
-                product[i]=product[i]*((Scalar) other).getValue();
+                product[i] = product[i] * ((Scalar) other).getValue();
             }
             return new Vector(product);
-        }
-        else if (other instanceof Vector) {
-            if (this.value.length==((Vector) other).value.length) {
+        } else if (other instanceof Vector) {
+            if (this.value.length == ((Vector) other).value.length) {
                 double product = 0;
                 for (int i = 0; i < this.value.length; i++) {
-                    product=product+this.value[i]*((Vector) other).value[i];
+                    product = product + this.value[i] * ((Vector) other).value[i];
                 }
                 return new Scalar(product);
             }
@@ -101,9 +98,9 @@ class Vector extends Var {
     @Override
     public Var div(Var other) {
         if (other instanceof Scalar && ((Scalar) other).getValue() != 0) {
-            double[] div=Arrays.copyOf(this.value,this.value.length);
+            double[] div = Arrays.copyOf(this.value, this.value.length);
             for (int i = 0; i < this.value.length; i++) {
-                div[i]=div[i]/((Scalar) other).getValue();
+                div[i] = div[i] / ((Scalar) other).getValue();
             }
             return new Vector(div);
         }

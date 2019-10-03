@@ -1,4 +1,4 @@
-package by.it.agadzhanov.jd02_04_calculator4;
+package by.it.agadzhanov.jd01_011_calculator4;
 
 class Scalar extends Var {
 
@@ -23,19 +23,17 @@ class Scalar extends Var {
     @Override
     public Var add(Var other) {
         if (other instanceof Scalar) {
-            double sum=this.value+((Scalar) other).value;
+            double sum = this.value + ((Scalar) other).value;
             return new Scalar(sum);
-        }
-        else return other.add(this); //если other был вектором или матрицей, то add ищем в соответствующем классе
+        } else return other.add(this); //если other был вектором или матрицей, то add ищем в соответствующем классе
     }
 
     @Override
     public Var sub(Var other) {
         if (other instanceof Scalar) {
-            double sub=this.value-((Scalar) other).value;
+            double sub = this.value - ((Scalar) other).value;
             return new Scalar(sub);
-        }
-        else {
+        } else {
             Scalar minus = new Scalar(-1);
             return other.mul(minus).add(this); //5-{1,2,3} --> -1*{1,2,3}+5
         }
@@ -44,10 +42,9 @@ class Scalar extends Var {
     @Override
     public Var mul(Var other) {
         if (other instanceof Scalar) {
-            double product=this.value*((Scalar) other).value;
+            double product = this.value * ((Scalar) other).value;
             return new Scalar(product);
-        }
-        else {
+        } else {
             return other.mul(this);
         }
     }
@@ -55,10 +52,9 @@ class Scalar extends Var {
     @Override
     public Var div(Var other) {
         if (other instanceof Scalar && ((Scalar) other).value != 0) {
-            double div=this.value/((Scalar) other).value;
+            double div = this.value / ((Scalar) other).value;
             return new Scalar(div);
-        }
-        else {
+        } else {
             return super.div(other);
         }
     }
