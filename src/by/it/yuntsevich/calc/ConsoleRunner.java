@@ -7,6 +7,7 @@ public class ConsoleRunner {
         Scanner sc = new Scanner(System.in);
         Parser parser = new Parser();
         Printer printer = new Printer();
+        Var.readVars();
 
 
         for(;;) {

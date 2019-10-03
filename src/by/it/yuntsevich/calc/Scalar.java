@@ -52,9 +52,9 @@ public class Scalar extends Var {
         return super.div(other);
     }
 
-    Scalar(Scalar otherScalar){
-        this.value = otherScalar.value;
-    }
+//    Scalar(Scalar otherScalar){
+//        this.value = otherScalar.value;
+//    }
     public Scalar(String stringValue){
         this.value = Double.valueOf(stringValue);
     }
