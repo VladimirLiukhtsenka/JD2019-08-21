@@ -20,6 +20,7 @@ public abstract class Var implements Operation {
 
 
     static Var createVar(String strVar) throws CalcException{
+        strVar = strVar.replace(" ", "");
         if (strVar.matches(Patterns.SCALAR))
             return new Scalar(strVar);
         if (strVar.matches(Patterns.VECTOR))
