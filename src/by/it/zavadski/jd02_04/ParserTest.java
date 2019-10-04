@@ -13,7 +13,7 @@ public static void initParser(){
 }
     @Test
     public void checkSimpleCalc() throws Exception{
-        String expression="3*3+1";
+        String expression="A=3*3+1";
         String actual=parser.calc(expression).toString();
         String expected="10.0";
         assertEquals(expected,actual);
@@ -21,9 +21,9 @@ public static void initParser(){
     @Test
 
     public void checkCreationOfVar() throws Exception {
-        String expression="2+2*2";
+        String expression="A=2+2*2";
         String expected="6.0";
-        parser.calc("A=2+2*2");
+        parser.calc(expression);
         Var var=Var.createVar("A");
         assertEquals(expected, var.toString());
     }
@@ -37,7 +37,7 @@ public static void initParser(){
     }
     @Test
     public void checkScalarSubScalar() throws Exception {
-        String expression="100-89";
+        String expression="A=100-89";
         String actual=parser.calc(expression).toString();
         String expected="11.0";
         assertEquals(expected,actual);
@@ -45,7 +45,7 @@ public static void initParser(){
 
     @Test
     public void checkScalarDivScalar() throws Exception {
-        String expression="1440/40";
+        String expression="A=1440/40";
         String actual=parser.calc(expression).toString();
         String expected="36.0";
         assertEquals(expected,actual);
@@ -53,7 +53,7 @@ public static void initParser(){
 
     @Test
     public void checkVectorAddScalar() throws Exception {
-        Var var = parser.calc("{1,2}+3");
+        Var var = parser.calc("A={1,2}+3");
         String expected = "{4.0, 5.0}";
         String actual = var.toString();
         assertEquals(expected, actual);
@@ -73,14 +73,14 @@ public static void initParser(){
 
     @Test
     public void checkVectorMultipleScalar() throws Exception {
-        Var var = parser.calc("{3,4}+5*6-7");
+        Var var = parser.calc("A={3,4}+5*6-7");
         String expected = "{26.0, 27.0}";
         String actual = var.toString();
         assertEquals(expected, actual);
     }
     @Test
     public void checkVectorSubVector() throws Exception {
-        Var var = parser.calc("{3,4}-{1,2}");
+        Var var = parser.calc("A={3,4}-{1,2}");
         String actual = var.toString();
         String expected = "{2.0, 2.0}";
         assertEquals(expected, actual);
@@ -88,7 +88,7 @@ public static void initParser(){
 
     @Test
     public void checkVectorSubScalar() throws Exception {
-        Var var = parser.calc("{2,3}-1");
+        Var var = parser.calc("A={2,3}-1");
         String actual = var.toString();
         String expected = "{1.0, 2.0}";
         assertEquals(expected, actual);
@@ -96,14 +96,14 @@ public static void initParser(){
 
     @Test
     public void checkSimpleExpressionMatrix() throws Exception {
-        Var var = parser.calc("{{2, 3},{2, 3}}+{{1, 2},{3, 4}}");
+        Var var = parser.calc("A={{2, 3},{2, 3}}+{{1, 2},{3, 4}}");
         String expected = "{{3.0, 5.0}, {5.0, 7.0}}";
         String actual = var.toString();
         assertEquals(expected, actual);
     }
     @Test
     public void checkMatrixMulMatrix() throws Exception {
-        Var var = parser.calc("{{1,2},{3,4}}*{{1,2},{3,4}}");
+        Var var = parser.calc("A={{1,2},{3,4}}*{{1,2},{3,4}}");
         String actual = var.toString();
         String expected = "{{7.0, 10.0}, {15.0, 22.0}}";
         assertEquals(expected, actual);
@@ -111,7 +111,7 @@ public static void initParser(){
 
     @Test
     public void checkMatrixSubMatrix() throws Exception {
-        Var var = parser.calc("{{2,3},{4,5}}-{{1,2},{3,4}}");
+        Var var = parser.calc("A={{2,3},{4,5}}-{{1,2},{3,4}}");
         String actual = var.toString();
         String expected = "{{1.0, 1.0}, {1.0, 1.0}}";
         assertEquals(expected, actual);
