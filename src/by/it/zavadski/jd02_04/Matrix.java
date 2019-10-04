@@ -19,20 +19,12 @@ public class Matrix extends Var {
     }
 
     public Matrix(Matrix matrix){
-        //this.value = Arrays.copyOf(matrix.value, matrix.value.length);
+        this.value = Arrays.copyOf(matrix.value, matrix.value.length);
         //this.value = matrix.value;
-        double[][] neededMatrix=new double[matrix.value.length][matrix.value[0].length];
-        for (int i = 0; i <matrix.value.length ; i++)
-            System.arraycopy(matrix.value[i],0,neededMatrix[i],0,neededMatrix[0].length);
-        this.value=neededMatrix;
-
     }
 
      Matrix(String strMatrix){
-//         String[] stringNumbers=strMatrix.replaceAll("[{]"," ").replaceAll("[}]"," ").
-//                 replaceAll("\\s","").split(",");
-         String[] stringNumbers=strMatrix.replaceAll("[{]"," ").replaceAll("[}]"," ").
-                 trim().split(",");
+         String[] stringNumbers=strMatrix.replaceAll("\\{\\{","").replaceAll("\\}\\}","").replaceAll("\\s","").split("\\}\\,\\{");
          Pattern number=Pattern.compile("[\\d]+\\.?+\\d*");
          double[][] matrixAppended=new double[stringNumbers.length][stringNumbers.length];
 
@@ -70,28 +62,25 @@ public class Matrix extends Var {
     @Override
     public Var add(Var other) throws CalcException {
         if (other instanceof Scalar) {
-            double[][] result = new double[this.value.length][this.value[0].length];
-            //Matrix result=new Matrix(value);
-            double scalarValue = ((Scalar) other).getValue();
-            for (int i = 0; i < this.value.length; i++) {
-                for (int j = 0; j < this.value[0].length; j++) {
-                    result[i][j] += scalarValue;
+            Matrix result=new Matrix(value);
+            double scalarValue=((Scalar) other).getValue();
+            for (int i = 0; i <result.value.length; i++) {
+                for (int j = 0; j <result.value.length ; j++) {
+                    result.value[i][j]+=scalarValue;
                 }
             }
             return new Matrix(result);
-        } else if (other instanceof Matrix)
-            if (this.value.length == ((Matrix) other).value.length && this.value[0].length == ((Matrix) other).value[0].length) {
-                double[][] result = new double[this.value.length][this.value[0].length];
-                for (int i = 0; i < this.value.length; i++)
-                    System.arraycopy(this.value[i], 0, result[i], 0, this.value[0].length);
-                for (int i = 0; i < this.value.length; i++)
-                    for (int j = 0; j < this.value[0].length; j++)
-                        result[i][j] = result[i][j] + ((Matrix) other).value[i][j];
-                return new Matrix(result);
+        }else  if(other instanceof Matrix){
+            Matrix result=new Matrix(value);
+            for (int i = 0; i <result.value.length; i++) {
+                for (int j = 0; j <result.value.length ; j++) {
+                    result.value[i][j]+=((Matrix) other).getValue(i,j);
+                }
             }
-        return super.add(other);
+            return new Matrix(result);
+        }else
+            return super.add(other);
     }
-
 
     @Override
     public Var sub(Var other) throws CalcException {

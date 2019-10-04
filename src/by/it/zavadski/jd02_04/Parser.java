@@ -38,25 +38,9 @@ public class Parser {
         throw new CalcException("Unknown operation "+operation);
     }
 
-    private String parseBrackets(String expression) throws CalcException {
-        Pattern brackets=Pattern.compile(Patterns.BRACKETS);
-        Matcher bracketsMatcher=brackets.matcher(expression);
-        if (bracketsMatcher.find()){
-            int start=bracketsMatcher.start();
-            int end=bracketsMatcher.end();
-            String expressionInBrackets=bracketsMatcher.group();
-            expressionInBrackets=expressionInBrackets.replace("(","").replace(")","");
-            Var result=calc(expressionInBrackets);
-            expression=expression.replace(expression.substring(start,end),result.toString());
-        }
-        return expression;
-    }
-
     Var calc(String expression) throws CalcException {
-        while (expression.contains("("))
-            expression=parseBrackets(expression);
-
-        expression.replace(" ", "");
+        expression = expression.replaceAll("\\(", "").replaceAll("\\)", "");
+        //expression.replace(" ", "");
         String[] part = expression.split(Patterns.OPERATION);
         List<String> operands = new ArrayList<>(Arrays.asList(part));
         List<String> operations = new ArrayList<>();
