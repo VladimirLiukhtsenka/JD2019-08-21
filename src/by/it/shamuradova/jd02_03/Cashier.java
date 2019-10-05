@@ -4,20 +4,15 @@ import java.util.List;
 
 public class Cashier implements Runnable {
     int num;
-
     private String name;
-
     private double revenue=0;
-
     public double getRevenue() {
         return this.revenue;
     }
-
     Cashier(int num) {
         name = "Кассир № " + num;
         this.num = num;
     }
-
     @Override
     public void run() {
         System.out.println(this + " открыл кассу");

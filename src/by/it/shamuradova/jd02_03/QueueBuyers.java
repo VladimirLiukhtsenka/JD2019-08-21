@@ -8,7 +8,6 @@ public class QueueBuyers {
     //нужно, чтобы очередь была в единственном экземпляре или LinkedList
     private static final BlockingDeque<Buyer> dequeOfBuyers = new LinkedBlockingDeque<>(30); //монитор, final -гарантия, что адрес (ссылка на объект) в памяти не изменится и монитор не изменится
     private static final BlockingDeque<Buyer> dequeOfRetiree = new LinkedBlockingDeque<>();
-
     //добавляем покупателя в очередь. Покупатель будет вызывать этот метод
     static void addBuyerInQueue(Buyer buyer) {
         if (buyer.retiree) {
@@ -25,7 +24,6 @@ public class QueueBuyers {
             }
         }
     }
-
     //извлекаем покупателя из очереди, метод для кассира
     static Buyer extract() {
         if (!dequeOfRetiree.isEmpty()) {
@@ -37,7 +35,6 @@ public class QueueBuyers {
             }
         }
     }
-
     //кассир проверяет, сколько осталось в очереди человек, если нету, можно закрываться
     static int getCount() {
         return dequeOfBuyers.size();

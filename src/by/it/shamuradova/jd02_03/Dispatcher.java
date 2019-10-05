@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Dispatcher extends Thread {
-
-
     private static final AtomicInteger countOfBuyers = new AtomicInteger(0);
     //очередь кассиров, последнего кассира закрывать, пока не останется ни один покупатель.
     //если очередь длинная - добавляем кассира, короткая - убавляем
@@ -51,11 +49,9 @@ public class Dispatcher extends Thread {
 //    static int getCountOfBuyersInMarket() {
 //        return countOfBuyersInMarket;
 //    }
-
     static boolean marketIsOpened() {
         return !planComplete() || countOfBuyersInMarket.get() > 0;
     }
-
     static boolean planComplete() {
             return countOfBuyers.get() == MAX;
     }
@@ -65,11 +61,9 @@ public class Dispatcher extends Thread {
             countOfBuyersInMarket.getAndIncrement();
             return countOfBuyers.get();
     }
-
     static int buyerLeaveMarket() {
         return countOfBuyersInMarket.getAndDecrement();
     }
-
     static int getMax() {
         return MAX;
     }
