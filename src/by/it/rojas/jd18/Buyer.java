@@ -1,80 +1,144 @@
 package by.it.rojas.jd18;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.Semaphore;
 
-import static by.it.rojas.jd18.Runner.Good;
 
 public class Buyer extends Thread implements Runnable, IBuyer, IUseBasket {
-    Buyer(){
-        this.setName("Buyer № "+ Dispatcher.buyerInMarket()+" ");
+
+    private int sum ;
+    private List<String> mySet ;
+    private boolean iWait = false ;
+
+    private static Semaphore semaphore = new Semaphore(20) ;
+
+    public void setIWait(boolean iWait) {
+        this.iWait = iWait;
+    }
+
+    public int getSum() {
+        return sum;
+    }
+
+    public List<String> getMySet() {
+        return mySet;
+    }
+
+    Buyer () {
+        super("Покупатель № " + Dispatcher.buyerInMarket() + " ");
+        this.sum = 0 ;
+        this.mySet = new ArrayList<>() ;
         start();
     }
+
     @Override
-    public void run(){
-        enterToMarket();
-        takeBasket();
-        chooseGoods();
-        putGoodsToBasket();
-        goToQueue();
-        goToOut();
+    public  void run() {
+        try {
+            semaphore.acquire();
+            enterToMarket();
+            takeBasket();
+            putGoodsToBasket();
+            chooseGoods();
+            goToQueue();
+            goToOut();
+        }
+        catch (InterruptedException e) {
+            System.out.println(this +" не может попасть вмагазин.");
+        }
+        finally {
+            semaphore.release();
+        }
+
     }
+
+    @Override
+    public String toString() {return this.getName() ;}
 
     @Override
     public void enterToMarket() {
-        System.out.println(this + "entered the market <--");
-    }
-
-    @Override
-    public String toString() {
-        return this.getName();
-    }
-
-    @Override
-    public void chooseGoods() {
-        int pause = Rnd.fromTo(500,2000);
-        Util.sleep(pause);
-        System.out.println("\t"+this+"took the product ");
+        System.out.println(this + "вошел в магазин (==>)");
     }
 
     @Override
     public void goToOut() {
-        System.out.println(this + "left the market -->");
+        System.out.println(this + " вышел из магазина (<==)");
         Dispatcher.buyerLeaveMarket();
     }
 
     @Override
     public void goToQueue() {
-        System.out.println(this+"came in line");
+        System.out.println(this + "встал в очередь.");
         QueueBuyers.add(this);
-        synchronized (this){
-            try {
+        iWait= true ;
+        synchronized (this)
+        {try {
+            while (iWait)
                 this.wait();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+        } catch (InterruptedException e)
+        {
+            System.out.println(this + " уснул в очереди. ");
+        }}
+        System.out.println(this + " расплатился (покинул очередь).");
+    }
+
+    @Override
+    public void chooseGoods() {
+        try{
+            int pause = Rnd.fromTo(500 , 2000) ;
+            Thread.sleep(pause);
         }
-        System.out.println(this+"left the line");
+        catch (InterruptedException e) {
+            System.out.println(this + "задерживается в магазине");
+        }
+        System.out.println(this + "выбрал товар");
     }
 
     @Override
     public void takeBasket() {
-        int pause = Rnd.fromTo(100,200);
-        Util.sleep(pause);
-        System.out.println(this + "took the basket");
+        try {
+            int pause = Rnd.fromTo(100 , 200);
+            Thread.sleep(pause);
+            System.out.println(this + "взял корзинку");
+        }
+        catch (InterruptedException e) {
+            System.out.println(this + "не может найти корзинку");}
     }
 
     @Override
-    public void putGoodsToBasket() {
-        HashMap<String,String> Basket = new HashMap<>();
-        int BuyerChoice = (int)(Math.random()*4+1);
-        for (Map.Entry<String, String> entry : Good.entrySet()) {
-            if (Basket.size()< BuyerChoice) {
-                Basket.put(entry.getKey(),entry.getValue());
-                System.out.println(this +"put "+entry.getKey() + "cost" + entry.getValue()+" to the basket");
-            }
-            int pause = Rnd.fromTo(100,200);
-            Util.sleep(pause);
+    public void  putGoodsToBasket() {try {
+        int pause = Rnd.fromTo(100 , 200);
+        Thread.sleep(pause);
+        int numberOfGoods = Rnd.fromTo(1, 4);
+
+        Set<Integer> numberOfNeededList = new HashSet<>() ;
+        while (numberOfNeededList.size()!= numberOfGoods )
+        {numberOfNeededList.add(Rnd.fromTo(0,14));}
+        for (Integer element : numberOfNeededList)
+        {Set<Map.Entry<String, Integer>> entry_set = Runner.listOfGoods.entrySet();
+            Iterator<Map.Entry<String, Integer>> it = entry_set.iterator() ;
+
+            for(int k = 0 ; k < element & (it.hasNext())  ; k++ )
+            {it.next() ; }
+            Map.Entry<String, Integer> me = it.next() ;
+
+            sum = sum + me.getValue() ;
+            mySet.add(me.getKey()) ;
         }
+
+        StringBuilder myString = new StringBuilder();
+        myString.append(this).append("положил в корзинку: ");
+        String delimeter = "";
+        for ( String good : mySet) {
+            myString.append(delimeter) ;
+            myString.append(good);
+            delimeter = ", " ;
+        }
+        myString.append("; сумма покупки = ").append(sum).append("рублей.");
+
+        System.out.println(myString);
+    }
+    catch (InterruptedException e) {
+        System.out.println(this + "не может выбрать товар");
+    }
     }
 }

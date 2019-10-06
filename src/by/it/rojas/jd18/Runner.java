@@ -1,50 +1,55 @@
 package by.it.rojas.jd18;
 
-import java.util.ArrayList;
+import java.util.ArrayDeque;
 import java.util.HashMap;
+import java.util.Queue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 
 public class Runner {
-    static HashMap<String,String> Good = new HashMap<>();
+
+    static public HashMap<String, Integer> listOfGoods = new HashMap<>() ;
 
     public static void main(String[] args) throws InterruptedException {
-        Good.put("milk "," 2 RUB");
-        Good.put("banana "," 3 RUB");
-        Good.put("chicken fillet "," 5 RUB");
-        Good.put("juice "," 2.5 RUB");
-
-        ArrayList<Thread> actorList = new ArrayList<>(200);
-        System.out.println("The market is opened");
 
 
-        ExecutorService pool = Executors.newFixedThreadPool(5);
+        listOfGoods.put("Хлеб" , 5) ;
+        listOfGoods.put("Картошка" , 3) ;
+        listOfGoods.put("Селедка" , 10) ;
+        listOfGoods.put("Мясо" , 15) ;
+        listOfGoods.put("Макароны", 4);
+        listOfGoods.put("Консервы", 8);
+        listOfGoods.put("Курица", 9);
+        listOfGoods.put("Батон", 5);
+        listOfGoods.put("Водка" , 12) ;
+        listOfGoods.put("Пиво" , 5) ;
+        listOfGoods.put("Морковь", 3);
+        listOfGoods.put("Лук", 2);
+        listOfGoods.put("Мука", 6);
+        listOfGoods.put("Мороженое", 6);
+        listOfGoods.put("Шоколад", 6);
 
-        for (int i = 1; i <=2 ; i++) {
-            Cashier cashier = new Cashier(i);
-            pool.execute(cashier);
+        Queue<Thread> queue = new ArrayDeque<>(300) ;
+        System.out.println("Магазин открылся");
+
+        ExecutorService poolForCashiers = Executors.newFixedThreadPool(5);
+        for (int i = 1; i <= 2; i++) {
+            Cashier cashier = new Cashier(i) ;
+            poolForCashiers.execute(cashier);
+
         }
-
-        while (!Dispatcher.planComplete()){
-            Util.sleep(1000);
-            int count = Rnd.fromTo(0,2);
-            for (int i = 0; i <= count; i++) {
-                if (!Dispatcher.planComplete())
-                {
-                    Buyer buyer = new Buyer();
-                    actorList.add(buyer);
-                }
+        while (!Dispatcher.planComplete()) {
+            int count = Rnd.fromTo(0 , 2) ;
+            for (int i = 0; (i <= count) && (!Dispatcher.planComplete()) ; i++) {
+                Buyer buyer = new Buyer() ;
+                queue.add(buyer) ;
             }
-            Util.sleep(1000);
+            Thread.sleep(1000);
         }
-        for (Thread actor : actorList) {
-            actor.join();
-        }
-        pool.shutdown();
-        while (! pool.isTerminated()){
-            Thread.yield();
-        }
-        System.out.println("The market is closed");
+        for (Thread element : queue) {element.join();}
+        poolForCashiers.shutdown();
+        while (!poolForCashiers.isTerminated()) {Thread.yield();}
+        System.out.println("Магазин закрылся. SORRY, WE ARE CLOSED!!! ");
     }
 }
