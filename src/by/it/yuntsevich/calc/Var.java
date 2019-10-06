@@ -27,7 +27,7 @@ public abstract class Var implements Operation {
             }
 
         } catch (IOException e) {
-            throw new CalcException("file not write: " + fileName, e);
+            throw new CalcException(ResourceManager.INSTANCE.get(Messages.FILE) + fileName, e);
         }
     }
 
@@ -67,29 +67,29 @@ public abstract class Var implements Operation {
             saveVarsToFile();
             return vars.get(strVar);
         }
-        throw new CalcException("Невозможно создать " + strVar);
+        throw new CalcException(ResourceManager.INSTANCE.get(Messages.CREATION) + strVar);
     }
 
     @Override
     public Var add(Var other) throws CalcException {
-        throw new CalcException("Операция сложения " + this + "+" + other + " невозможна");
+        throw new CalcException(ResourceManager.INSTANCE.get(Messages.OPERATIONIMPOSSIBLE) + this + "+" + other );
     }
 
     @Override
     public Var sub(Var other) throws CalcException {
-        throw new CalcException("Операция вычитания " + this + "-" + other + " невозможна");
+        throw new CalcException(ResourceManager.INSTANCE.get(Messages.OPERATIONIMPOSSIBLE) + this + "-" + other);
 
     }
 
     @Override
     public Var mul(Var other) throws CalcException {
-        throw new CalcException("Операция умножения " + this + "*" + other + " невозможна");
+        throw new CalcException(ResourceManager.INSTANCE.get(Messages.OPERATIONIMPOSSIBLE) + this + "*" + other);
 
     }
 
     @Override
     public Var div(Var other) throws CalcException {
-        throw new CalcException("Операция деления " + this + "/" + other + " невозможна");
+        throw new CalcException(ResourceManager.INSTANCE.get(Messages.OPERATIONIMPOSSIBLE) + this + "/" + other);
 
     }
 

@@ -48,7 +48,7 @@ class Parser {
                 case "/":
                     return one.div(two).toString();
             }
-        throw new CalcException("unknown operation: " + operation);
+        throw new CalcException(ResourceManager.INSTANCE.get(Messages.OPERATION) + operation);
     }
 
 
