@@ -52,7 +52,7 @@ class Parser {
             case "/":
                 return one.div(two);
         }
-        throw new CalcException("unknown operation: "+operation);
+        throw new CalcException(Var.rm.get("Parser.ErrUnknownOperation") + " " +operation);
     }
 
     Var calc(String expression) throws CalcException{

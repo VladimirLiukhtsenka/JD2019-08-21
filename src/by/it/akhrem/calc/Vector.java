@@ -50,7 +50,7 @@ public class Vector extends Var {
         if (other instanceof Vector) {
             double [] result = new double [this.value.length];
             if (this.value.length != ((Vector) other).value.length)
-                throw new CalcException("The sizes of vectors is not equal");
+                throw new CalcException(Var.rm.get("Vector.ErrNotEqualSize"));
             for  (int i = 0; i< this.value.length; i++)
                 result[i] = this.value[i] + ((Vector) other).value[i];
             return new Vector(result);
@@ -69,7 +69,7 @@ public class Vector extends Var {
         if (other instanceof Vector) {
             double [] result = new double [this.value.length];
             if (this.value.length != ((Vector) other).value.length)
-                throw new CalcException("The sizes of vectors is not equal");
+                throw new CalcException(Var.rm.get("Vector.ErrNotEqualSize"));
             for  (int i = 0; i< this.value.length; i++)
                 result[i] = this.value[i] - ((Vector) other).value[i];
             return new Vector(result);
@@ -88,7 +88,7 @@ public class Vector extends Var {
         if (other instanceof Vector) {
             double scalar = 0;
             if (this.value.length != ((Vector) other).value.length)
-                throw new CalcException("The sizes of vectors is not equal");
+                throw new CalcException(Var.rm.get("Vector.ErrNotEqualSize"));
             for  (int i = 0; i< this.value.length; i++)
                 scalar += this.value[i] * ((Vector) other).value[i];
             return new Scalar(scalar);
@@ -104,6 +104,6 @@ public class Vector extends Var {
                 result[i] = this.value[i] / ((Scalar) other).getValue();
             return new Vector(result);
         }
-        throw new CalcException("Unavailable operation for Vector");
+        throw new CalcException(Var.rm.get("Vector.ErrUnavailableOperation"));
     }
 }
