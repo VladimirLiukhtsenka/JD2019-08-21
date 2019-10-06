@@ -19,8 +19,12 @@ public class Matrix extends Var {
     }
 
     public Matrix(Matrix matrix){
-        this.value = Arrays.copyOf(matrix.value, matrix.value.length);
+        //this.value = Arrays.copyOf(matrix.value, matrix.value.length);
         //this.value = matrix.value;
+        double[][] neededMatrix=new double[matrix.value.length][matrix.value[0].length];
+        for (int i = 0; i <matrix.value.length ; i++)
+            System.arraycopy(matrix.value[i],0,neededMatrix[i],0,matrix.value[0].length);
+        this.value=neededMatrix;
     }
 
      Matrix(String strMatrix){

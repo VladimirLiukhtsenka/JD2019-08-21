@@ -40,7 +40,7 @@ public class Parser {
 
     Var calc(String expression) throws CalcException {
         expression = expression.replaceAll("\\(", "").replaceAll("\\)", "");
-        //expression.replace(" ", "");
+        expression.replace(" ", "");
         String[] part = expression.split(Patterns.OPERATION);
         List<String> operands = new ArrayList<>(Arrays.asList(part));
         List<String> operations = new ArrayList<>();
