@@ -4,7 +4,7 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-class Parser {
+public class Parser {
 
     private final HashMap<String, Integer> prTable=new HashMap<String,Integer>(){
         {

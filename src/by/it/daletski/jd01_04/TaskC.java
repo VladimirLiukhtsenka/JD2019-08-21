@@ -1,5 +1,6 @@
 package by.it.daletski.jd01_04;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class TaskC {
@@ -19,31 +20,25 @@ public class TaskC {
         Helper.sort (array);
         InOut.printArray (array, "V", 4);
 
-        for (int i = 0; i < array.length; i++) {
-            if (array[i] == start) {
-                System.out.println ("Index of first element=" + i);
-                break;
-            }
-        }
-        for (int i = 0; i < array.length; i++) {
-            if (array[i] == stop) {
-                System.out.printf ("Index of last element=" + i);
-                break;
-            }
-        }
+        int startIndex = Arrays.binarySearch (array, start);
+        int stopIndex = Arrays.binarySearch (array, stop);
+        System.out.printf ("Index of first element=%1d%n", startIndex);
+        System.out.printf ("Index of last element=%1d%n", stopIndex);
+    }
 
-
+    static int binarySearch(double[] array, double value) {
+        return 1;
     }
 
 
     static int mergeSort(double[] array, int left, int right) {
         double d = array[right];
         int sort = 0;
-        for (int i = left+1; i <=right ; i++) {
-            if (array[i]<d){
-                array[i] = array[sort+1];
-        }
-        array[i] = array[sort];
+        for (int i = left + 1; i <= right; i++) {
+            if (array[i] < d) {
+                array[i] = array[sort + 1];
+            }
+            array[i] = array[sort];
         }
         return sort;
     }
