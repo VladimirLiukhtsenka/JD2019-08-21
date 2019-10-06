@@ -2,8 +2,6 @@ package by.it.daletski.jd02_03;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class Market {
 
@@ -11,19 +9,16 @@ public class Market {
 
         System.out.println ("Market opened");
 
-
-        ExecutorService threadPool = Executors.newFixedThreadPool (5);
-
-
         for (int i = 0; i <=2 ; i++) {
             Cashier cashier = new Cashier (i);
-            threadPool.execute (cashier);
+            Thread thread = new Thread (cashier);
+            thread.start ();
         }
 
 
         List<Thread> actorList = new ArrayList<>(200);
         for (int i = 1; i <= 2; i++) {
-            Cashier cashier = new Cashier (i);
+            Cashier cashier = new Cashier(i);
             Thread thread = new Thread(cashier);
             actorList.add(thread);
             thread.start();
@@ -33,7 +28,7 @@ public class Market {
             int max = Util.random(2);
             for (int i = 0; i < max; i++)
                 if (!Dispatcher.planComplete ()) {
-                    Buyer buyer = new Buyer (1);
+                    Buyer buyer = new Buyer ();
                     actorList.add (buyer);
                     buyer.start ();
                 }
@@ -41,10 +36,6 @@ public class Market {
         }
         for (Thread actor : actorList) {
             actor.join();
-        }
-        threadPool.shutdown ();
-        while (!threadPool.isTerminated ()){
-            Util.sleep (1);
         }
         System.out.println("Market closed");
     }

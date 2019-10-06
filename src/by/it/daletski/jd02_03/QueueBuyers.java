@@ -5,20 +5,20 @@ import java.util.concurrent.LinkedBlockingDeque;
 
 class QueueBuyers {
 
-
-    private static BlockingDeque<Buyer> deque=new LinkedBlockingDeque<> (30);
-    //sync QueueBuyers.class
+    private static BlockingDeque<Buyer> deque=new LinkedBlockingDeque<>(30);
 
     static void add(Buyer buyer){
-
-        deque.addLast (buyer);
+        try {
+            deque.putLast(buyer);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
-   static Buyer extract(){
-
-
-        return deque.pollFirst ();
+    static Buyer extract(){
+        return deque.pollFirst();
     }
+
 
 
 }
