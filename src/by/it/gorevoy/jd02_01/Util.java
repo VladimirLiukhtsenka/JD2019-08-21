@@ -1,6 +1,5 @@
 package by.it.gorevoy.jd02_01;
 
-
 public class Util {
     public static int random (int max) {
         return random(0, max);
