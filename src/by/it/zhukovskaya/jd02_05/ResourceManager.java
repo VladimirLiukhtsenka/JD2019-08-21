@@ -1,15 +1,26 @@
 package by.it.zhukovskaya.jd02_05;
 
+import java.util.Locale;
 import java.util.ResourceBundle;
 
-public enum ResourceManager {
+enum ResourceManager {
     INSTANCE;
 
-    String baseName="by.it.zhukovskaya.jd02_05.res.strings";
-    ResourceBundle resourceBundle= ResourceBundle.getBundle(baseName,locale);
+    private String baseName;
+    private ResourceBundle resourceBundle;
+    private Locale locale;
 
+    ResourceManager() {
+        baseName="by.it.zhukovskaya.jd02_05.res.strings";
+        setLocale(Locale.getDefault());
+    }
 
-    public void get(String s){
+    void setLocale(Locale locale){
+        this.locale=locale;
+        resourceBundle=ResourceBundle.getBundle(baseName,locale);
+    }
 
+    String get(String key) {
+        return resourceBundle.getString(key);
     }
 }
