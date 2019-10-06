@@ -1,5 +1,7 @@
 package by.it.shamuradova.calc;
 
+import by.it.shamuradova.jd02_05.res.ResMan;
+
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -9,6 +11,7 @@ import java.util.TreeSet;
 abstract class Var implements Operation {
     private static Map<String, Var> vars = new HashMap<>(); //в случае операции "=", вычисления не выполняются, но переменная записывается в карту
     //ключ- название переменной String, значение Scalar, Vеctor, Matrix
+    static ResManager manager = ResManager.INSTANCE;
 
     static Map<String, Var> getVars() {
         return vars;
@@ -32,7 +35,9 @@ abstract class Var implements Operation {
             }
             writer.flush();
         } catch (IOException e) {
-            throw new CalcException(" not write file: " + filename, e);
+
+            String fileNotA = manager.getKey(Message.FILE_HAS_NOT_BEEN_WRITTEN);
+            throw new CalcException(fileNotA + filename, e);
         }
 //        Var var = createVar(varExpression);
 //        vars.put(key, var);
@@ -66,26 +71,25 @@ abstract class Var implements Operation {
 
     @Override
     public String toString() {
-        return "Это класс Var";
+        return manager.getKey(Message.VAR);
     }
 
     @Override
     public Var add(Var other) throws CalcException{
-        throw new CalcException("Операция сложения " + this +"+" + other +" невозможна");
+        throw new CalcException(manager.getKey(Message.ADD) + this +"+" + other);
     }
     @Override
     public Var sub(Var other) throws CalcException{
-        throw new CalcException("Операция разницы " + this + "-" + other + "невозможна");
+        throw new CalcException(manager.getKey(Message.SUB) + this + "-" + other);
     }
     @Override
     public Var mul(Var other) throws CalcException{
-        throw new CalcException("Операция умножения " + this + "*" + other + "невозможна");
+        throw new CalcException(manager.getKey(Message.MUL) + this + "*" + other);
 
     }
     @Override
     public Var div(Var other) throws CalcException{
-        throw new CalcException("Операция деления " + this + "/" + other + "невозможна");
-
+        throw new CalcException(manager.getKey(Message.DIV) + this + "/" + other);
     }
 
     static Var createVar(String a){

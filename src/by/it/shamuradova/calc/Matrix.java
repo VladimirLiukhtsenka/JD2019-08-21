@@ -15,7 +15,10 @@ public class Matrix extends Var {
         // }
         //}
     }
-    Matrix(){}
+
+    Matrix() {
+    }
+
     public Matrix(Matrix matrix) {
         this(matrix.mat);
     }
@@ -55,7 +58,7 @@ public class Matrix extends Var {
     }
 
     @Override
-    public Var add(Var other) throws CalcException{
+    public Var add(Var other) throws CalcException {
         if (other instanceof Scalar) {
             double[][] matrix = Arrays.copyOf(this.mat, this.mat.length);
             double[][] sumMatrixScalar = new double[this.mat.length][this.mat.length];
@@ -77,12 +80,15 @@ public class Matrix extends Var {
             }
             return new Matrix(sumMatrix);
         } else {
+//            String SUCCESS_KEY = "message.success"; //название ключа
+//            System.out.println(resourceBundle.get(SUCCESS_KEY)); //по кдючу достаем значения
             return super.add(other);
         }
+
     }
 
     @Override
-    public Var sub(Var other) throws CalcException{
+    public Var sub(Var other) throws CalcException {
         if (other instanceof Scalar) {
             double[][] matrix = Arrays.copyOf(this.mat, this.mat.length);
             double[][] matrixResult = new double[matrix.length][matrix.length];
@@ -109,8 +115,8 @@ public class Matrix extends Var {
     }
 
     @Override
-    public Var mul (Var other)throws CalcException{
-        if (other instanceof Scalar){
+    public Var mul(Var other) throws CalcException {
+        if (other instanceof Scalar) {
             double[][] matrix = Arrays.copyOf(this.mat, this.mat.length);
             double[][] mulMatrixScalar = new double[this.mat.length][this.mat.length];
             double scalar = ((Scalar) other).getValue();
@@ -120,39 +126,36 @@ public class Matrix extends Var {
                 }
             }
             return new Matrix(mulMatrixScalar);
-        }
-        else if (other instanceof Matrix){
+        } else if (other instanceof Matrix) {
             double[][] matrix1 = Arrays.copyOf(this.mat, this.mat.length);
             double[][] matrix2 = Arrays.copyOf(((Matrix) other).mat, ((Matrix) other).mat.length);
-            double [][] mulMatrixResult= new double[matrix1.length][matrix2[0].length];
-            for(int i=0; i<matrix1.length; i++){
-                for(int j=0; j<matrix2[0].length; j++){
-                    for(int k=0; k<matrix2.length; k++){
-                        mulMatrixResult[i][j]=mulMatrixResult[i][j]+matrix1[i][k]*matrix2[k][j];
+            double[][] mulMatrixResult = new double[matrix1.length][matrix2[0].length];
+            for (int i = 0; i < matrix1.length; i++) {
+                for (int j = 0; j < matrix2[0].length; j++) {
+                    for (int k = 0; k < matrix2.length; k++) {
+                        mulMatrixResult[i][j] = mulMatrixResult[i][j] + matrix1[i][k] * matrix2[k][j];
                     }
                 }
             }
             return new Matrix(mulMatrixResult);
-        }
-        else if (other instanceof Vector){
+        } else if (other instanceof Vector) {
             double[][] matrix = Arrays.copyOf(this.mat, this.mat.length);
-            double [] vector = Arrays.copyOf(((Vector) other).getValue(), ((Vector) other).getValue().length);
-            double [] mulMatrixVector=new double[matrix.length];
+            double[] vector = Arrays.copyOf(((Vector) other).getValue(), ((Vector) other).getValue().length);
+            double[] mulMatrixVector = new double[matrix.length];
             for (int i = 0; i < matrix.length; i++) {
                 for (int j = 0; j < vector.length; j++) {
-                    mulMatrixVector[i]=mulMatrixVector[i]+matrix[i][j]*vector[j];
+                    mulMatrixVector[i] = mulMatrixVector[i] + matrix[i][j] * vector[j];
                 }
             }
             return new Vector(mulMatrixVector);
-        }
-        else{
+        } else {
             return super.mul(other);
         }
     }
 
     @Override
-    public Var div (Var other)throws CalcException{
-        if (other instanceof Scalar){
+    public Var div(Var other) throws CalcException {
+        if (other instanceof Scalar) {
             double[][] matrix = Arrays.copyOf(this.mat, this.mat.length);
             double[][] divMatrixScalar = new double[this.mat.length][this.mat.length];
             double scalar = ((Scalar) other).getValue();
@@ -162,8 +165,7 @@ public class Matrix extends Var {
                 }
             }
             return new Matrix(divMatrixScalar);
-        }
-        else{
+        } else {
             return super.div(other);
         }
     }

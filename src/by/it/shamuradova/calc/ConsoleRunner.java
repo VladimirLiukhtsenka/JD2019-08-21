@@ -1,5 +1,6 @@
 package by.it.shamuradova.calc;
 
+import java.util.Locale;
 import java.util.Scanner;
 
 public class ConsoleRunner {
@@ -7,15 +8,11 @@ public class ConsoleRunner {
         Scanner sc = new Scanner(System.in);
         Parser parser = new Parser();
         Printer printer = new Printer();
-//        try {
-//            Var.loadVars();
-//        } catch (CalcException e) {
-//            System.err.println(e.getMessage());
-//        } catch (IOException e) {
-//            System.out.println("The file vars.txt was not found. It will be recreated after the first variable is assigned...");
-//            e.printStackTrace();
-//        }
+        ResManager rm = ResManager.INSTANCE;
+
         for (; ; ) {
+            String out = rm.getKey(Message.ENTER);
+            System.out.println(out);
             String vyragenie = sc.nextLine();
             try {
                 if (vyragenie.equals("end")) {
@@ -26,6 +23,15 @@ public class ConsoleRunner {
                 }
                 if (vyragenie.equals("sortvar")) {
                     printer.printSorted(Var.getVars());
+                }
+                if (vyragenie.equals("ru")) {
+                    rm.setLocale(new Locale("ru", "RU"));
+                }
+                if (vyragenie.equals("be")) {
+                    rm.setLocale(new Locale("be", "BY"));
+                }
+                if (vyragenie.equals("en")) {
+                    rm.setLocale(new Locale("en", "US"));
                 } else {
                     Var result = parser.calc(vyragenie);
                     printer.print(result);
@@ -34,9 +40,5 @@ public class ConsoleRunner {
                 System.out.println(e.getMessage());
             }
         }
-//        System.out.println("printvar");
-//        Var.printVar();
-//        System.out.println("sortvar");
-//        Var.sortvar();
     }
 }
