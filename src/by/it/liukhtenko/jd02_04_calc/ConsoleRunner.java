@@ -10,11 +10,8 @@ public class ConsoleRunner {
         Parser parser = new Parser();
         Printer printer = new Printer();
         Var.loadVars();
-      //  System.out.println(sc.nextLine());
-
         while (!(line = sc.nextLine()).equals("end")) {
             try {
-
                 if ((line.equals("printvar"))) {
                     Var.printvar();
                     continue;
@@ -24,7 +21,7 @@ public class ConsoleRunner {
                 }
                 Var result = parser.calc(line);
                 printer.print(result);
-            }catch (CalcException e ){
+            } catch (CalcException e) {
                 System.out.println(e.getMessage());
             }
         }

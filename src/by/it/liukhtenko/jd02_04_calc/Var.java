@@ -1,27 +1,25 @@
 package by.it.liukhtenko.jd02_04_calc;
 
 
-
 import java.io.*;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
 
+
 abstract class Var implements Operation {
 
+    private static Map<String, Var> vars = new HashMap<>();
+    private static String filename = getPath().concat("vars.txt");
 
-    private static String getPath(Class<?> taskAClass) {
+    private static String getPath() {
         String rootProject = System.getProperty("user.dir");
-        String subPath = taskAClass.getName()
+        String subPath = Var.class.getName()
                 .replace(".", File.separator)
-                .replace(taskAClass.getSimpleName(), "");
+                .replace(Var.class.getSimpleName(), "");
         return rootProject + File.separator + "src" + File.separator + subPath;
     }
 
-
-    private static Map<String, Var> vars = new HashMap<>();
-    private static String filename = getPath(Var.class).concat("vars.txt");
     public static Map<String, Var> getVars() {
         return vars;
     }
@@ -30,7 +28,7 @@ abstract class Var implements Operation {
         try (
                 PrintWriter writer = new PrintWriter(new FileWriter(filename))
         ) {
-            for (Map.Entry<String,Var> pair : vars.entrySet()) {
+            for (Map.Entry<String, Var> pair : vars.entrySet()) {
                 writer.println(pair.getKey() + "=" + pair.getValue());
             }
             writer.flush();
@@ -50,70 +48,62 @@ abstract class Var implements Operation {
     }
 
     static Var saveVar(String name, Var var) throws CalcException {
-       vars.put(name,var);
+        vars.put(name, var);
         saveVars();
-       return var;
-   }
+        return var;
+    }
 
-
-    static void printvar (){
+    static void printvar() {
         for (String s : vars.keySet()) {
-            String key = s.toString();
+            String key = s;
             String value = vars.get(s).toString();
             System.out.println(key + "=" + value);
 
         }
-
     }
-    static void sortvar (){
+
+    static void sortvar() {
         Map<String, Var> vars = new TreeMap<>(getVars());
         for (String s : vars.keySet()) {
-            String key = s.toString();
+            String key = s;
             String value = vars.get(s).toString();
             System.out.println(key + "=" + value);
         }
-
     }
 
     static Var createVar(String operand) throws CalcException {
-        operand = operand.trim().replace("\\s+","");
+        operand = operand.trim().replace("\\s+", "");
         if (operand.matches(Patterns.SCALAR))
             return new Scalar(operand);
         else if (operand.matches(Patterns.VECTOR))
             return new Vector(operand);
         else if (operand.matches(Patterns.MATRIX))
             return new Matrix(operand);
-        else if(vars.containsKey(operand)) {
+        else if (vars.containsKey(operand)) {
             return vars.get(operand);
         }
-        throw  new CalcException("Невозможно создать "+operand);
-    }
-/*
-    static void save(String name, Var var) throws CalcException {
-        vars.put(name, var);
-        saveVars();
+        throw new CalcException("Невозможно создать " + operand);
     }
 
- */
+
     @Override
     public Var add(Var other) throws CalcException {
-        throw new CalcException("Операция сложения"+ this+"+"+other+"невозможна");
-
+        throw new CalcException("Операция сложения" + this + "+" + other + "невозможна");
     }
 
     @Override
     public Var sub(Var other) throws CalcException {
-        throw new CalcException("Операция вычитания"+ this+"-"+other+"невозможна");
+        throw new CalcException("Операция вычитания" + this + "-" + other + "невозможна");
     }
 
     @Override
     public Var mul(Var other) throws CalcException {
-        throw new CalcException("Операция умножения"+ this+"*"+other+"невозможна");
+        throw new CalcException("Операция умножения" + this + "*" + other + "невозможна");
     }
 
     @Override
     public Var div(Var other) throws CalcException {
-        throw new CalcException("Операция деления"+ this+"/"+other+"невозможна");
+        throw new CalcException("Операция деления" + this + "/" + other + "невозможна");
     }
 
     @Override
