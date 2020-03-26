@@ -1,8 +1,8 @@
 package by.it.liukhtenko.training.enum_;
 
 public enum  Season {
-    WINTER(), SPRING, SUMMER, AUTUMN;
+    WINTER, SPRING, SUMMER, AUTUMN;
      Season(){
-        System.out.println(this.name()+this.ordinal());
+        System.out.println(this.name());
     }
 }

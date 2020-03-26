@@ -18,5 +18,6 @@ public class XmlSerializable {
         }
         Bean bean = new Bean();
         System.out.println(Bean.field + bean.getName());
+        String s = "^[\\w-\\+]+(\\.[\\w-]+)*@[\\w-]+(\\.[\\w]+)*(\\.[a-zA-Z]{2,})$";
     }
 }
