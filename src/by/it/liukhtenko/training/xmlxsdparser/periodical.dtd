@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+        <!ELEMENT papers (paper)+>
+        <!ELEMENT paper (visualCharacteristics, subscriptionIndex, monthly, yearOfFoundation)+>
+        <!ATTLIST paper
+                title CDATA
+                type CDATA #REQUIRED
+                >
+        <!ELEMENT visualCharacteristics (colored, pageSize, glossy)>
+        <!ELEMENT colored (#PCDATA)>
+        <!ELEMENT pageSize (#PCDATA)>
+        <!ELEMENT glossy (#PCDATA)>
+        <!ELEMENT subscriptionIndex (#PCDATA)>
+        <!ELEMENT monthly (#PCDATA)>
+        <!ELEMENT yearOfFoundation (#PCDATA)>
+

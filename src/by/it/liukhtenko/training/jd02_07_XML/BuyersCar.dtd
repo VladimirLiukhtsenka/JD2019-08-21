@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+        <!ELEMENT BuyersCar (BuyerCar)+>
+        <!ELEMENT BuyerCar (login,password,email,ads)>
+        <!ELEMENT login (#PCDATA)>
+        <!ELEMENT password (#PCDATA)>
+        <!ELEMENT email (#PCDATA)>
+        <!ELEMENT ads (ad)+>
+        <!ELEMENT ad (description,address,model,engineVolume,maxSpeed,price)>
+        <!ELEMENT description (#PCDATA)>
+        <!ELEMENT address (#PCDATA)>
+        <!ELEMENT model (#PCDATA)>
+        <!ELEMENT engineVolume (#PCDATA)>
+        <!ELEMENT maxSpeed (#PCDATA)>
+        <!ELEMENT price (#PCDATA)>
+        <!ATTLIST price currency PCDATA #REQUIRED>

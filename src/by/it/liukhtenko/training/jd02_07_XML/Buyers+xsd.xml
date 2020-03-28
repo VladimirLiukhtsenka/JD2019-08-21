@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BuyersCar xmlns="http://jd02_07.liukhtenko.it.by/"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://jd02_07.liukhtenko.it.by/ BuyersCar.xsd">
+    <BuyerCar>
+        <login>Ivan</login>
+        <password>zxcv123</password>
+        <email>Ivan@gmail.com</email>
+        <ads>
+            <ad>
+                <description>Отличный седан!</description>
+                <address>г.Минск ул. Ленина 43</address>
+                <model>ВАЗ 2109</model>
+                <engineVolume>1.6</engineVolume>
+                <maxSpeed>160</maxSpeed>>
+                <price currency="USD">1000</price>
+            </ad>
+            <ad>
+                <description>Отличный лифтбек!</description>
+                <address>г.Минск ул. Столетова 14</address>
+                <model>Toyota yaris</model>
+                <engineVolume>1.2</engineVolume>
+                <maxSpeed>140</maxSpeed>>
+                <price currency="USD">8000</price>
+            </ad>
+        </ads>
+    </BuyerCar>
+    <BuyerCar>
+        <login>Pavel</login>
+        <password>asdf678</password>
+        <email>Pavel@gmail.com</email>
+        <ads>
+            <ad>
+                <description>Шикарный паркетник!</description>
+                <address>г.Минск ул. Карбышева 43</address>
+                <model>Volvo CX 90</model>
+                <engineVolume>2.0</engineVolume>
+                <maxSpeed>220</maxSpeed>>
+                <price currency="USD">20000</price>
+            </ad>
+        </ads>
+    </BuyerCar>
+</BuyersCar>
